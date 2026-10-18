@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Download, Apple, Monitor, Check, ShieldCheck } from 'lucide-react';
+import { X, Download, Apple, Monitor, Check, ShieldCheck, Terminal } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface DownloadModalProps {
@@ -9,7 +9,7 @@ interface DownloadModalProps {
 
 export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose }) => {
   const [downloadStarted, setDownloadStarted] = useState(false);
-  const [selectedOS, setSelectedOS] = useState<'mac' | 'windows'>('mac');
+  const [selectedOS, setSelectedOS] = useState<'linux' | 'mac' | 'windows'>('linux');
 
   if (!isOpen) return null;
 
@@ -47,7 +47,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
 
           <button
             onClick={onClose}
-            className="size-8 rounded-full flex items-center justify-center hover:bg-[#ead6cd] text-[#59534E] hover:text-[#1d110c] transition-colors"
+            className="size-8 rounded-full flex items-center justify-center hover:bg-[#ead6cd] text-[#59534E] hover:text-[#1d110c] transition-colors cursor-pointer"
           >
             <X className="size-5" />
           </button>
@@ -58,6 +58,17 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
           {/* OS Switcher */}
           <div className="flex rounded-2xl border border-[#ead6cd] bg-[#f4ebe6] p-1 text-sm font-bold">
             <button
+              onClick={() => setSelectedOS('linux')}
+              className={`flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                selectedOS === 'linux'
+                  ? 'bg-white text-[#1d110c] shadow-sm'
+                  : 'text-[#59534E] hover:text-[#1d110c]'
+              }`}
+            >
+              <Terminal className="size-4 text-[#ff5100]" />
+              <span>Linux</span>
+            </button>
+            <button
               onClick={() => setSelectedOS('mac')}
               className={`flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 selectedOS === 'mac'
@@ -66,7 +77,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
               }`}
             >
               <Apple className="size-4" />
-              <span>macOS (Mac)</span>
+              <span>macOS</span>
             </button>
             <button
               onClick={() => setSelectedOS('windows')}
@@ -77,14 +88,44 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
               }`}
             >
               <Monitor className="size-4" />
-              <span>Windows PC</span>
+              <span>Windows</span>
             </button>
           </div>
 
           {/* Download Buttons for Selected OS */}
-          {selectedOS === 'mac' ? (
+          {selectedOS === 'linux' ? (
             <div className="space-y-3">
-              <button
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.AppImage"
+                download="Weave.AppImage"
+                onClick={() => triggerDownload()}
+                className="w-full py-3.5 px-4 rounded-2xl bg-[#ff5100] text-white font-bold text-sm flex items-center justify-between hover:bg-[#e04500] active:scale-[0.98] shadow-sm transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Terminal className="size-5" />
+                  <span>Download for Linux (Universal AppImage)</span>
+                </div>
+                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">v1.0 .AppImage</span>
+              </a>
+
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-Linux.AppImage"
+                download="Weave-Linux.AppImage"
+                onClick={() => triggerDownload()}
+                className="w-full py-3 px-4 rounded-2xl border border-[#ead6cd] bg-white text-[#1d110c] font-semibold text-xs flex items-center justify-between hover:bg-[#f4ebe6] transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Terminal className="size-4" />
+                  <span>Download Alternative Linux Mirror</span>
+                </div>
+                <span className="text-xs text-[#59534E]">129 MB</span>
+              </a>
+            </div>
+          ) : selectedOS === 'mac' ? (
+            <div className="space-y-3">
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.dmg"
+                download="Weave.dmg"
                 onClick={() => triggerDownload()}
                 className="w-full py-3.5 px-4 rounded-2xl bg-[#ff5100] text-white font-bold text-sm flex items-center justify-between hover:bg-[#e04500] active:scale-[0.98] shadow-sm transition-all cursor-pointer"
               >
@@ -92,23 +133,27 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
                   <Apple className="size-5" />
                   <span>Download for Apple Silicon (M1/M2/M3/M4)</span>
                 </div>
-                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">v2.3 .dmg</span>
-              </button>
+                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">v1.0 .dmg</span>
+              </a>
 
-              <button
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-macOS.zip"
+                download="Weave-macOS.zip"
                 onClick={() => triggerDownload()}
                 className="w-full py-3 px-4 rounded-2xl border border-[#ead6cd] bg-white text-[#1d110c] font-semibold text-xs flex items-center justify-between hover:bg-[#f4ebe6] transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2">
                   <Apple className="size-4" />
-                  <span>Download for Intel Mac</span>
+                  <span>Download for Intel Mac / Universal ZIP</span>
                 </div>
-                <span className="text-xs text-[#59534E]">Legacy .dmg</span>
-              </button>
+                <span className="text-xs text-[#59534E]">150 MB</span>
+              </a>
             </div>
           ) : (
             <div className="space-y-3">
-              <button
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.exe"
+                download="Weave.exe"
                 onClick={() => triggerDownload()}
                 className="w-full py-3.5 px-4 rounded-2xl bg-[#ff5100] text-white font-bold text-sm flex items-center justify-between hover:bg-[#e04500] active:scale-[0.98] shadow-sm transition-all cursor-pointer"
               >
@@ -116,8 +161,21 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
                   <Monitor className="size-5" />
                   <span>Download for Windows (64-bit Installer)</span>
                 </div>
-                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">v2.3 .exe</span>
-              </button>
+                <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">v1.0 .exe</span>
+              </a>
+
+              <a
+                href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-Windows-x64.zip"
+                download="Weave-Windows-x64.zip"
+                onClick={() => triggerDownload()}
+                className="w-full py-3 px-4 rounded-2xl border border-[#ead6cd] bg-white text-[#1d110c] font-semibold text-xs flex items-center justify-between hover:bg-[#f4ebe6] transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Monitor className="size-4" />
+                  <span>Download Portable Windows ZIP</span>
+                </div>
+                <span className="text-xs text-[#59534E]">181 MB</span>
+              </a>
             </div>
           )}
 
