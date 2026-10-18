@@ -218,8 +218,8 @@ function healCorruptedSession(jid, participant = null) {
       activeSock.uploadPreKeysToServerIfRequired(true).catch(() => {});
     }
 
-    // Only delete session files if Baileys retries failed multiple times (>= 2)
-    if (count < 2) {
+    // Delete session and sender-key files immediately on decryption failure so WhatsApp re-initiates a fresh ratchet
+    if (count < 1) {
       return;
     }
 
@@ -4036,7 +4036,7 @@ export async function startWhatsAppBot() {
       version,
       auth: {
         creds: state.creds,
-        keys: makeCacheableSignalKeyStore(state.keys, baileysLogger, signalCacheStore),
+        keys: makeCacheableSignalKeyStore(state.keys, baileysLogger),
       },
       msgRetryCounterCache: retryCacheStore,
       logger: baileysLogger,
@@ -4125,10 +4125,14 @@ export async function startWhatsAppBot() {
           }, 3500);
         } else {
           console.log(
-            `🔄 Session logged out (401). Auto-clearing '${AUTH_DIR}' and generating a fresh QR code...`
+            `🔄 Session logged out (401). Backing up '${AUTH_DIR}' and generating a fresh QR code...`
           );
           try {
-            fs.rmSync(AUTH_DIR, { recursive: true, force: true });
+            if (fs.existsSync(AUTH_DIR)) {
+              const backupDir = `${AUTH_DIR}.backup-${Date.now()}`;
+              fs.renameSync(AUTH_DIR, backupDir);
+              console.log(`📦 Archived logged out session to ${backupDir}`);
+            }
           } catch {}
           reconnectTimer = setTimeout(() => {
             reconnectTimer = null;
@@ -4375,9 +4379,24 @@ async function handleIncomingMessage(sock, msg, type, nowSec, acceptMessagesAfte
           console.log(`⏱️ Calibrated clock offset against incoming message: ${rawDiff}s`);
         }
 
+        // WhatsApp App Sync Logic:
+        // When reconnecting or opening after laptop shutdown/sleep, WhatsApp server sends backlogged/sync messages.
+        // We sync contacts, group metadata, and chat context so the app has full history,
+        // but NEVER execute or reply to any message sent before the bot was opened/started.
+        // A 15-second grace buffer accounts for slight network transit or clock alignment differences.
         const effectiveBotStartSec = BOT_START_TIME_SEC - serverTimeOffsetSec;
-        if (effectiveBotStartSec > 0 && msgTime < effectiveBotStartSec - 600) {
-          console.log(`⏱️ [Stale Backlog Skipped] msgId=${msg.key?.id} msgTime=${msgTime} effectiveBotStart=${effectiveBotStartSec}`);
+        if (effectiveBotStartSec > 0 && msgTime < (effectiveBotStartSec - 15)) {
+          const text = extractMessageText(msg);
+          if (text && msg.key?.remoteJid) {
+            const senderDisplay = msg.pushName || (msg.key?.fromMe ? 'Owner' : getSenderNumber(msg));
+            recordChatMessage(msg.key.remoteJid, {
+              sender: senderDisplay,
+              text,
+              timestamp: msgTime * 1000,
+              quotedText: extractQuotedText(msg),
+            });
+          }
+          console.log(`⏱️ [Sync/Backlog Message Recorded, Execution Skipped] msgId=${msg.key?.id} msgTime=${msgTime} cutoff=${effectiveBotStartSec - 15}`);
           return;
         }
       }
@@ -4439,41 +4458,35 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
         const callsign = (CONFIG.triggerPrefix || '').toLowerCase().trim();
         const callsignNoAt = callsign.replace(/^@/, '');
 
+        // Commands must be strictly prefixed with call sign (e.g. "@ap init", "@ap initialize")
         const isInitCmd =
-          cleanText === '@agent initialize' ||
-          cleanText === '@agent init' ||
-          cleanText === 'agent initialize' ||
-          cleanText === 'agent init' ||
           cleanText === `${callsign} initialize` ||
           cleanText === `${callsign} init` ||
           cleanText === `@${callsignNoAt} initialize` ||
           cleanText === `@${callsignNoAt} init` ||
-          cleanText === `${callsignNoAt} initialize` ||
-          cleanText === `${callsignNoAt} init` ||
-          cleanText === 'initialize' ||
-          cleanText === 'init' ||
-          cleanText === '/init' ||
-          cleanText === '/initialize';
+          (callsignNoAt && (cleanText === `${callsignNoAt} initialize` || cleanText === `${callsignNoAt} init`)) ||
+          cleanText === '@agent initialize' ||
+          cleanText === '@agent init';
 
         const isDeinitCmd =
-          cleanText === '@agent deinitialize' ||
-          cleanText === '@agent deinit' ||
-          cleanText === 'agent deinitialize' ||
-          cleanText === 'agent deinit' ||
           cleanText === `${callsign} deinitialize` ||
           cleanText === `${callsign} deinit` ||
           cleanText === `@${callsignNoAt} deinitialize` ||
           cleanText === `@${callsignNoAt} deinit` ||
-          cleanText === `${callsignNoAt} deinitialize` ||
-          cleanText === `${callsignNoAt} deinit` ||
-          cleanText === 'deinitialize' ||
-          cleanText === 'deinit' ||
-          cleanText === '/deinit' ||
-          cleanText === '/deinitialize';
+          (callsignNoAt && (cleanText === `${callsignNoAt} deinitialize` || cleanText === `${callsignNoAt} deinit`)) ||
+          cleanText === '@agent deinitialize' ||
+          cleanText === '@agent deinit';
+
+        const senderIsOwner = isOwner(msg);
 
         if (!isInit) {
           if (isInitCmd) {
             recordProcessedMessageId(msg.key.id);
+            if (!senderIsOwner) {
+              await sendReply(sock, jid, "You cannot use this agent until the owner gives you permission.", msg);
+              return;
+            }
+
             const sender = msg.key.participant || jid;
             markGroupInitialized(jid, sender);
 
@@ -4502,6 +4515,11 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
         } else {
           if (isDeinitCmd) {
             recordProcessedMessageId(msg.key.id);
+            if (!senderIsOwner) {
+              await sendReply(sock, jid, "Only the owner can deinitialize this group.", msg);
+              return;
+            }
+
             markGroupDeinitialized(jid);
             await sendReply(
               sock,
@@ -4512,22 +4530,18 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
             return;
           } else if (isInitCmd) {
             recordProcessedMessageId(msg.key.id);
-            let masterDir = '';
-            let bound = null;
-            let projects = [];
-            try {
-              masterDir = getValidatedMasterDir();
-              const listInfo = listProjectsForGroup(jid);
-              bound = listInfo.boundAlias;
-              projects = listInfo.projects || [];
-            } catch {}
-
-            const initReply = TEMPLATES.welcome_init({
-              masterDir,
-              activeProject: bound,
-              projects,
-            });
-            await sendReply(sock, jid, initReply, msg);
+            if (!senderIsOwner) {
+              await sendReply(sock, jid, "You cannot use this agent until the owner gives you permission.", msg);
+              return;
+            }
+            const listInfo = listProjectsForGroup(jid);
+            const bound = listInfo.boundAlias;
+            await sendReply(
+              sock,
+              jid,
+              `ℹ️ *Agent is already initialized in this group.*\n${bound ? `🟢 Active project: \`${bound}\`` : `⚪ Active project: None (unbound)`}\n\nSay \`${callsign} list projects\` to view available projects or \`${callsign} switch to <name>\` to switch.`,
+              msg
+            );
             return;
           }
         }
@@ -4561,7 +4575,7 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
 
       if (!isSenderAuthorized(msg)) {
         console.log(`🔒 Unauthorized sender in ${jid}: ${getSenderNumber(msg)}`);
-        await sendReply(sock, jid, "You don't have permission to use this project.", msg);
+        await sendReply(sock, jid, "You cannot use this agent until the owner gives you permission.", msg);
         return;
       }
 
@@ -4880,18 +4894,19 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
       const callsignNoAt = callsign.replace(/^@/, '');
 
       const isDeinitBody =
-        lowerRaw === 'deinitialize' ||
-        lowerRaw === 'deinit' ||
-        lowerRaw === '@agent deinitialize' ||
-        lowerRaw === '@agent deinit' ||
         lowerRaw === `${callsign} deinitialize` ||
         lowerRaw === `${callsign} deinit` ||
         lowerRaw === `@${callsignNoAt} deinitialize` ||
         lowerRaw === `@${callsignNoAt} deinit` ||
-        lowerRaw === `${callsignNoAt} deinitialize` ||
-        lowerRaw === `${callsignNoAt} deinit`;
+        (callsignNoAt && (lowerRaw === `${callsignNoAt} deinitialize` || lowerRaw === `${callsignNoAt} deinit`)) ||
+        lowerRaw === '@agent deinitialize' ||
+        lowerRaw === '@agent deinit';
 
       if (isDeinitBody) {
+        if (!owner) {
+          await sendReply(sock, jid, "Only the owner can deinitialize this group.", msg);
+          return;
+        }
         if (isGroup) {
           markGroupDeinitialized(jid);
           await sendReply(
@@ -4912,18 +4927,34 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
         }
       }
 
-      if (
-        lowerRaw === 'initialize' ||
-        lowerRaw === 'init' ||
-        lowerRaw === '@agent initialize' ||
-        lowerRaw === '@agent init' ||
+      const isInitBody =
         lowerRaw === `${callsign} initialize` ||
         lowerRaw === `${callsign} init` ||
         lowerRaw === `@${callsignNoAt} initialize` ||
         lowerRaw === `@${callsignNoAt} init` ||
-        lowerRaw === `${callsignNoAt} initialize` ||
-        lowerRaw === `${callsignNoAt} init`
-      ) {
+        (callsignNoAt && (lowerRaw === `${callsignNoAt} initialize` || lowerRaw === `${callsignNoAt} init`)) ||
+        lowerRaw === '@agent initialize' ||
+        lowerRaw === '@agent init';
+
+      if (isInitBody) {
+        if (!owner) {
+          await sendReply(sock, jid, "You cannot use this agent until the owner gives you permission.", msg);
+          return;
+        }
+
+        const listInfo = listProjectsForGroup(jid);
+        const bound = listInfo.boundAlias;
+
+        if (isGroup && isGroupInitialized(jid)) {
+          await sendReply(
+            sock,
+            jid,
+            `ℹ️ *Agent is already initialized in this group.*\n${bound ? `🟢 Active project: \`${bound}\`` : `⚪ Active project: None (unbound)`}\n\nSay \`${callsign} list projects\` to view available projects or \`${callsign} switch to <name>\` to switch.`,
+            msg
+          );
+          return;
+        }
+
         let masterDir = '';
         try {
           masterDir = getValidatedMasterDir();
@@ -4932,27 +4963,15 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
           return;
         }
 
-        const listInfo = listProjectsForGroup(jid);
-        const bound = listInfo.boundAlias;
-        const available = listInfo.projects || [];
+        if (isGroup) {
+          markGroupInitialized(jid, msg.key.participant || jid);
+        }
 
-        const projBullets = available.length > 0
-          ? available.map(p => `• *${p}*${p === bound ? ' _(Active in this group)_' : ''}`).join('\n')
-          : '_No subproject folders yet._';
-
-        const initReply = [
-          `🚀 *Weave Autopilot Agent Initialized!*`,
-          `📁 *Master Directory:* \`${masterDir}\``,
-          bound ? `🟢 *Current Active Project:* \`${bound}\`` : `⚪ *Current Status:* Unbound (No active project in this group)`,
-          '',
-          `📂 *Available Projects:*`,
-          projBullets,
-          '',
-          `💡 *What would you like to do?*`,
-          `• Say: *"start a new project called <name>"* to create a folder`,
-          `• Say: *"switch to <name>"* to work on an existing project`,
-          `• Say: *"@ap fullauto"* to enable hands-free autonomous mode`,
-        ].join('\n');
+        const initReply = TEMPLATES.welcome_init({
+          masterDir,
+          activeProject: bound,
+          projects: listInfo.projects || [],
+        });
 
         await sendReply(sock, jid, initReply, msg);
         return;
@@ -5045,16 +5064,20 @@ async function _processIncomingMessage(sock, msg, type, nowSec, acceptMessagesAf
         return;
       }
 
-      if (
-        lowerRaw === 'fullauto' ||
-        lowerRaw === 'full auto' ||
+      const isFullAutoCmd =
+        lowerRaw === `${callsign} fullauto` ||
+        lowerRaw === `${callsign} full auto` ||
+        lowerRaw === `@${callsignNoAt} fullauto` ||
+        lowerRaw === `@${callsignNoAt} full auto` ||
+        (callsignNoAt && (lowerRaw === `${callsignNoAt} fullauto` || lowerRaw === `${callsignNoAt} full auto`)) ||
         lowerRaw === '@agent fullauto' ||
-        lowerRaw === '@agent full auto' ||
-        lowerRaw === '@ap fullauto' ||
-        lowerRaw === '@ap full auto' ||
-        lowerRaw.endsWith(' fullauto') ||
-        lowerRaw.endsWith(' full auto')
-      ) {
+        lowerRaw === '@agent full auto';
+
+      if (isFullAutoCmd) {
+        if (!owner) {
+          await sendReply(sock, jid, "Only the owner can toggle full auto mode.", msg);
+          return;
+        }
         const nextState = !isFullAutoGroup;
         currentState.fullAutoGroups = currentState.fullAutoGroups || {};
         currentState.fullAutoGroups[jid] = nextState;
