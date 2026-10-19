@@ -104,7 +104,7 @@ export function App() {
     <div className="min-h-screen bg-[#09090b] text-white flex flex-col justify-between selection:bg-[#ff5100] selection:text-white px-6 sm:px-12 md:px-20 lg:px-28 py-10 sm:py-16 transition-colors duration-300 font-sans">
       
       {/* Top Header / Emblem */}
-      <header className="w-full max-w-3xl mx-auto flex items-center justify-between pb-12 sm:pb-20">
+      <header className="w-full max-w-3xl mx-auto flex items-center pb-12 sm:pb-20">
         <a href="/" className="inline-flex items-center gap-3 group">
           {/* Weave custom woven companion emblem in dark mode */}
           <div className="relative size-10 rounded-full border border-[#27272a] bg-[#18181b] flex items-center justify-center shadow-xs group-hover:border-[#ff5100] group-hover:scale-105 transition-all">
@@ -126,14 +126,6 @@ export function App() {
             weave
           </span>
         </a>
-
-        <button
-          onClick={openDownloadModal}
-          className="text-sm font-medium text-[#a1a1aa] hover:text-[#ff5100] transition-colors flex items-center gap-1 cursor-pointer"
-        >
-          <span>Get Weave</span>
-          <ArrowRight className="size-3.5" />
-        </button>
       </header>
 
       {/* Main Editorial Body with White Text on Black */}
@@ -197,7 +189,7 @@ export function App() {
             onClick={openDownloadModal}
             className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-white text-[#09090b] hover:bg-[#ff5100] hover:text-white text-base sm:text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-98"
           >
-            <span>Download Weave</span>
+            <span>Get Weave</span>
             <ArrowRight className="size-4 sm:size-5 group-hover:translate-x-1 transition-transform" />
           </button>
           
