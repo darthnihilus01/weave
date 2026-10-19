@@ -263,15 +263,9 @@ export function App() {
               <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                 {/* Work Email or GitHub Handle */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between items-center px-0.5">
-                    <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-identity">
-                      Work Email or GitHub Handle
-                    </label>
-                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-wide flex items-center gap-1">
-                      <span className="size-1 rounded-full bg-emerald-400" />
-                      <span>VERIFIED GATEWAY</span>
-                    </span>
-                  </div>
+                  <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8] block px-0.5" htmlFor="invite-identity">
+                    Work Email or GitHub Handle
+                  </label>
                   <div className="relative flex items-center">
                     <span className="absolute left-3.5 text-[#71717a] flex items-center pointer-events-none">
                       <IdCard className="size-4" />
@@ -294,14 +288,9 @@ export function App() {
 
                 {/* WhatsApp Mobile Number */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between items-center px-0.5">
-                    <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-phone">
-                      WhatsApp Mobile Number
-                    </label>
-                    <span className="font-mono text-[10px] text-[#71717a] uppercase tracking-wider">
-                      For Signal E2EE Keyring
-                    </span>
-                  </div>
+                  <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8] block px-0.5" htmlFor="invite-phone">
+                    WhatsApp Mobile Number
+                  </label>
                   <div className="flex items-center gap-2">
                     {/* Country Code Pill Selector */}
                     <div className="relative shrink-0">
