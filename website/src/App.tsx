@@ -63,7 +63,6 @@ export function App() {
   const [identity, setIdentity] = useState('');
   const [countryCode, setCountryCode] = useState('+1');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [runtimeTarget, setRuntimeTarget] = useState<'antigravity' | 'gemini'>('antigravity');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -105,7 +104,7 @@ export function App() {
     <div className="min-h-screen bg-[#09090b] text-white flex flex-col justify-between selection:bg-[#ff5100] selection:text-white px-6 sm:px-12 md:px-20 lg:px-28 py-10 sm:py-16 transition-colors duration-300 font-sans">
       
       {/* Top Header / Emblem */}
-      <header className="w-full max-w-3xl mx-auto flex items-center justify-between pb-12 sm:pb-20">
+      <header className="w-full max-w-3xl mx-auto flex items-center pb-12 sm:pb-20">
         <a href="/" className="inline-flex items-center gap-3 group">
           <div className="relative size-10 rounded-full border border-[#27272a] bg-[#18181b] flex items-center justify-center shadow-xs group-hover:border-[#ff5100] group-hover:scale-105 transition-all">
             <svg
@@ -126,15 +125,6 @@ export function App() {
             weave
           </span>
         </a>
-
-        {/* Subtle Live Gateway Badge */}
-        <div 
-          onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18181b] border border-[#27272a] hover:border-emerald-500/40 text-xs font-mono text-[#a1a1aa] hover:text-white cursor-pointer transition-all"
-        >
-          <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Batch #14 Live</span>
-        </div>
       </header>
 
       {/* Main Editorial Body with White Text on Black */}
@@ -243,67 +233,38 @@ export function App() {
         </nav>
       </footer>
 
-      {/* EXACT STITCH MCP: GLASS CAPSULE INVITE PASS MODAL */}
+      {/* CLEAN & STREAMLINED INVITE-ONLY PASS MODAL */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#09090b]/85 backdrop-blur-2xl animate-fade-in font-sans"
           onClick={() => setIsModalOpen(false)}
         >
-          {/* FLOATING GLASS CAPSULE & LINEAR KEYPAD / TICKET */}
+          {/* FLOATING GLASS CAPSULE */}
           <div 
-            className="relative w-full max-w-[560px] rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] transition-all duration-300 overflow-hidden text-white"
+            className="relative w-full max-w-[540px] rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] transition-all duration-300 overflow-hidden text-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Soft Emerald Neon Glow Accent Aura */}
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-32 bg-emerald-500/10 blur-[60px] pointer-events-none rounded-full" />
 
-            {/* Top Bar: Monospace Ticket Badge with Live Status Beacon */}
-            <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-3">
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/25">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-                  </span>
-                  <span className="font-mono text-[11px] font-medium tracking-widest text-emerald-300/90 uppercase">
-                    ACCESS PASS // BATCH #14
-                  </span>
-                </div>
-                <span className="hidden sm:inline-block font-mono text-[11px] text-[#71717a] uppercase tracking-wider">
-                  GATEWAY: LIVE
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] text-[#71717a]/60 px-1.5 py-0.5 rounded border border-white/5 hidden sm:inline-block">
-                  ESC
-                </span>
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-[#71717a] hover:text-white transition-colors p-1 rounded-md hover:bg-white/5 cursor-pointer"
-                  title="Close modal"
-                >
-                  <X className="size-4" />
-                </button>
-              </div>
-            </div>
+            {/* Clean Close Button in Top-Right */}
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-5 right-5 text-[#71717a] hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer z-20"
+              title="Close modal (Esc)"
+              aria-label="Close modal"
+            >
+              <X className="size-4" />
+            </button>
 
             {/* Modal Capsule Body */}
-            <div className="p-6 sm:p-7 space-y-5 relative z-10">
+            <div className="p-6 sm:p-8 space-y-5 relative z-10">
               
-              {/* Headline & Punchy Subtitle */}
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-xs bg-white" />
-                  <span className="font-mono text-[11px] uppercase tracking-widest text-[#71717a]">
-                    Private Beta Access Protocol
-                  </span>
-                </div>
+              {/* Headline */}
+              <div className="pr-8">
                 <h2 className="text-[26px] sm:text-[30px] leading-tight text-white font-bold tracking-tight">
                   Weave is invite-only for now
                 </h2>
-                <p className="text-[#a1a1aa] text-[13px] sm:text-[14px] leading-relaxed">
-                  Connect WhatsApp directly to your local runtime. Deploying weekly tranches to preserve latency and verifiable cryptographic peer pairing.
-                </p>
               </div>
 
               {/* Direct Interactive Toggle Switcher */}
@@ -415,69 +376,11 @@ export function App() {
                     </div>
                   </div>
 
-                  {/* Primary Runtime Target */}
-                  <div className="space-y-1.5 pt-0.5">
-                    <label className="font-mono text-[11px] uppercase tracking-wider text-[#71717a] px-0.5">
-                      Primary Runtime Target
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {/* Card 1: Antigravity Local CLI */}
-                      <label
-                        onClick={() => setRuntimeTarget('antigravity')}
-                        className={`group relative flex items-start gap-3 p-3 rounded-xl bg-[#09090b]/90 border cursor-pointer transition-all select-none ${
-                          runtimeTarget === 'antigravity'
-                            ? 'border-white/20 ring-1 ring-white/10'
-                            : 'border-white/5 hover:border-white/20'
-                        }`}
-                      >
-                        <div className="size-4 rounded-full border border-white/30 flex items-center justify-center shrink-0 mt-0.5">
-                          <div className={`size-2 rounded-full ${runtimeTarget === 'antigravity' ? 'bg-emerald-400' : 'bg-transparent'}`} />
-                        </div>
-                        <div className="space-y-0.5">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-mono text-[12px] font-semibold text-white">Local CLI</span>
-                            <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-white/10 text-white/80 uppercase font-bold">
-                              Offline
-                            </span>
-                          </div>
-                          <p className="font-mono text-[11px] text-[#71717a] leading-tight">
-                            Antigravity daemon (Zero cloud)
-                          </p>
-                        </div>
-                      </label>
-
-                      {/* Card 2: Gemini Cloud API */}
-                      <label
-                        onClick={() => setRuntimeTarget('gemini')}
-                        className={`group relative flex items-start gap-3 p-3 rounded-xl bg-[#09090b]/90 border cursor-pointer transition-all select-none ${
-                          runtimeTarget === 'gemini'
-                            ? 'border-white/20 ring-1 ring-white/10'
-                            : 'border-white/5 hover:border-white/20'
-                        }`}
-                      >
-                        <div className="size-4 rounded-full border border-white/30 flex items-center justify-center shrink-0 mt-0.5">
-                          <div className={`size-2 rounded-full ${runtimeTarget === 'gemini' ? 'bg-emerald-400' : 'bg-transparent'}`} />
-                        </div>
-                        <div className="space-y-0.5">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-mono text-[12px] font-semibold text-white">Cloud API</span>
-                            <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 uppercase font-bold">
-                              Fast
-                            </span>
-                          </div>
-                          <p className="font-mono text-[11px] text-[#71717a] leading-tight">
-                            Gemini 2.5 Flash hybrid pipeline
-                          </p>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
                   {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting || isSubmitted}
-                    className={`w-full h-12 rounded-full font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-1 ${
+                    className={`w-full h-12 rounded-full font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-2 ${
                       isSubmitted
                         ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 cursor-default'
                         : isSubmitting
@@ -552,7 +455,7 @@ export function App() {
                         </button>
 
                         <a
-                          href="mailto:ramanandv722@gmail.com?subject=Weave%20Private%20Beta%20Access%20Request&body=Hi%20Ramanand%2C%0A%0AWe%20are%20building%20with%3A%20%5BAntigravity%20CLI%20%2F%20Gemini%202.5%20Flash%5D%0AOur%20workflow%20use-case%3A%20%0A%0AWhatsApp%20Number%20for%20pairing%3A%20"
+                          href="mailto:ramanandv722@gmail.com?subject=Weave%20Private%20Beta%20Access%20Request&body=Hi%20Ramanand%2C%0A%0AWe%20are%20building%20with%3A%20Weave%20Agent%0AOur%20workflow%20use-case%3A%20%0A%0AWhatsApp%20Number%20for%20pairing%3A%20"
                           className="h-9 rounded-lg bg-white text-black text-xs font-semibold flex items-center justify-center gap-1 hover:bg-slate-100 transition-colors shadow-xs"
                         >
                           <span>Direct Dispatch</span>
@@ -563,7 +466,7 @@ export function App() {
 
                     <div className="flex items-center gap-2 text-[#71717a] font-mono text-[11px] pt-1">
                       <Terminal className="size-3.5 text-emerald-400 shrink-0" />
-                      <span>Include your deployment target (Antigravity CLI or Gemini) for immediate response.</span>
+                      <span>Direct email to Ramanand for immediate bypass key provisioning.</span>
                     </div>
                   </div>
                 </div>
