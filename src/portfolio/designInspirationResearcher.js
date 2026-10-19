@@ -78,22 +78,13 @@ DO NOT use predefined formulas like "Swiss Editorial", "Bento Grid", or "Neon UI
 DO NOT pigeonhole every site into the same 3 preset styles.
 Every single website request MUST receive 3 COMPLETELY DYNAMIC, BESPOKE AESTHETIC PHILOSOPHIES invented organically for this specific domain, craft, and brand.
 
-Examples of domain-native aesthetic invention:
-- For a Horse Tender / Equestrian Estate:
-  * Direction 1: "Heritage Paddock & Saddle Leather" (Deep forest obsidian #0A110D, saddle amber #C28B53, warm linen, live pasture camera viewport & turnout schedules)
-  * Direction 2: "Equine Performance & Livery Telemetry" (Stall care matrix, veterinary audit logs, high-precision typography, biometric trackers)
-  * Direction 3: "Nordic Horsemanship & Raw Timber" (Organic curves, warm pine tones, plein-air photo spreads, gentle tactile cards)
-- For an Artisan Sourdough Bakery:
-  * Direction 1: "Wood-Fired Hearth & Flour" (Crust amber, stone gray, fermentation schedule, daily bake counter)
-  * Direction 2: "Parisian Pâtisserie Monograph" (Porcelain cream, gilded accents, serif typography, vitrine pastry showcase)
-  * Direction 3: "Organic Grain Lab" (Minimalist transparency matrix, farmer partner origin cards)
-- For a Financial Spreadsheet Add-on:
-  * Direction 1: "Autonomous Ledger & Cell Sync" (Deep slate, formula bar preview, emerald verification badges)
-  * Direction 2: "Institutional Audit Precision" (Hairline balance sheets, variance matrices, CFO proof tables)
-  * Direction 3: "Kinetic Financial Canvas" (Interactive calculation sandbox, real-time FX tickers)
-
-Generate 3 RADICALLY DIFFERENT, dynamic design philosophies tailored uniquely to: "${prompt}".
-Invent evocative names for each direction that naturally belong to this domain (NOT generic presets!).
+CRITICAL RESEARCH DIRECTIVE:
+1. Conduct deep domain analysis on the user's specific topic, business model, and audience.
+2. Extract the authentic visual conventions, essential interactive components, trust signals, and layout architectures appropriate for this specific craft or industry.
+3. Formulate 3 RADICALLY DISTINCT design philosophies tailored natively to: "${prompt}".
+   - Invent evocative, domain-native names for each aesthetic direction.
+   - Curate domain-authentic color palettes, contrast ratios, and typography pairings.
+   - Define bespoke interactive components and telemetry specific to this discipline.
 
 For valid Stitch fonts, stitchHeadlineFont and stitchBodyFont MUST be one of:
 "PLAYFAIR_DISPLAY", "SPACE_GROTESK", "DM_SANS", "PLUS_JAKARTA_SANS", "OUTFIT", "INTER", "MONTSERRAT", "MANROPE", "FRAUNCES", "SPACE_MONO", "GOOGLE_SANS", "IBM_PLEX_SERIF"
@@ -223,53 +214,18 @@ export function getFallbackDesignInspirations(prompt) {
   const brandName = `${domainTitle}`;
   const lower = cleanPrompt.toLowerCase();
 
-  let palette1, palette2, palette3;
-  let comp1, comp2, comp3;
-  let dirName1, dirName2, dirName3;
-
-  if (lower.match(/(horse|equine|stable|paddock|rider|equestrian|livery|farm|ranch)/i)) {
-    dirName1 = 'Heritage Paddock & Saddle Leather';
-    dirName2 = 'Equine Livery & Pedigree Monograph';
-    dirName3 = 'Nordic Horsemanship & Performance Telemetry';
-    palette1 = { bg: '#0D140F', bgCard: '#152119', accent: '#C49A45', accentSecondary: '#2E5A36', textPrimary: '#F5F2EB', textMuted: '#9CA89E', border: 'rgba(196, 154, 69, 0.2)' };
-    palette2 = { bg: '#FAF8F5', bgCard: '#FFFFFF', accent: '#2B3E2D', accentSecondary: '#8B5A2B', textPrimary: '#1F2421', textMuted: '#5C6560', border: '#E2DCD5' };
-    palette3 = { bg: '#1A1817', bgCard: '#262220', accent: '#E07A5F', accentSecondary: '#D4A373', textPrimary: '#F4F1DE', textMuted: '#A69F98', border: '#3D3734' };
-    comp1 = ['Live Paddock Turnout Schedule', 'Equine Nutrition & Care Telemetry', 'Stall Video Viewport', 'Livery Reservation CTA'];
-    comp2 = ['Breeding Pedigree Monograph', 'Pasture Care Manifesto', 'Veterinary Audit Matrix', 'Private Tour Inquiry'];
-    comp3 = ['Training Track Live Telemetry', 'Equestrian Performance Metrics', 'Interactive Barn Map', 'Livery Membership Portal'];
-  } else if (lower.match(/(potter|ceramic|clay|kiln|glaze|stoneware|vase|atelier|handmade|craft)/i)) {
-    dirName1 = 'Raw Clay & Kiln Hearth';
-    dirName2 = 'Artisan Ceramic Monograph';
-    dirName3 = 'Modern Wheelhouse & Glaze Lab';
-    palette1 = { bg: '#121110', bgCard: '#1C1917', accent: '#D97706', accentSecondary: '#A8A29E', textPrimary: '#FAFAF9', textMuted: '#A8A29E', border: '#292524' };
-    palette2 = { bg: '#FDFBF7', bgCard: '#FFFFFF', accent: '#44403C', accentSecondary: '#B45309', textPrimary: '#1C1917', textMuted: '#78716C', border: '#E7E5E4' };
-    palette3 = { bg: '#18181B', bgCard: '#27272A', accent: '#F59E0B', accentSecondary: '#71717A', textPrimary: '#FAFAFA', textMuted: '#A1A1AA', border: '#3F3F46' };
-    comp1 = ['Kiln Batch Firing Schedule', 'Clay Body & Glaze Formula Spec', 'Hand-Thrown Vessel Showcase', 'Atelier Drop Waitlist'];
-    comp2 = ['Single-Batch Ceramic Monograph', 'Artisan Technique Manifesto', 'Vessel Dimension Spec Table', 'Private Commission Form'];
-    comp3 = ['Live Glaze Finish Explorer', 'Interactive Ceramic Wheel Viewer', 'Limited Edition Drop Counter', 'Studio Workshop Passes'];
-  } else if (lower.match(/(sheet|sheets|spreadsheet|excel|reconcil|ledger|finance|accounting|cfo|fintech)/i)) {
-    dirName1 = 'Autonomous Ledger & Cell Sync';
-    dirName2 = 'Institutional Audit Monograph';
-    dirName3 = 'Kinetic Financial Canvas';
-    palette1 = { bg: '#0B0F17', bgCard: 'rgba(15, 23, 42, 0.8)', accent: '#10B981', accentSecondary: '#06B6D4', textPrimary: '#F8FAFC', textMuted: '#94A3B8', border: 'rgba(255, 255, 255, 0.1)' };
-    palette2 = { bg: '#FDFCF7', bgCard: '#FFFFFF', accent: '#0A0A0A', accentSecondary: '#4A5568', textPrimary: '#111827', textMuted: '#6B7280', border: '#E5E7EB' };
-    palette3 = { bg: '#0F172A', bgCard: '#1E293B', accent: '#38BDF8', accentSecondary: '#A855F7', textPrimary: '#F1F5F9', textMuted: '#94A3B8', border: '#334155' };
-    comp1 = ['Formula Bar Telemetry Hero', 'Interactive Variance Table', 'Live Bank Status Ticker', 'SOC2 Security Pill'];
-    comp2 = ['Asymmetric Serif Masthead', 'Hairline Audit Matrix', 'Two-Column Precision Manifesto', 'Numbered Step Catalog'];
-    comp3 = ['Kinetic Telemetry Ticker', 'Split Screen Interactive Demo', 'High-Contrast Badge Grid', 'CFO Proof Quote'];
-  } else {
-    dirName1 = `${domainTitle} Signature Atmosphere`;
-    dirName2 = `${domainTitle} Heritage Monograph`;
-    dirName3 = `${domainTitle} Kinetic Studio`;
-    palette1 = { bg: '#090D16', bgCard: '#111827', accent: '#6366F1', accentSecondary: '#EC4899', textPrimary: '#F9FAFB', textMuted: '#9CA3AF', border: 'rgba(255, 255, 255, 0.12)' };
-    palette2 = { bg: '#FAFAF9', bgCard: '#FFFFFF', accent: '#18181B', accentSecondary: '#71717A', textPrimary: '#09090B', textMuted: '#52525B', border: '#E4E4E7' };
-    palette3 = { bg: '#0A0A0C', bgCard: '#141418', accent: '#14B8A6', accentSecondary: '#F59E0B', textPrimary: '#F4F4F5', textMuted: '#A1A1AA', border: '#27272A' };
-    comp1 = ['Interactive Showcase Hero', 'Domain Feature Telemetry', 'Interactive Offerings Matrix', 'Primary Action Console'];
-    comp2 = ['Curated Domain Monograph', 'Craft Philosophy Manifesto', 'Detailed Specification Grid', 'Private Inquiry Portal'];
-    comp3 = ['Dynamic Metric Dashboard', 'High-Contrast Feature Highlights', 'Interactive Workflow Preview', 'Direct Access Booking'];
-  }
-
   const slug = domainTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const dirName1 = `${domainTitle} Signature Atmosphere`;
+  const dirName2 = `${domainTitle} Craft Monograph`;
+  const dirName3 = `${domainTitle} Kinetic Studio`;
+
+  const palette1 = { bg: '#090D16', bgCard: '#111827', accent: '#6366F1', accentSecondary: '#EC4899', textPrimary: '#F9FAFB', textMuted: '#9CA3AF', border: 'rgba(255, 255, 255, 0.12)' };
+  const palette2 = { bg: '#FAFAF9', bgCard: '#FFFFFF', accent: '#18181B', accentSecondary: '#71717A', textPrimary: '#09090B', textMuted: '#52525B', border: '#E4E4E7' };
+  const palette3 = { bg: '#0A0A0C', bgCard: '#141418', accent: '#14B8A6', accentSecondary: '#F59E0B', textPrimary: '#F4F4F5', textMuted: '#A1A1AA', border: '#27272A' };
+
+  const comp1 = [`${domainTitle} Feature Showcase`, `${domainTitle} Operational Metrics`, 'Interactive Offerings Matrix', 'Primary Action Console'];
+  const comp2 = [`${domainTitle} Heritage Monograph`, 'Craft Philosophy Manifesto', 'Specification Grid', 'Private Inquiry Portal'];
+  const comp3 = [`${domainTitle} Dynamic Dashboard`, 'Feature Highlights', 'Interactive Workflow Preview', 'Direct Access Booking'];
 
   return {
     topicAnalysis: {

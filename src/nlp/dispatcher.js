@@ -654,38 +654,11 @@ export async function dispatchIntent({
       await sendReply(
         sock,
         jid,
-        `Yeah, hey, I'm just working on it! 🚀`,
+        `Yeah, hey, I'm just working on it! 🚀\nDeploying a design research agent to analyze the key features, layout structure, and visual conventions for "${rawBody}". Synthesizing screens on Google Stitch in the background...`,
         msg
       ).catch(() => {});
 
-      // 2. Interactive Discovery Poll (Dynamic Domain-Native Aesthetic Directions)
-      const voterJid = msg?.key?.fromMe
-        ? (sock?.user?.id || jid)
-        : (msg?.key?.participant || msg?.key?.remoteJid || jid);
-
-      try {
-        const domainInspirations = getFallbackDesignInspirations(rawBody);
-        const pollOptions = (domainInspirations.inspirations || []).map((ins, idx) => {
-          const numEmoji = ['1️⃣', '2️⃣', '3️⃣'][idx] || `${idx + 1}️⃣`;
-          return `${numEmoji} ${ins.name}`;
-        });
-        pollOptions.push('4️⃣ Bespoke (I’ll describe in chat)');
-
-        const brandOrDomain = domainInspirations.topicAnalysis?.brandName || 'this site';
-        await sendChoicePoll(sock, {
-          groupJid: jid,
-          allowedVoterJid: voterJid,
-          question: `Which aesthetic direction best fits ${brandOrDomain}?`,
-          options: pollOptions,
-          intent: 'choice_needed',
-          originalTask: rawBody,
-          context: 'website_vibe_choice',
-        });
-      } catch (pollErr) {
-        console.warn('[Dispatcher] Dynamic vibe poll notice:', pollErr.message);
-      }
-
-      // 3. Product Discovery Follow-up (Agent 2 - Conversational Product Discovery)
+      // 2. Product Discovery Follow-up (Agent 2 - Conversational Product Discovery)
       await sendReply(
         sock,
         jid,
@@ -693,7 +666,7 @@ export async function dispatchIntent({
         msg
       ).catch(() => {});
 
-      // Initialize session state so early poll votes and product notes can attach immediately
+      // Initialize session state so product notes can attach immediately
       const preState = loadProjectsState();
       preState.portfolioSessions = preState.portfolioSessions || {};
       preState.portfolioSessions[jid] = {
@@ -706,7 +679,7 @@ export async function dispatchIntent({
       };
       saveProjectsState(preState);
 
-      // 4. Background UI Generation Agent (Agent 1 - Stitch MCP UI Agent)
+      // 3. Background UI Generation Agent (Agent 1 - Stitch MCP UI Agent)
       // Runs autonomously in the background without blocking conversation
       (async () => {
         try {
@@ -719,7 +692,7 @@ export async function dispatchIntent({
             senderName: msg?.pushName || 'Founder / Architect',
           });
 
-          // Send all 3 Google Stitch design variations
+          // Send all 3 Google Stitch design variations with extracted features
           if (result.variants && result.variants.length > 0) {
             for (const v of result.variants) {
               if (v.screenshotPath && fs.existsSync(v.screenshotPath)) {
@@ -743,6 +716,31 @@ export async function dispatchIntent({
           const cleanedText = result.messageText.replace(/\[SEND_FILE:[^\]]+\]/g, '').trim();
           await sendReply(sock, jid, cleanedText, msg);
           if (reactToMessage) await reactToMessage(sock, msg, '✅').catch(() => {});
+
+          // 4. Interactive Choice Poll (Sent AFTER screenshots & features are generated!)
+          try {
+            const voterJid = msg?.key?.fromMe
+              ? (sock?.user?.id || jid)
+              : (msg?.key?.participant || msg?.key?.remoteJid || jid);
+
+            const pollOptions = (result.variants || []).map((v) => {
+              const emoji = ['1️⃣', '2️⃣', '3️⃣'][v.option - 1] || `${v.option}️⃣`;
+              return `${emoji} Option ${v.option}: ${v.name.slice(0, 32)}`;
+            });
+            pollOptions.push('4️⃣ Request Custom Changes');
+
+            await sendChoicePoll(sock, {
+              groupJid: jid,
+              allowedVoterJid: voterJid,
+              question: `Which design direction do you want to choose or iterate on?`,
+              options: pollOptions,
+              intent: 'choice_needed',
+              originalTask: rawBody,
+              context: 'portfolio_variant_selection',
+            });
+          } catch (pollErr) {
+            console.warn('[Dispatcher] Post-generation poll notice:', pollErr.message);
+          }
         } catch (err) {
           console.error('[StitchUIAgent] Portfolio Creation Error:', err);
           await sendReply(

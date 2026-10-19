@@ -87,49 +87,42 @@ async function runMultiAgentFlowTests() {
   assert.ok(ackMsg, 'Instant reassurance message ("working on it") must be sent');
   console.log(`✅ Instant reassurance sent: "${ackMsg.text}"`);
 
-  // 3. Verify WhatsApp poll was created
-  const vibePoll = sentPolls.find((p) => p.poll.name.toLowerCase().includes('vibe') || p.poll.name.toLowerCase().includes('aesthetic'));
-  assert.ok(vibePoll, 'WhatsApp poll for vibe/aesthetic must be sent');
-  assert.ok(vibePoll.poll.values.length >= 2, 'Poll must have selectable options');
-  console.log(`✅ WhatsApp Poll sent with question: "${vibePoll.poll.name}" and ${vibePoll.poll.values.length} options.`);
-
-  // 4. Verify conversational follow-up was asked
+  // 3. Verify conversational follow-up was asked immediately
   const followUpMsg = sentMessages.find((m) => m.text.includes('tell me a bit more about the product') || m.text.includes('main goal'));
   assert.ok(followUpMsg, 'Follow-up product questions must be sent');
   console.log(`✅ Product Discovery follow-up sent: "${followUpMsg.text.slice(0, 60)}..."`);
 
   // ==========================================
-  // Test 2: Poll Vote Resolution (Vibe Choice)
+  // Test 2: Post-Generation Poll Vote Resolution
   // ==========================================
-  console.log('\nTest 2: Resolving aesthetic poll vote...');
-  const chosenVibe = '3️⃣ Warm & Artisanal (Craft tones & serif)';
+  console.log('\nTest 2: Resolving post-generation variant selection poll vote...');
+  const chosenOption = '1️⃣ Option 1: Signature Showcase';
   const voteRes = {
-    chosenOption: chosenVibe,
+    chosenOption,
     pending: {
-      context: 'website_vibe_choice',
+      context: 'portfolio_variant_selection',
       originalTask: prompt,
     },
     voterJid: 'founder@s.whatsapp.net',
     groupJid: testJid,
   };
 
-  // Simulating the resolution from handleVoteResolution in bot.js
-  const cleanVibe = chosenVibe.replace(/^[0-9️⃣\s]+/, '').trim();
+  const cleanOption = chosenOption.replace(/^[0-9️⃣\s]+/, '').trim();
   const stateAfterVote = loadProjectsState();
   stateAfterVote.portfolioSessions = stateAfterVote.portfolioSessions || {};
   if (!stateAfterVote.portfolioSessions[testJid]) {
     stateAfterVote.portfolioSessions[testJid] = {};
   }
-  stateAfterVote.portfolioSessions[testJid].preferredVibe = cleanVibe;
+  stateAfterVote.portfolioSessions[testJid].activePhilosophy = '1';
   saveProjectsState(stateAfterVote);
 
   const updatedState = loadProjectsState();
   assert.strictEqual(
-    updatedState.portfolioSessions[testJid].preferredVibe,
-    cleanVibe,
-    'Preferred vibe must be recorded in session state'
+    updatedState.portfolioSessions[testJid].activePhilosophy,
+    '1',
+    'Active philosophy must be updated to 1 upon variant selection'
   );
-  console.log(`✅ Poll vote resolved and recorded vibe: "${cleanVibe}"`);
+  console.log(`✅ Post-generation poll vote resolved and activated option: "1"`);
 
   // ==========================================
   // Test 3: Conversational Product Discovery Response

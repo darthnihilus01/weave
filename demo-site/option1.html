@@ -3,11 +3,11 @@
 <html class="scroll-smooth" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Purrfect Match — Velvet Salon &amp; Whisker Society</title>
+<title>Aura &amp; Embers — Terroir Monograph &amp; Micro-Lot Cupping Compendium</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Public+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=Public+Sans:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -19,61 +19,73 @@
       theme: {
         extend: {
           colors: {
-            primary: "#9E4736",
-            "primary-container": "#F6DDD7",
-            "on-primary": "#FFFFFF",
-            "on-primary-container": "#4A180E",
-            surface: "#FAF7F2",
-            "surface-container": "#F4EFEA",
-            "surface-container-high": "#EDE5DC",
-            "on-surface": "#2D2622",
-            "on-surface-variant": "#786E67",
-            "outline-variant": "#DBCFC6",
-            accent: "#C59B27",
-            mahogany: "#6A281B"
+            parchment: "#F9F6F0",
+            "parchment-card": "#FAF7F2",
+            "parchment-deep": "#F2ECE2",
+            espresso: "#1C1714",
+            "espresso-light": "#38312B",
+            terracotta: "#9E472A",
+            "terracotta-tint": "#FAF0EC",
+            "terracotta-dark": "#7F3720",
+            hairline: "#E5DED4",
+            "hairline-dark": "#D8CFC3",
+            botanical: "#4F5D48",
+            "muted-clay": "#6B6258"
           },
           borderRadius: {
-            DEFAULT: "0.125rem",
-            lg: "0.25rem",
-            xl: "0.5rem",
-            full: "0.75rem"
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
           },
+          spacing: {},
           fontFamily: {
+            serif: ["Cormorant Garamond", "serif"],
             headline: ["Space Grotesk", "sans-serif"],
-            display: ["'Cormorant Garamond'", "serif"],
-            body: ["'Plus Jakarta Sans'", "sans-serif"],
-            label: ["'Public Sans'", "sans-serif"]
-          }
-        }
-      }
+            display: ["Space Grotesk", "sans-serif"],
+            body: ["DM Sans", "sans-serif"],
+            label: ["Public Sans", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
     }
   </script>
 <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
       vertical-align: middle;
+      line-height: 1;
     }
-    .material-symbols-fill {
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    .paper-texture {
+      background-color: #F9F6F0;
+      background-image: radial-gradient(#1C1714 0.45px, transparent 0.45px), radial-gradient(#9E472A 0.45px, #F9F6F0 0.45px);
+      background-size: 18px 18px;
+      background-position: 0 0, 9px 9px;
+      background-opacity: 0.03;
     }
-    .arched-portrait {
-      border-top-left-radius: 9rem;
-      border-top-right-radius: 9rem;
-      border-bottom-left-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
+    .wax-seal {
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.25), 0 4px 14px rgba(158, 71, 42, 0.28);
     }
-    .deckled-border {
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 12px 24px -4px rgba(115, 80, 60, 0.08);
-      border: 1px solid rgba(219, 207, 198, 0.6);
+    details summary::-webkit-details-marker {
+      display:none;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #D8CFC3;
+      border-radius: 2px;
     }
   </style>
 </head>
-<body class="bg-[#FAF7F2] text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary-container">
+<body class="bg-parchment text-espresso font-body antialiased selection:bg-terracotta selection:text-white">
 
 <div id="stitch-preview-bar" style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 99999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; font-size: 13px;">
   <div style="display: flex; align-items: center; gap: 8px;">
     <span style="background: #10b981; color: #000; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 10px; letter-spacing: 0.05em;">DESIGN PREVIEW</span>
-    <span style="color: #cbd5e1;">Viewing: <strong style="color: #fff;">Option 1: Purrfect Match - Velvet Salon & Whisker Society</strong></span>
+    <span style="color: #cbd5e1;">Viewing: <strong style="color: #fff;">Option 1: Aura & Embers — Terroir Monograph & Micro-Lot Cupping</strong></span>
   </div>
   <div style="display: flex; gap: 6px;">
     
@@ -82,609 +94,800 @@
       <a href="/option3.html" style="padding: 5px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 12px; transition: all 0.2s; background: rgba(255,255,255,0.1); color: #fff;">Option 3</a>
   </div>
 </div>
-<!-- TOP APP BAR -->
-<header class="bg-surface sticky top-0 z-50 transition-all duration-300 shadow-sm border-b border-outline-variant/30">
-<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-<!-- Brand & Cameo -->
-<a class="flex items-center gap-3 group" href="#">
-<div class="w-10 h-10 rounded-full border border-primary/30 p-0.5 flex items-center justify-center bg-surface-container shadow-inner">
-<div class="w-full h-full rounded-full border border-accent/40 flex items-center justify-center bg-[#F9F5F0]">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="pets">pets</span>
+<!-- TOP ANNOUNCEMENT BAR (Archival Note) -->
+<aside class="bg-espresso text-[#E8DFD3] text-[11px] tracking-widest font-label uppercase py-2 px-6 border-b border-hairline/20">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse"></span>
+<span>Solstice Dispatch Active: Lot 041 &amp; 042 Freshly Cupped at Farmgate</span>
+</div>
+<div class="hidden md:flex items-center gap-6 text-[10px] tracking-widest">
+<span>CO₂-Neutral Overland Postal Delivery</span>
+<span class="text-hairline/40">•</span>
+<span>Direct Agricultural Royalty: 340% Fair Trade Base</span>
 </div>
 </div>
-<div class="flex flex-col">
-<span class="font-headline text-2xl font-bold tracking-tight text-primary">Purrfect Match</span>
-<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant -mt-1 font-semibold">Velvet Salon &amp; Whisker Society</span>
-</div>
+</aside>
+<!-- TOP NAV BAR (Shared Component: TopNavBar with JSON Alignment) -->
+<header class="sticky top-0 z-50 bg-[#F9F6F0]/95 backdrop-blur-md border-b border-hairline">
+<div class="w-full max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+<!-- Brand Logo Anchor -->
+<a class="flex flex-col group" href="#">
+<span class="font-serif text-2xl md:text-3xl tracking-tight text-espresso font-normal group-hover:text-terracotta transition-colors duration-200">
+          Aura &amp; Embers
+        </span>
+<span class="font-label text-[9px] uppercase tracking-[0.28em] text-muted-clay">Terroir Roasters • Est. 2019</span>
 </a>
 <!-- Desktop Navigation Links -->
-<nav class="hidden md:flex items-center space-x-8">
-<a class="text-primary font-medium border-b border-primary pb-1 font-label text-sm tracking-wide transition-all" href="#dossiers">Curated Dossiers</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label text-sm tracking-wide" href="#salon">Salon Playdates</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label text-sm tracking-wide" href="#lineage">Lineage Registry</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label text-sm tracking-wide" href="#concierge">Request Presentation</a>
+<nav class="hidden lg:flex items-center space-x-8 text-xs font-label uppercase tracking-widest text-muted-clay">
+<a class="text-terracotta border-b-2 border-terracotta pb-1 font-semibold transition-colors duration-200" href="#hero">Terroir Ledger</a>
+<a class="hover:text-terracotta transition-colors duration-200" href="#ledger">Micro-Lots</a>
+<a class="hover:text-terracotta transition-colors duration-200" href="#ledger">Brew Archive</a>
+<a class="hover:text-terracotta transition-colors duration-200" href="#configurator">Dispatch Calendar</a>
+<a class="hover:text-terracotta transition-colors duration-200" href="#configurator">Subscriptions</a>
 </nav>
-<!-- Action Cluster -->
-<div class="flex items-center gap-4">
-<div class="hidden sm:flex items-center gap-2 border-r border-outline-variant/50 pr-4">
-<button aria-label="Notifications" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" title="Notifications">
-<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<!-- Right Utility Actions -->
+<div class="flex items-center space-x-5">
+<!-- Bookmark Icon -->
+<button aria-label="Bookmarked lots" class="text-espresso hover:text-terracotta transition-colors p-1 relative">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
 </button>
-<button aria-label="Favorites" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" title="Favorites">
-<span class="material-symbols-outlined text-xl" data-icon="favorite">favorite</span>
-</button>
-</div>
-<a class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-[#8C3A2A] text-on-primary font-label text-xs uppercase tracking-wider font-semibold rounded-full shadow-sm hover:shadow transition-all duration-300 border border-accent/30 active:scale-[0.99]" href="#concierge">
-<span>Society Membership</span>
-<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+<!-- Cart Action with Count Badge -->
+<a class="flex items-center space-x-2 text-xs font-label uppercase tracking-wider text-espresso hover:text-terracotta transition-colors py-1.5 px-3 border border-hairline rounded hover:border-terracotta" href="#configurator">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+<span class="font-medium">Cart</span>
+<span class="w-4 h-4 bg-terracotta text-white rounded-full text-[10px] flex items-center justify-center font-label">2</span>
 </a>
+<!-- Trailing Primary Action -->
+<a class="hidden sm:inline-flex bg-terracotta hover:bg-terracotta-dark text-white text-xs font-label uppercase tracking-widest px-4 py-2.5 rounded transition-all duration-200 shadow-sm" href="#configurator">
+          Acquire Allotment
+        </a>
 </div>
 </div>
 </header>
 <main>
-<!-- 1. HERO SECTION -->
-<section class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
-<!-- Ornate background accents -->
-<div class="absolute -top-40 right-0 w-96 h-96 bg-primary-container/20 rounded-full blur-3xl pointer-events-none"></div>
-<div class="absolute top-1/2 -left-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
-<div class="max-w-7xl mx-auto px-6 lg:px-12">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-<!-- Editorial Headline Column -->
-<div class="lg:col-span-7 space-y-8">
-<div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface-container border border-outline-variant/60">
-<span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-medium">Salon Season 1894 • Autumn Presentations</span>
+<!-- HERO SECTION (Split Archival Editorial) -->
+<section class="relative overflow-hidden border-b border-hairline pt-10 pb-16 lg:py-20 bg-parchment" id="hero">
+<!-- Faint botanical coordinates stamp in background -->
+<div class="absolute right-12 top-6 opacity-[0.035] pointer-events-none select-none font-serif text-[180px] leading-none text-espresso">
+        08
+      </div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Left Column: Editorial Monograph -->
+<div class="lg:col-span-7 flex flex-col items-start space-y-6">
+<!-- Archival lot label & Provenance Badge -->
+<div class="flex flex-wrap items-center gap-3">
+<span class="font-label text-xs uppercase tracking-[0.25em] text-terracotta font-semibold">
+              HARVEST DISPATCH // VOL. 08
+            </span>
+<span class="text-hairline-dark">•</span>
+<span class="inline-flex items-center text-xs font-label text-espresso bg-hairline/60 px-3 py-1 rounded border border-hairline font-normal tracking-wide">
+<span class="material-symbols-outlined text-terracotta text-sm mr-1.5">landscape</span>
+              Huila, Colombia • 2,150m • Natural Anaerobic
+            </span>
 </div>
-<h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] text-on-surface tracking-tight">
-              Curated <span class="italic font-normal text-primary">Courtship</span> for the <span class="italic font-normal text-primary">Distinguished</span> Feline
-            </h1>
-<p class="font-body text-lg text-on-surface-variant leading-relaxed max-w-2xl font-light">
-              Bespoke companionship matching, peer-vetted temperaments, and neutral salon playdates conducted under the highest standards of parlour etiquette.
-            </p>
-<div class="flex flex-wrap items-center gap-4 pt-2">
-<a class="px-8 py-3.5 rounded-full bg-primary hover:bg-[#8B3B2B] text-white font-label text-xs uppercase tracking-widest font-semibold transition-all shadow-md hover:shadow-lg border border-accent/40 active:scale-[0.98]" href="#dossiers">
-                Explore Dossiers
-              </a>
-<a class="px-8 py-3.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant font-label text-xs uppercase tracking-widest font-semibold transition-all active:scale-[0.98]" href="#salon">
-                Audition Your Feline
-              </a>
+<!-- Oversized High-Contrast Serif Headline -->
+<h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] font-normal leading-[1.08] text-espresso tracking-tight">
+            Rare Geisha &amp; Bourbon Micro-Lots, <em class="italic font-normal font-serif text-terracotta">Documented at Source</em>.
+          </h1>
+<!-- Poetic Editorial Paragraph -->
+<p class="font-body text-base lg:text-lg text-muted-clay max-w-2xl leading-relaxed font-light">
+            We operate as an open-folio cupping atelier. Each micro-lot is preserved through single-origin monastic roasting, calibrated to the altitude, soil minerality, and thermal drying cycle of high-altitude Andean and Rift Valley terroirs. Never blended; roasted exclusively to seasonal demand.
+          </p>
+<!-- Primary & Secondary CTA Group -->
+<div class="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+<a class="w-full sm:w-auto text-center bg-terracotta hover:bg-terracotta-dark text-white font-label text-xs uppercase tracking-widest px-8 py-4 rounded transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2" href="#ledger">
+<span>Acquire Lot No. 042</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+<a class="w-full sm:w-auto text-center border border-espresso text-espresso hover:bg-espresso hover:text-parchment font-label text-xs uppercase tracking-widest px-7 py-4 rounded transition-all duration-200 flex items-center justify-center gap-2" href="#methodology">
+<span class="material-symbols-outlined text-base">menu_book</span>
+<span>Read Farm Monograph</span>
+</a>
 </div>
-<!-- Society Endorsement Mini Bar -->
-<div class="pt-6 border-t border-outline-variant/40 flex items-center gap-6 text-on-surface-variant">
-<div class="flex -space-x-2">
-<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A refined British Shorthair cat in a vintage Victorian brass collar, high-key warm cream lighting, editorial catalog aesthetics with antique textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwsoBknpW4iY92nQi2wwSVU410oVGPGxF7d52XOFcof5IqVhI9qBNJ_UZrbxSkyyZGOtVL2MfRTZjLARdVH9oupoRqoFcDhBDH9blwWnAzz-D72kojt__rvSakhmj2EvVpemyBowDwzZ4jSv9vnKOLY0kYR3MgM4s3XfECkwiNI5W50sfCCxfjVE4p8NWOrbjOO_JZHdba_Afqgl3JCdQmsWn6zsKZU2t1plJInCCQE563aCNo3FfDulKxIre9b0c2zNmyLAkjHxxT"/>
+<!-- Quick Proof Metric Bar -->
+<div class="pt-6 border-t border-hairline w-full grid grid-cols-3 gap-4 text-left">
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay">Annual Yield</p>
+<p class="font-serif text-xl sm:text-2xl text-espresso font-medium mt-0.5">380 Kg</p>
 </div>
-<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="An aristocrat Persian cat with pure white silky coat, gentle expression, warm archival studio portrait lighting with muted cream velvet tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCKSdJ6N-rXQJiDutDHZqELSedf5_l2KDSwfNNsru1KfMBmDC7BJfNHTsrC2DKpUwQqu3fxrjVL0pX3xbPo2iealkfIICP5qqhEXL-6_1TS0Dm36hlQeOLA-MBjJfXLjPN-wZWNSiPgETnf9mAIMlJdAr33G2TxFmFYnKDGXnlDuSKRypdKS2bSxagHr8mWSvPzTxxL3MXysDJwfsAv1oqNtudsbKJsHnZklbwg80VFBAwEDEv2HXyVk8sgxR554Vr2_OE8S8eRo_f"/>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay">Farmgate Base</p>
+<p class="font-serif text-xl sm:text-2xl text-terracotta font-medium mt-0.5">$18.50 / lb</p>
 </div>
-<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A dignified Maine Coon feline in a soft warm salon setting, natural amber daylight, velvet salon whisker society monogram badge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_-A6NSLg5auUNBUy6GZZONc513kbH-64VHLZYCAKELFwnOfIz6YjvRx9XP-MDsI0HE7MacWVpFKeKDrgH2tOITxj-ejYYDcXOUiNBe7AjGgPJZs5fu31QDwaVY0RU1u2gYZwNEjSVF7e_O5ibV-tHBjfaqyleXuD8jjC_Y9VmgTov7pL_0FjPmQExRQ5cE4sSjjebPPfpHbJW8pxaDcSJ64YA9LwVkJDLt6E5uY-4oVpZOChYFCKJiISXNxG4GRzl6i5zTii8YeUg"/>
-</div>
-</div>
-<p class="font-label text-xs tracking-wide text-on-surface-variant">
-                Recommended by <strong class="text-on-surface font-semibold">412 Feline Houses</strong> across Kensington &amp; Mayfair
-              </p>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay">Rest Calibration</p>
+<p class="font-serif text-xl sm:text-2xl text-espresso font-medium mt-0.5">18 Days Degas</p>
 </div>
 </div>
-<!-- Calling Card Hero Mockup -->
+</div>
+<!-- Right Column: Framed Archival Botanical Card with Wax Seal -->
 <div class="lg:col-span-5 relative">
-<div class="relative bg-white deckled-border rounded-xl p-6 sm:p-8 max-w-md mx-auto shadow-xl">
-<!-- Corner Crest Stamp -->
-<div class="absolute top-4 right-4 flex flex-col items-center opacity-85">
-<div class="w-9 h-9 rounded-full border border-accent/60 flex items-center justify-center text-accent">
-<span class="material-symbols-outlined text-lg" data-icon="workspace_premium">workspace_premium</span>
+<div class="relative bg-parchment-card p-4 sm:p-5 border border-hairline shadow-lg rounded">
+<!-- Archival Header inside photograph frame -->
+<div class="flex justify-between items-center text-[10px] font-label uppercase tracking-widest text-muted-clay pb-3 border-b border-hairline/80 mb-3">
+<span>Folio No. 08-COL-2024</span>
+<span>Specimen: Coffea Arabica</span>
 </div>
-<span class="font-label text-[8px] uppercase tracking-wider text-accent mt-0.5">High-Tea Class</span>
-</div>
-<!-- Feline Arch Portrait -->
-<div class="relative mx-auto w-56 h-64 arched-portrait overflow-hidden p-1 bg-surface-container border border-accent/50 shadow-inner">
-<div class="w-full h-full arched-portrait overflow-hidden relative">
-<img class="w-full h-full object-cover" data-alt="Exquisite archival portrait of Sir Barnaby, an aristocratic Lilac and Cream pedigree British Shorthair feline sitting calmly upon a plush velvet ottoman, gentle sepia-warm natural salon lighting, high resolution editorial finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYQOjgxcaCNUzPozwowq3PNApxS9w1K_D6y2VB8j85M5i-W5UG-XZcw0SlVhUOajqY1IHj6ISgTyPbNjJQWT-gOdsUL73AxcnLAVOXgITLxxq0MmM-BUoi1DRY2CNlzsTBW_1zwMzMKoGEBXtJ060RsaYgJS1hnWlT-ZAIjOgzv4vsohRkIbyz7ciQNBARJm3amOnrUThGzDRdtHJdyrNn7ZMU0HFZetmwI0Oe6HWuSIRgudPWITqvcI_Iyolg0XoAkZWBe9qSvr0K"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-<div class="absolute bottom-2 left-0 right-0 text-center">
-<span class="bg-surface/90 text-primary text-[10px] font-label font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
-                      Debut Companion
-                    </span>
-</div>
-</div>
-</div>
-<!-- Dossier Details -->
-<div class="text-center mt-5 space-y-3">
-<div>
-<h3 class="font-display text-2xl font-bold text-on-surface">Sir Barnaby</h3>
-<p class="font-label text-xs text-on-surface-variant uppercase tracking-wider mt-0.5">Lilac &amp; Cream British Shorthair • 4 Years Old</p>
-</div>
-<!-- Temperament Badges -->
-<div class="flex flex-wrap justify-center gap-1.5 pt-1">
-<span class="px-2.5 py-1 rounded-full bg-[#FAF4EB] border border-[#E4D5B7] text-[#866219] font-label text-[11px] font-medium flex items-center gap-1">
-<span class="material-symbols-outlined text-xs" data-icon="chair">chair</span> Couch Diplomat
-                  </span>
-<span class="px-2.5 py-1 rounded-full bg-[#FAF4EB] border border-[#E4D5B7] text-[#866219] font-label text-[11px] font-medium flex items-center gap-1">
-<span class="material-symbols-outlined text-xs" data-icon="wb_sunny">wb_sunny</span> Sunbeam Connoisseur
-                  </span>
-<span class="px-2.5 py-1 rounded-full bg-[#FAF4EB] border border-[#E4D5B7] text-[#866219] font-label text-[11px] font-medium flex items-center gap-1">
-<span class="material-symbols-outlined text-xs" data-icon="restaurant">restaurant</span> Caviar Sceptic
-                  </span>
-</div>
-<!-- Pedigree Ledger -->
-<div class="bg-surface-container/60 rounded p-3 text-left border border-outline-variant/40 space-y-1.5 text-xs font-label">
-<div class="flex justify-between items-center text-on-surface-variant">
-<span>Lineage Archive:</span>
-<strong class="text-on-surface font-medium">House of Kensington</strong>
-</div>
-<div class="flex justify-between items-center text-on-surface-variant">
-<span>Disposition:</span>
-<strong class="text-on-surface font-medium">Contemplative &amp; Affectionate</strong>
-</div>
-<div class="flex justify-between items-center text-on-surface-variant">
-<span>Etiquette Rating:</span>
-<span class="text-accent flex items-center">
-<span class="material-symbols-outlined text-sm material-symbols-fill" data-icon="star">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill" data-icon="star">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill" data-icon="star">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill" data-icon="star">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill" data-icon="star">star</span>
-</span>
+<!-- Botanical Photography Frame -->
+<div class="relative aspect-[4/5] overflow-hidden rounded border border-hairline group">
+<img class="w-full h-full object-cover object-center filter saturate-[0.9] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Editorial warm documentary photograph of specialty coffee cherries ripening on high-altitude mountain branches in Huila Colombia. Soft natural morning light filters through misty volcanic slopes, highlighting emerald leaves and crimson cherries with warm parchment and deep terracotta undertones in a tactile fine-art aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeQPgIsK8N3S9PfY5X3voll9Llv_JDKcUo51_2oWnIkJcQFgJ7zLFwnNrTqDZ_hgTAXJ1sL3igZFv7ZQdK94aH6MEM64Onr6ry-YTPE-Ey0NnP9HwnK1HCbJSCQj1B8jNNb4Kb2R6T2Mj9VAkqICPt-SU141Hyay7AGXlxeLhrgMMRmJuDQ-G_Rg5Ay929A-j3u8yjHykZqA3AMvo5d_g5suu59VXwg_vKzrf6RZwKoDUqf2x6F8LcK98YXBK7yHKVXMMScnC0CA"/>
+<!-- Subtle vignette overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent pointer-events-none"></div>
+<!-- Overlaid Archival Circular Wax-Seal Terracotta Stamp -->
+<div class="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 z-20">
+<div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-terracotta text-[#FAF0EC] wax-seal border-2 border-[#82331B] flex flex-col items-center justify-center text-center p-2 transform rotate-12 transition-transform hover:rotate-0 duration-300">
+<span class="material-symbols-outlined text-sm sm:text-base leading-none">verified</span>
+<span class="font-serif text-lg sm:text-2xl font-bold leading-none tracking-tight mt-0.5">89.75</span>
+<span class="font-label text-[7px] sm:text-[8px] uppercase tracking-widest font-semibold mt-0.5">SCA Cupping</span>
+<span class="font-label text-[6px] tracking-tight uppercase opacity-80">Certified Specialty</span>
 </div>
 </div>
-<!-- Calling Card CTA -->
-<button class="w-full mt-3 py-3 rounded-full bg-primary hover:bg-[#8A3A2B] text-white font-label text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all shadow-sm">
-<span>Request Salon Introduction</span>
-<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
-</button>
+<!-- In-image label bottom -->
+<div class="absolute bottom-3 left-3 right-3 text-parchment text-xs font-serif italic">
+                “Hand-picked at 24° Brix density before 96-hour anaerobic yeast cherry ferment.”
+              </div>
+</div>
+<!-- Micro-details at the foot of the image card -->
+<div class="mt-4 pt-3 border-t border-hairline flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] font-label text-muted-clay gap-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-terracotta text-sm">person_outline</span>
+<span>Curator: Elena Varga</span>
+</div>
+<div class="flex items-center gap-3">
+<span>Moisture: <strong class="text-espresso font-medium">10.4%</strong></span>
+<span>•</span>
+<span>Water Activity: <strong class="text-espresso font-medium">0.58 aW</strong></span>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<!-- 2. ASYMMETRIC SOCIAL PROOF METRIC TICKER -->
-<section class="border-y border-outline-variant/60 bg-[#F4EFEA] py-10 relative">
+<!-- TERROIR LEDGER GRID (Curated Specimen Cards) -->
+<section class="py-20 lg:py-28 bg-[#FAF7F2] border-b border-hairline relative" id="ledger">
 <div class="max-w-7xl mx-auto px-6 lg:px-12">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-outline-variant/60">
-<!-- Metric 1 -->
-<div class="flex items-start gap-4 px-0 md:px-8 py-2 md:py-0">
-<div class="p-2.5 rounded-full bg-white text-primary border border-outline-variant/50 shadow-sm mt-1">
-<span class="material-symbols-outlined text-2xl" data-icon="verified">verified</span>
+<!-- Section Header with Editorial Framing -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-hairline gap-6">
+<div>
+<div class="flex items-center gap-2 text-terracotta font-label text-xs uppercase tracking-[0.2em] font-semibold mb-2">
+<span class="material-symbols-outlined text-sm">nature</span>
+<span>Seasonal Inventory Dossier</span>
+</div>
+<h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-espresso font-normal">
+              The Terroir Ledger
+            </h2>
+<p class="font-body text-muted-clay mt-2 text-sm sm:text-base max-w-xl">
+              Four curated specimen lots from the current solstice dispatch. Micro-roasted in 12-kilogram Probat batches to accentuate distinct elevation profiles.
+            </p>
+</div>
+<!-- Interactive Filter Chips -->
+<div class="flex flex-wrap gap-2 text-xs font-label">
+<button class="px-3.5 py-1.5 rounded border border-espresso bg-espresso text-parchment uppercase tracking-wider font-medium">
+              All Lots
+            </button>
+<button class="px-3.5 py-1.5 rounded border border-hairline bg-parchment text-muted-clay hover:border-terracotta hover:text-terracotta uppercase tracking-wider transition-colors">
+              Pink Bourbon
+            </button>
+<button class="px-3.5 py-1.5 rounded border border-hairline bg-parchment text-muted-clay hover:border-terracotta hover:text-terracotta uppercase tracking-wider transition-colors">
+              Washed Geisha
+            </button>
+<button class="px-3.5 py-1.5 rounded border border-hairline bg-parchment text-muted-clay hover:border-terracotta hover:text-terracotta uppercase tracking-wider transition-colors">
+              Anaerobic SL-28
+            </button>
+</div>
+</div>
+<!-- 4-Column Specimen Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Finca La Esperanza -->
+<article class="bg-parchment border border-hairline rounded p-5 flex flex-col justify-between hover:border-terracotta/70 transition-all duration-300 shadow-sm hover:shadow-md group">
+<div>
+<!-- Header tag & Price -->
+<div class="flex justify-between items-baseline pb-3 border-b border-hairline text-xs font-label">
+<span class="text-terracotta font-semibold tracking-wider">LOT 041</span>
+<span class="font-serif text-lg text-espresso font-medium">$34.00</span>
+</div>
+<!-- Title & Origin -->
+<div class="mt-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-muted-clay">Colombia • Valle del Cauca</span>
+<h3 class="font-serif text-2xl text-espresso font-medium mt-0.5 group-hover:text-terracotta transition-colors">
+                  Finca La Esperanza
+                </h3>
+</div>
+<!-- Specimen Specs Box -->
+<div class="mt-4 bg-parchment-deep/60 p-3 rounded text-[11px] font-label space-y-1.5 border border-hairline/60">
+<div class="flex justify-between">
+<span class="text-muted-clay">Producer:</span>
+<span class="text-espresso font-medium">Rigoberto Herrera</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Varietal:</span>
+<span class="text-espresso font-medium">Geisha (Washed)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Elevation:</span>
+<span class="text-espresso font-medium">1,950m</span>
+</div>
+<div class="flex justify-between text-[10px] text-muted-clay/80 pt-1 border-t border-hairline/50">
+<span>GPS: 03°58'N 76°18'W</span>
+<span>Harvest: Nov 2024</span>
+</div>
+</div>
+<!-- Sensory Flavor Spectrum Bar -->
+<div class="mt-5">
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay mb-1.5">Sensory Notes</p>
+<p class="font-serif italic text-sm text-espresso">Bergamot, Jasmine Flower, Candied Peach</p>
+<!-- Spectrum bars -->
+<div class="w-full grid grid-cols-3 gap-1 mt-2.5">
+<div>
+<div class="h-1 bg-terracotta rounded-full w-full"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Floral 40%</span>
 </div>
 <div>
-<div class="flex items-baseline gap-2">
-<span class="font-display text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">14,200+</span>
-<span class="font-label text-xs uppercase tracking-wider text-primary font-semibold">Registered</span>
-</div>
-<h4 class="font-headline text-base font-bold text-on-surface mt-0.5">Verified Courtesies</h4>
-<p class="font-body text-xs text-on-surface-variant mt-1 italic">
-                “Zero incidents of ungentlemanly conduct on salon records.”
-              </p>
-</div>
-</div>
-<!-- Metric 2 -->
-<div class="flex items-start gap-4 px-0 md:px-8 py-4 md:py-0">
-<div class="p-2.5 rounded-full bg-white text-accent border border-outline-variant/50 shadow-sm mt-1">
-<span class="material-symbols-outlined text-2xl" data-icon="music_note">music_note</span>
+<div class="h-1 bg-[#D18868] rounded-full w-[85%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Citrus 35%</span>
 </div>
 <div>
-<div class="flex items-baseline gap-2">
-<span class="font-display text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">98.4%</span>
-<span class="font-label text-xs uppercase tracking-wider text-accent font-semibold">Resonance</span>
-</div>
-<h4 class="font-headline text-base font-bold text-on-surface mt-0.5">Harmony Score</h4>
-<p class="font-body text-xs text-on-surface-variant mt-1">
-                Measured via acoustic purr resonance and shared loaf proximity.
-              </p>
+<div class="h-1 bg-[#E2BAA6] rounded-full w-[70%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Stonefruit 25%</span>
 </div>
 </div>
-<!-- Metric 3 -->
-<div class="flex items-start gap-4 px-0 md:px-8 py-4 md:py-0">
-<div class="p-2.5 rounded-full bg-white text-primary border border-outline-variant/50 shadow-sm mt-1">
-<span class="material-symbols-outlined text-2xl" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Collapsible Extraction Recipe Drawer -->
+<div class="mt-6 pt-4 border-t border-hairline">
+<details class="group/recipe">
+<summary class="flex items-center justify-between cursor-pointer list-none text-xs font-label uppercase tracking-wider text-espresso group-hover/recipe:text-terracotta">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+                    Extraction Recipe
+                  </span>
+<span class="material-symbols-outlined text-sm transition-transform group-open/recipe:rotate-180">expand_more</span>
+</summary>
+<div class="mt-3 bg-[#F2ECE2] p-3 rounded text-xs font-body space-y-2 border border-hairline">
+<div class="grid grid-cols-3 gap-1 text-[10px] font-label pb-2 border-b border-hairline">
+<div><span class="text-muted-clay block">METHOD</span>Chemex</div>
+<div><span class="text-muted-clay block">TEMP</span>93°C</div>
+<div><span class="text-muted-clay block">RATIO</span>1:16.5</div>
+</div>
+<p class="text-[11px] text-muted-clay"><strong class="text-espresso">Grind:</strong> 450µm Medium-Coarse</p>
+<ol class="text-[11px] text-espresso-light space-y-1 list-decimal list-inside font-label">
+<li><strong class="font-medium">0:00</strong> — Bloom 50g water (40s)</li>
+<li><strong class="font-medium">0:45</strong> — Slow spiral to 180g</li>
+<li><strong class="font-medium">1:45</strong> — Center pour to 300g total</li>
+</ol>
+</div>
+</details>
+<button class="w-full mt-3 bg-espresso hover:bg-terracotta text-white font-label text-xs uppercase tracking-widest py-2 rounded transition-colors duration-200">
+                Acquire Lot 041
+              </button>
+</div>
+</article>
+<!-- Card 2: El Paraiso Reserve -->
+<article class="bg-parchment border border-hairline rounded p-5 flex flex-col justify-between hover:border-terracotta/70 transition-all duration-300 shadow-sm hover:shadow-md group">
+<div>
+<!-- Header tag & Price -->
+<div class="flex justify-between items-baseline pb-3 border-b border-hairline text-xs font-label">
+<span class="text-terracotta font-semibold tracking-wider">LOT 042</span>
+<span class="font-serif text-lg text-espresso font-medium">$38.00</span>
+</div>
+<!-- Title & Origin -->
+<div class="mt-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-muted-clay">Colombia • Cauca Valley</span>
+<h3 class="font-serif text-2xl text-espresso font-medium mt-0.5 group-hover:text-terracotta transition-colors">
+                  El Paraiso Reserve
+                </h3>
+</div>
+<!-- Specimen Specs Box -->
+<div class="mt-4 bg-parchment-deep/60 p-3 rounded text-[11px] font-label space-y-1.5 border border-hairline/60">
+<div class="flex justify-between">
+<span class="text-muted-clay">Producer:</span>
+<span class="text-espresso font-medium">Diego Bermudez</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Varietal:</span>
+<span class="text-espresso font-medium">Castillo Thermal Shock</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Elevation:</span>
+<span class="text-espresso font-medium">2,050m</span>
+</div>
+<div class="flex justify-between text-[10px] text-muted-clay/80 pt-1 border-t border-hairline/50">
+<span>GPS: 02°26'N 76°36'W</span>
+<span>Harvest: Dec 2024</span>
+</div>
+</div>
+<!-- Sensory Flavor Spectrum Bar -->
+<div class="mt-5">
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay mb-1.5">Sensory Notes</p>
+<p class="font-serif italic text-sm text-espresso">Wild Strawberry, Guava Jam, Rose Water</p>
+<div class="w-full grid grid-cols-3 gap-1 mt-2.5">
+<div>
+<div class="h-1 bg-terracotta rounded-full w-full"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Red Berry 45%</span>
 </div>
 <div>
-<div class="flex items-baseline gap-2">
-<span class="font-display text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">100%</span>
-<span class="font-label text-xs uppercase tracking-wider text-primary font-semibold">Civility</span>
+<div class="h-1 bg-[#D18868] rounded-full w-[90%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Tropical 35%</span>
 </div>
-<h4 class="font-headline text-base font-bold text-on-surface mt-0.5">Zero Hiss Guarantee</h4>
-<p class="font-body text-xs text-on-surface-variant mt-1">
-                Complimentary neutral chaperone separation and catnip soothing.
+<div>
+<div class="h-1 bg-[#E2BAA6] rounded-full w-[60%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Floral 20%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsible Extraction Recipe Drawer -->
+<div class="mt-6 pt-4 border-t border-hairline">
+<details class="group/recipe">
+<summary class="flex items-center justify-between cursor-pointer list-none text-xs font-label uppercase tracking-wider text-espresso group-hover/recipe:text-terracotta">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+                    Extraction Recipe
+                  </span>
+<span class="material-symbols-outlined text-sm transition-transform group-open/recipe:rotate-180">expand_more</span>
+</summary>
+<div class="mt-3 bg-[#F2ECE2] p-3 rounded text-xs font-body space-y-2 border border-hairline">
+<div class="grid grid-cols-3 gap-1 text-[10px] font-label pb-2 border-b border-hairline">
+<div><span class="text-muted-clay block">METHOD</span>Hario V60</div>
+<div><span class="text-muted-clay block">TEMP</span>92°C</div>
+<div><span class="text-muted-clay block">RATIO</span>1:16.0</div>
+</div>
+<p class="text-[11px] text-muted-clay"><strong class="text-espresso">Grind:</strong> 380µm Medium-Fine</p>
+<ol class="text-[11px] text-espresso-light space-y-1 list-decimal list-inside font-label">
+<li><strong class="font-medium">0:00</strong> — 45g Bloom with gentle agitation</li>
+<li><strong class="font-medium">0:40</strong> — First pulse to 150g</li>
+<li><strong class="font-medium">1:20</strong> — Second pulse to 240g drain</li>
+</ol>
+</div>
+</details>
+<button class="w-full mt-3 bg-terracotta hover:bg-terracotta-dark text-white font-label text-xs uppercase tracking-widest py-2 rounded transition-colors duration-200">
+                Acquire Lot 042
+              </button>
+</div>
+</article>
+<!-- Card 3: Kamwangi Station -->
+<article class="bg-parchment border border-hairline rounded p-5 flex flex-col justify-between hover:border-terracotta/70 transition-all duration-300 shadow-sm hover:shadow-md group">
+<div>
+<!-- Header tag & Price -->
+<div class="flex justify-between items-baseline pb-3 border-b border-hairline text-xs font-label">
+<span class="text-terracotta font-semibold tracking-wider">LOT 043</span>
+<span class="font-serif text-lg text-espresso font-medium">$31.00</span>
+</div>
+<!-- Title & Origin -->
+<div class="mt-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-muted-clay">Kenya • Kirinyaga Slopes</span>
+<h3 class="font-serif text-2xl text-espresso font-medium mt-0.5 group-hover:text-terracotta transition-colors">
+                  Kamwangi Station
+                </h3>
+</div>
+<!-- Specimen Specs Box -->
+<div class="mt-4 bg-parchment-deep/60 p-3 rounded text-[11px] font-label space-y-1.5 border border-hairline/60">
+<div class="flex justify-between">
+<span class="text-muted-clay">Cooperative:</span>
+<span class="text-espresso font-medium">Kainamui Farmers</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Varietal:</span>
+<span class="text-espresso font-medium">SL-28 &amp; SL-34 Washed</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Elevation:</span>
+<span class="text-espresso font-medium">1,800m</span>
+</div>
+<div class="flex justify-between text-[10px] text-muted-clay/80 pt-1 border-t border-hairline/50">
+<span>GPS: 00°29'S 37°12'E</span>
+<span>Harvest: Jan 2025</span>
+</div>
+</div>
+<!-- Sensory Flavor Spectrum Bar -->
+<div class="mt-5">
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay mb-1.5">Sensory Notes</p>
+<p class="font-serif italic text-sm text-espresso">Blackcurrant, Ruby Grapefruit, Cane Sugar</p>
+<div class="w-full grid grid-cols-3 gap-1 mt-2.5">
+<div>
+<div class="h-1 bg-terracotta rounded-full w-full"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Dark Fruit 50%</span>
+</div>
+<div>
+<div class="h-1 bg-[#D18868] rounded-full w-[80%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Tart Citrus 30%</span>
+</div>
+<div>
+<div class="h-1 bg-[#E2BAA6] rounded-full w-[65%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Caramel 20%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsible Extraction Recipe Drawer -->
+<div class="mt-6 pt-4 border-t border-hairline">
+<details class="group/recipe">
+<summary class="flex items-center justify-between cursor-pointer list-none text-xs font-label uppercase tracking-wider text-espresso group-hover/recipe:text-terracotta">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+                    Extraction Recipe
+                  </span>
+<span class="material-symbols-outlined text-sm transition-transform group-open/recipe:rotate-180">expand_more</span>
+</summary>
+<div class="mt-3 bg-[#F2ECE2] p-3 rounded text-xs font-body space-y-2 border border-hairline">
+<div class="grid grid-cols-3 gap-1 text-[10px] font-label pb-2 border-b border-hairline">
+<div><span class="text-muted-clay block">METHOD</span>AeroPress</div>
+<div><span class="text-muted-clay block">TEMP</span>94°C</div>
+<div><span class="text-muted-clay block">RATIO</span>1:14.0</div>
+</div>
+<p class="text-[11px] text-muted-clay"><strong class="text-espresso">Grind:</strong> 350µm Inverted Style</p>
+<ol class="text-[11px] text-espresso-light space-y-1 list-decimal list-inside font-label">
+<li><strong class="font-medium">0:00</strong> — 200g water fast pour</li>
+<li><strong class="font-medium">0:30</strong> — 4 paddle stirs &amp; cap lock</li>
+<li><strong class="font-medium">1:30</strong> — Invert and press 30s</li>
+</ol>
+</div>
+</details>
+<button class="w-full mt-3 bg-espresso hover:bg-terracotta text-white font-label text-xs uppercase tracking-widest py-2 rounded transition-colors duration-200">
+                Acquire Lot 043
+              </button>
+</div>
+</article>
+<!-- Card 4: Hacienda La Papaya -->
+<article class="bg-parchment border border-hairline rounded p-5 flex flex-col justify-between hover:border-terracotta/70 transition-all duration-300 shadow-sm hover:shadow-md group">
+<div>
+<!-- Header tag & Price -->
+<div class="flex justify-between items-baseline pb-3 border-b border-hairline text-xs font-label">
+<span class="text-terracotta font-semibold tracking-wider">LOT 044</span>
+<span class="font-serif text-lg text-espresso font-medium">$36.00</span>
+</div>
+<!-- Title & Origin -->
+<div class="mt-4">
+<span class="text-[10px] font-label uppercase tracking-widest text-muted-clay">Ecuador • Saraguro Region</span>
+<h3 class="font-serif text-2xl text-espresso font-medium mt-0.5 group-hover:text-terracotta transition-colors">
+                  Hacienda La Papaya
+                </h3>
+</div>
+<!-- Specimen Specs Box -->
+<div class="mt-4 bg-parchment-deep/60 p-3 rounded text-[11px] font-label space-y-1.5 border border-hairline/60">
+<div class="flex justify-between">
+<span class="text-muted-clay">Producer:</span>
+<span class="text-espresso font-medium">Juan Peña</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Varietal:</span>
+<span class="text-espresso font-medium">Typica Mejorado</span>
+</div>
+<div class="flex justify-between">
+<span class="text-muted-clay">Elevation:</span>
+<span class="text-espresso font-medium">2,100m</span>
+</div>
+<div class="flex justify-between text-[10px] text-muted-clay/80 pt-1 border-t border-hairline/50">
+<span>GPS: 03°21'S 79°01'W</span>
+<span>Harvest: Oct 2024</span>
+</div>
+</div>
+<!-- Sensory Flavor Spectrum Bar -->
+<div class="mt-5">
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay mb-1.5">Sensory Notes</p>
+<p class="font-serif italic text-sm text-espresso">Meyer Lemon, Apricot, Raw Honey</p>
+<div class="w-full grid grid-cols-3 gap-1 mt-2.5">
+<div>
+<div class="h-1 bg-terracotta rounded-full w-full"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Bright Acid 40%</span>
+</div>
+<div>
+<div class="h-1 bg-[#D18868] rounded-full w-[85%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Stone Fruit 35%</span>
+</div>
+<div>
+<div class="h-1 bg-[#E2BAA6] rounded-full w-[75%]"></div>
+<span class="text-[9px] font-label text-muted-clay block mt-1">Honeyed 25%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsible Extraction Recipe Drawer -->
+<div class="mt-6 pt-4 border-t border-hairline">
+<details class="group/recipe">
+<summary class="flex items-center justify-between cursor-pointer list-none text-xs font-label uppercase tracking-wider text-espresso group-hover/recipe:text-terracotta">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+                    Extraction Recipe
+                  </span>
+<span class="material-symbols-outlined text-sm transition-transform group-open/recipe:rotate-180">expand_more</span>
+</summary>
+<div class="mt-3 bg-[#F2ECE2] p-3 rounded text-xs font-body space-y-2 border border-hairline">
+<div class="grid grid-cols-3 gap-1 text-[10px] font-label pb-2 border-b border-hairline">
+<div><span class="text-muted-clay block">METHOD</span>Kalita Wave</div>
+<div><span class="text-muted-clay block">TEMP</span>93°C</div>
+<div><span class="text-muted-clay block">RATIO</span>1:15.5</div>
+</div>
+<p class="text-[11px] text-muted-clay"><strong class="text-espresso">Grind:</strong> 420µm Flat Bed Medium</p>
+<ol class="text-[11px] text-espresso-light space-y-1 list-decimal list-inside font-label">
+<li><strong class="font-medium">0:00</strong> — 50g bloom rinse</li>
+<li><strong class="font-medium">0:45</strong> — Slow center circle to 170g</li>
+<li><strong class="font-medium">1:30</strong> — Final fill to 310g gently</li>
+</ol>
+</div>
+</details>
+<button class="w-full mt-3 bg-espresso hover:bg-terracotta text-white font-label text-xs uppercase tracking-widest py-2 rounded transition-colors duration-200">
+                Acquire Lot 044
+              </button>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- ROAST METHODOLOGY & ELEVATION MONOGRAPH (Editorial Bento Section) -->
+<section class="py-20 lg:py-28 bg-parchment border-b border-hairline" id="methodology">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+<!-- Bento Left: Botanical Line Art & Altitude Philosophy -->
+<div class="lg:col-span-7 bg-[#F4EFE6] border border-hairline rounded p-8 sm:p-12 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-terracotta font-medium mb-3">
+<span class="material-symbols-outlined text-base">dew_point</span>
+<span>Thermal Kinetic Craft</span>
+</div>
+<h2 class="font-serif text-3xl sm:text-4xl text-espresso font-normal leading-snug">
+                “We do not imprint dark roast bitterness onto fragile botanical genetics.”
+              </h2>
+<p class="font-body text-muted-clay mt-6 leading-relaxed text-sm sm:text-base">
+                Each bean arriving at our roast atelier contains a compressed narrative of altitude, volcanic rainfall, and human stewardship. Our roasting curves use gentle infrared conductive heat transfers to ensure core sugars caramelize without scorching cellular walls, preserving volatile aromatic esters.
               </p>
+<!-- Curatorial Botanical Elevation Chart -->
+<div class="mt-8 pt-6 border-t border-hairline space-y-3">
+<div class="flex justify-between text-xs font-label text-espresso">
+<span class="font-medium">Sub-Alpine Andean Belt (2,000m – 2,250m)</span>
+<span class="text-terracotta font-medium">Dense Hard Bean (SHB)</span>
+</div>
+<div class="w-full bg-hairline h-1.5 rounded-full overflow-hidden">
+<div class="bg-terracotta h-full w-[92%] rounded-full"></div>
+</div>
+<p class="text-[11px] font-label text-muted-clay">Slow cellular maturation yields dense phosphoric brightness and concentrated sucrose chains.</p>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-hairline flex items-center justify-between text-xs font-label text-muted-clay">
+<span>Refractometer Batch Verification: 1.38% TDS Yield</span>
+<span class="text-espresso font-medium">Borchardt &amp; Varga Protocol</span>
+</div>
+</div>
+<!-- Bento Right: Monograph Editorial Image Card -->
+<div class="lg:col-span-5 bg-parchment-card border border-hairline rounded p-6 sm:p-8 flex flex-col justify-between">
+<div>
+<div class="aspect-[4/3] rounded overflow-hidden border border-hairline relative mb-6">
+<img class="w-full h-full object-cover filter contrast-[1.05]" data-alt="Close up archival still life of artisan cupping bowls filled with rich golden-amber coffee liquor, alongside stainless steel cupping spoons and brass weight scales on a weathered unbleached wooden workbench in a minimalist Japanese-inspired coffee laboratory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM_q_OmSzIPraatcUnFehkM1PfIhAH6kL6w2kGoksis2BX3b0o32zFds9LrBJieST2tHbJUEsKUXDJWiChIXLBoM-NIIbBRiiRPOAsiV7g1ZkONb68sVE0AoD1ZqvN36jhpq77iW5DuqVOSDjnH0nw2V8i72VyNVIxsgkxazv7FO6ADuxya38-2dYUqLDQp0V4qO0T4Gp0Y8konMmVzubVW8vr-PvKkqfsncr9dk_VISUtDADMGgxU9XSPlfZNutP5INAqzRGG5w"/>
+<span class="absolute top-3 left-3 bg-espresso/80 text-parchment text-[9px] font-label uppercase tracking-widest px-2.5 py-1 rounded backdrop-blur-sm">
+                  Lab Protocol // 04
+                </span>
+</div>
+<h3 class="font-serif text-2xl text-espresso font-normal">
+                Open Cupping Standards
+              </h3>
+<p class="font-body text-xs sm:text-sm text-muted-clay mt-2.5 leading-relaxed">
+                Before any harvest lot is cleared for dispatch, it undergoes three sequential blind cuppings over a 14-day degassing rest period to chart its acidity decline and aromatics peak.
+              </p>
+</div>
+<div class="pt-6 border-t border-hairline mt-6 flex items-center justify-between">
+<span class="font-serif italic text-espresso text-sm">Download Lab Cupping Monograph (.PDF)</span>
+<span class="material-symbols-outlined text-espresso hover:text-terracotta cursor-pointer transition-colors">download</span>
 </div>
 </div>
 </div>
 </div>
 </section>
-<!-- 3. ARCHIVAL ART PRINTS GALLERY ('Prospective Companions') -->
-<section class="py-20 lg:py-28 bg-[#FAF7F2]" id="dossiers">
-<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<!-- ROAST SUBSCRIPTION CONFIGURATOR -->
+<section class="py-20 lg:py-28 bg-[#F4EFE6] border-b border-hairline relative" id="configurator">
+<div class="max-w-5xl mx-auto px-6 lg:px-12">
 <!-- Section Header -->
-<div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
-<div class="inline-flex items-center justify-center space-x-3 text-accent">
-<span class="w-12 h-[1px] bg-accent/60"></span>
-<span class="material-symbols-outlined text-sm" data-icon="diamond">diamond</span>
-<span class="w-12 h-[1px] bg-accent/60"></span>
+<div class="text-center max-w-2xl mx-auto mb-12">
+<div class="inline-flex items-center gap-1.5 text-terracotta text-xs font-label uppercase tracking-widest font-semibold mb-2">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span>Archival Allotment Service</span>
 </div>
-<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-on-surface">
-            The Society Registry — Selected Season Debuts
+<h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-espresso font-normal">
+            Solstice Subscription Configurator
           </h2>
-<p class="font-body text-base text-on-surface-variant max-w-xl mx-auto font-light">
-            Each prospect is verified for genealogical rectitude, salon poise, and conversational whiskers. Calling cards are renewed bi-monthly.
+<p class="font-body text-muted-clay mt-3 text-sm sm:text-base">
+            Secure priority reservation on micro-lots roasted in numbered batches. Cancel, pause, or alter bean curation at your discretion.
           </p>
 </div>
-<!-- 3-Column Archival Print Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Card 1: Lady Genevieve -->
-<article class="bg-white deckled-border rounded-lg p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group">
-<div class="space-y-4">
-<div class="relative w-full h-72 rounded bg-surface-container overflow-hidden border border-outline-variant/40">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Lady Genevieve, an exquisite Ragdoll Marquise cat with deep sapphire blue eyes and pristine cream and seal point fur resting on an antique French velvet ottoman, soft warm daylight editorial photograph." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQmUWwjP89557M8RcjX4gPxPQ7RpdHwt2ejVOVkPvMyAQxj18OpNwYzE9PG2CLMGGhi1XsMemeWmo737M7ctguQFpdT5e_pwCnvAk9EZLf2lA_rxhZ2-3a0755F3RX2Zpbx_AE3YrauaOIDDt5m-sfl5kB7CKvg9YgzkKb6M1MwapXsi07VteTA41qEV5I2pn-DYhKV_bnlOHh8W9ocCTwtIwgFBH1z8H9k1-QLJnNDEkHAftCNuF9WOEgaUBCUlVoKSrvJuF5VA_q"/>
-<div class="absolute top-3 left-3 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-label font-bold uppercase tracking-widest text-primary border border-outline-variant">
-                  Dossier #084
-                </div>
-<div class="absolute bottom-3 right-3 bg-on-surface/80 backdrop-blur-sm px-2.5 py-0.5 rounded text-[11px] font-label text-white">
-                  48hr Acclimation
-                </div>
-</div>
+<!-- The Interactive Configurator Box -->
+<div class="bg-parchment border border-hairline rounded shadow-lg p-6 sm:p-10 lg:p-12">
+<div class="space-y-8">
+<!-- Step 1: Roast Calibration Profile Toggle -->
 <div>
-<div class="flex justify-between items-baseline">
-<h3 class="font-display text-2xl font-bold text-on-surface">Lady Genevieve</h3>
-<span class="text-xs font-label text-accent font-semibold">Marquise</span>
-</div>
-<p class="text-xs font-label text-on-surface-variant uppercase tracking-wider mt-0.5">Blue Bicolor Ragdoll • 3 Years Old</p>
-</div>
-<!-- Personality Traits -->
-<div class="space-y-2 pt-2 border-t border-outline-variant/40 text-xs font-label">
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Salon Affinity:</span>
-<span class="text-on-surface font-medium">French Velvet Ottomans</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Dietary Leaning:</span>
-<span class="text-on-surface font-medium">Organic Quail Broth</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Loaf Posture:</span>
-<span class="text-on-surface font-medium">Tucked Paws Symmetry</span>
-</div>
-</div>
-<div class="flex flex-wrap gap-1.5 pt-1">
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Graceful</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Quiet Melodist</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Loves Silk Feathers</span>
-</div>
-</div>
-<div class="pt-6 mt-6 border-t border-outline-variant/40 flex items-center justify-between">
-<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Lineage: De Valois</span>
-<a class="inline-flex items-center gap-1.5 text-primary hover:text-mahogany font-label text-xs uppercase tracking-wider font-bold" href="#salon">
-<span>Examine Dossier</span>
-<span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
-</a>
-</div>
-</article>
-<!-- Card 2: Baron von Fluffington -->
-<article class="bg-white deckled-border rounded-lg p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group">
-<div class="space-y-4">
-<div class="relative w-full h-72 rounded bg-surface-container overflow-hidden border border-outline-variant/40">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Baron von Fluffington, a grand Siberian Forest Count cat with dense silver tabby mane and piercing hazel eyes seated before a stately stone fireplace in a rustic country estate, natural warm rim lighting, aristocratic feline lookbook." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOIIM8EDdsLLv9lg-qXqdCwF-cVKbNwhSpGKZDtj9ub1EM5DnWZq2RFt7sv9e4QWqmwgPlGc9Fz4C_veHrnvHBhsm-luhda_e29_B-PqhtfWf3GNG4m5GukvhleBO7pWtWu1C9mDD0iRrtX8N-0ZQpeJdSxhF91TVTaZTdaATW-wtJszr0hbuTJieALO9JfwPbcGVNpBUJ921Z-75TgGP0XYoCkc1ge4dGxzSZ5SSrAvK5f8rLIzQoC1ivmFkJYtDUIE9g7bCSvye6"/>
-<div class="absolute top-3 left-3 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-label font-bold uppercase tracking-widest text-primary border border-outline-variant">
-                  Dossier #092
-                </div>
-<div class="absolute bottom-3 right-3 bg-on-surface/80 backdrop-blur-sm px-2.5 py-0.5 rounded text-[11px] font-label text-white">
-                  72hr Acclimation
-                </div>
-</div>
-<div>
-<div class="flex justify-between items-baseline">
-<h3 class="font-display text-2xl font-bold text-on-surface">Baron von Fluffington</h3>
-<span class="text-xs font-label text-accent font-semibold">Count</span>
-</div>
-<p class="text-xs font-label text-on-surface-variant uppercase tracking-wider mt-0.5">Siberian Forest Noble • 5 Years Old</p>
-</div>
-<!-- Personality Traits -->
-<div class="space-y-2 pt-2 border-t border-outline-variant/40 text-xs font-label">
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Salon Affinity:</span>
-<span class="text-on-surface font-medium">High Hearth Perches</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Dietary Leaning:</span>
-<span class="text-on-surface font-medium">Freeze-Dried Salmon Caviar</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Loaf Posture:</span>
-<span class="text-on-surface font-medium">Sphinx Vigilant Style</span>
-</div>
-</div>
-<div class="flex flex-wrap gap-1.5 pt-1">
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Aristocratic</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Baritone Purr</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Birdwatcher</span>
-</div>
-</div>
-<div class="pt-6 mt-6 border-t border-outline-variant/40 flex items-center justify-between">
-<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Lineage: Romanov-Hearth</span>
-<a class="inline-flex items-center gap-1.5 text-primary hover:text-mahogany font-label text-xs uppercase tracking-wider font-bold" href="#salon">
-<span>Examine Dossier</span>
-<span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
-</a>
-</div>
-</article>
-<!-- Card 3: Duchess Mirabelle -->
-<article class="bg-white deckled-border rounded-lg p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group">
-<div class="space-y-4">
-<div class="relative w-full h-72 rounded bg-surface-container overflow-hidden border border-outline-variant/40">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Duchess Mirabelle, an adorable Scottish Fold Heiress cat with folded ears, golden eyes and soft ginger coat curled gracefully upon pure cashmere fabric in an editorial Parisian parlour, soft vintage grain, high aesthetic detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8jxLC-xU6O0g9dA2JIN2R3WgodQS9DEfa8-HMFAhuwibxGJa71CUDlAbsqQI0nRt4OctqHqTHLRnpf2HFUExlsFg34h8niR-FRPtMGb-x4AYbtuzn389zlcBjgXLAbrGgrNUog3KPJPsEarqbJMzsEcm51flREx_A7TPWiLeIfcVwGCPIPbJ-KUgRt-DfkNLAS-jPDUcEVeaqj3m4zf6BaJeC7sDOpxeNZXhNswG6owzXEGwf4LgqBzIdZlKPecO82e-oCwW6gGBL"/>
-<div class="absolute top-3 left-3 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-label font-bold uppercase tracking-widest text-primary border border-outline-variant">
-                  Dossier #104
-                </div>
-<div class="absolute bottom-3 right-3 bg-on-surface/80 backdrop-blur-sm px-2.5 py-0.5 rounded text-[11px] font-label text-white">
-                  24hr Rapid Courtship
-                </div>
-</div>
-<div>
-<div class="flex justify-between items-baseline">
-<h3 class="font-display text-2xl font-bold text-on-surface">Duchess Mirabelle</h3>
-<span class="text-xs font-label text-accent font-semibold">Heiress</span>
-</div>
-<p class="text-xs font-label text-on-surface-variant uppercase tracking-wider mt-0.5">Scottish Fold • 2 Years Old</p>
-</div>
-<!-- Personality Traits -->
-<div class="space-y-2 pt-2 border-t border-outline-variant/40 text-xs font-label">
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Salon Affinity:</span>
-<span class="text-on-surface font-medium">Cashmere Throws</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Dietary Leaning:</span>
-<span class="text-on-surface font-medium">Warm Bone Broth Infusion</span>
-</div>
-<div class="flex items-center text-on-surface-variant">
-<span class="w-24 text-on-surface-variant/80">Loaf Posture:</span>
-<span class="text-on-surface font-medium">Crescent Curled Ball</span>
-</div>
-</div>
-<div class="flex flex-wrap gap-1.5 pt-1">
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Tender Hearted</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Gentle Headbutt</span>
-<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-label">Kittenish Poise</span>
-</div>
-</div>
-<div class="pt-6 mt-6 border-t border-outline-variant/40 flex items-center justify-between">
-<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Lineage: Balmoral Fold</span>
-<a class="inline-flex items-center gap-1.5 text-primary hover:text-mahogany font-label text-xs uppercase tracking-wider font-bold" href="#salon">
-<span>Examine Dossier</span>
-<span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
-</a>
-</div>
-</article>
-</div>
-<!-- Registry Footer Callout -->
-<div class="mt-14 p-6 bg-surface-container rounded border border-outline-variant/60 flex flex-col sm:flex-row items-center justify-between gap-4">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-accent text-2xl" data-icon="menu_book">menu_book</span>
-<p class="font-label text-sm text-on-surface">
-              Seeking specific coat colourations or nocturnal sleep routines? Access the <span class="font-bold">Full 1894 Society Lineage Archives</span>.
-            </p>
-</div>
-<button class="px-6 py-2.5 rounded bg-white hover:bg-surface border border-outline-variant text-on-surface font-label text-xs uppercase tracking-wider font-semibold whitespace-nowrap shadow-sm transition-all">
-            Unlock Full Registry (160+ Felines)
-          </button>
-</div>
-</div>
-</section>
-<!-- 4. NEUTRAL TERRITORY SALON CONCIERGE BOOKING INTERFACE -->
-<section class="py-20 bg-surface-container border-y border-outline-variant/50 relative" id="salon">
-<div class="max-w-7xl mx-auto px-6 lg:px-12">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-<!-- Booking Left Manifesto -->
-<div class="lg:col-span-5 space-y-6">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-white border border-outline-variant text-primary font-label text-xs uppercase tracking-widest font-semibold">
-<span class="material-symbols-outlined text-sm" data-icon="table_restaurant">table_restaurant</span>
-              Parlour Etiquette &amp; Neutrality
-            </div>
-<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-on-surface leading-tight">
-              Neutral Territory <br/><span class="italic font-normal text-primary">Salon Concierge</span>
-</h2>
-<p class="font-body text-base text-on-surface-variant leading-relaxed font-light">
-              Feline temperaments require diplomacy. Our salons are completely neutral territories, purified of ambient domestic scents, fitted with acoustic dampening velvet curtains, and overseen by certified Society Chaperones.
-            </p>
-<div class="space-y-4 pt-2">
-<div class="flex items-start gap-3">
-<span class="material-symbols-outlined text-accent text-xl mt-0.5" data-icon="done">done</span>
-<div>
-<h4 class="font-headline text-sm font-bold text-on-surface">Bilateral Safety Protocol</h4>
-<p class="text-xs text-on-surface-variant font-light">Independent retreat tunnels if one party requires solitary composure.</p>
-</div>
-</div>
-<div class="flex items-start gap-3">
-<span class="material-symbols-outlined text-accent text-xl mt-0.5" data-icon="done">done</span>
-<div>
-<h4 class="font-headline text-sm font-bold text-on-surface">Sommelier Refreshment Service</h4>
-<p class="text-xs text-on-surface-variant font-light">Custom infusion of Japanese silvervine, French catnip, or fresh broth pairings.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Interactive Booking Console Box -->
-<div class="lg:col-span-7">
-<div class="bg-white deckled-border rounded-xl p-8 shadow-xl">
-<div class="border-b border-outline-variant/50 pb-5 mb-6 flex justify-between items-center">
-<div>
-<h3 class="font-headline text-xl font-bold text-on-surface">Reserve a Courtship Salon Chamber</h3>
-<p class="font-label text-xs text-on-surface-variant mt-0.5">Complimentary 90-minute session with dedicated Master of Whiskers</p>
-</div>
-<span class="material-symbols-outlined text-primary text-3xl" data-icon="calendar_month">calendar_month</span>
-</div>
-<form class="space-y-6" onsubmit="event.preventDefault(); alert('Presentation request registered in the Society Courtship Ledger.');">
-<!-- 1. Chamber Selection -->
-<div>
-<label class="block font-label text-xs uppercase tracking-wider font-semibold text-on-surface mb-2.5">
-                    1. Select Chamber Ambiance
-                  </label>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-<label class="cursor-pointer">
-<input checked="" class="peer sr-only" name="chamber" type="radio"/>
-<div class="p-3.5 rounded border border-outline-variant peer-checked:border-primary peer-checked:bg-primary-container/20 transition-all text-center">
-<span class="material-symbols-outlined text-primary text-2xl mb-1" data-icon="yard">yard</span>
-<h5 class="font-headline text-xs font-bold text-on-surface">The Orangerie</h5>
-<p class="text-[10px] text-on-surface-variant font-label mt-0.5">Sunlit &amp; Floral</p>
-</div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only" name="chamber" type="radio"/>
-<div class="p-3.5 rounded border border-outline-variant peer-checked:border-primary peer-checked:bg-primary-container/20 transition-all text-center">
-<span class="material-symbols-outlined text-primary text-2xl mb-1" data-icon="fireplace">fireplace</span>
-<h5 class="font-headline text-xs font-bold text-on-surface">The Hearth Suite</h5>
-<p class="text-[10px] text-on-surface-variant font-label mt-0.5">Warm &amp; Timbered</p>
-</div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only" name="chamber" type="radio"/>
-<div class="p-3.5 rounded border border-outline-variant peer-checked:border-primary peer-checked:bg-primary-container/20 transition-all text-center">
-<span class="material-symbols-outlined text-primary text-2xl mb-1" data-icon="chair">chair</span>
-<h5 class="font-headline text-xs font-bold text-on-surface">Gilded Parlour</h5>
-<p class="text-[10px] text-on-surface-variant font-label mt-0.5">Velvet &amp; Silk</p>
-</div>
-</label>
-</div>
-</div>
-<!-- 2. Refreshment Pairing -->
-<div>
-<label class="block font-label text-xs uppercase tracking-wider font-semibold text-on-surface mb-2.5">
-                    2. Select Course of Refreshment
-                  </label>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-<label class="flex items-center gap-2 p-3 rounded border border-outline-variant bg-surface/50 cursor-pointer">
-<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
-<span class="font-label text-xs text-on-surface">Organic Valerian Tea</span>
-</label>
-<label class="flex items-center gap-2 p-3 rounded border border-outline-variant bg-surface/50 cursor-pointer">
-<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
-<span class="font-label text-xs text-on-surface">Poached Mackerel Amuse</span>
-</label>
-<label class="flex items-center gap-2 p-3 rounded border border-outline-variant bg-surface/50 cursor-pointer">
-<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
-<span class="font-label text-xs text-on-surface">Filtered Spring Water</span>
-</label>
-</div>
-</div>
-<!-- 3. Date & Time Selection -->
+<label class="block font-label text-xs uppercase tracking-widest text-espresso font-semibold mb-3">
+                1. Select Extraction Focus
+              </label>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="relative flex items-center justify-between p-4 rounded border-2 border-terracotta bg-terracotta-tint/40 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<input checked="" class="text-terracotta focus:ring-terracotta border-hairline h-4 w-4" name="extraction_type" type="radio" value="filter"/>
 <div>
-<label class="block font-label text-xs uppercase tracking-wider font-semibold text-on-surface mb-1.5">
-                      Proposed Salon Date
-                    </label>
-<input class="w-full text-xs font-label rounded border-outline-variant bg-surface px-3 py-2 text-on-surface focus:border-primary focus:ring-primary" type="date" value="2025-11-14"/>
+<span class="block font-serif text-lg text-espresso font-medium">Filter Connoisseur</span>
+<span class="block text-xs font-label text-muted-clay">Light Nordic Roast • High Clarity</span>
 </div>
+</div>
+<span class="material-symbols-outlined text-terracotta">coffee_maker</span>
+</label>
+<label class="relative flex items-center justify-between p-4 rounded border border-hairline hover:border-terracotta bg-parchment-card cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<input class="text-terracotta focus:ring-terracotta border-hairline h-4 w-4" name="extraction_type" type="radio" value="espresso"/>
 <div>
-<label class="block font-label text-xs uppercase tracking-wider font-semibold text-on-surface mb-1.5">
-                      Tea Interval Time
-                    </label>
-<select class="w-full text-xs font-label rounded border-outline-variant bg-surface px-3 py-2 text-on-surface focus:border-primary focus:ring-primary">
-<option>High Tea (2:30 PM — 4:00 PM)</option>
-<option>Twilight Siesta (5:00 PM — 6:30 PM)</option>
-<option>Morning Sunbeam Salon (10:30 AM — 12:00 PM)</option>
-</select>
+<span class="block font-serif text-lg text-espresso font-medium">Espresso Explorations</span>
+<span class="block text-xs font-label text-muted-clay">Medium-Light Development • Syrupy Crema</span>
 </div>
 </div>
-<!-- Submit Button -->
-<div class="pt-2">
-<button class="w-full py-4 rounded-full bg-primary hover:bg-[#8B3B2B] text-white font-label text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200" type="submit">
-<span class="material-symbols-outlined text-base" data-icon="lock">lock</span>
-<span>Confirm Salon Chaperone &amp; Reserve Chamber</span>
+<span class="material-symbols-outlined text-muted-clay">local_cafe</span>
+</label>
+</div>
+</div>
+<!-- Step 2: Allotment Volume -->
+<div>
+<label class="block font-label text-xs uppercase tracking-widest text-espresso font-semibold mb-3">
+                2. Select Seasonal Quantity
+              </label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="border border-hairline p-4 rounded bg-parchment-card text-center hover:border-terracotta cursor-pointer transition-all">
+<span class="font-label text-xs uppercase tracking-wider text-muted-clay block">Curator Pair</span>
+<span class="font-serif text-2xl text-espresso font-medium block mt-1">2 Bags</span>
+<span class="text-[11px] font-label text-muted-clay block mt-0.5">500g Total (25 Cups)</span>
+</div>
+<div class="border-2 border-terracotta p-4 rounded bg-terracotta-tint/40 text-center cursor-pointer transition-all relative">
+<span class="absolute -top-2.5 right-4 bg-terracotta text-white text-[9px] font-label uppercase tracking-widest px-2 py-0.5 rounded font-semibold">
+                    Most Favored
+                  </span>
+<span class="font-label text-xs uppercase tracking-wider text-terracotta font-semibold block">Archive Folio</span>
+<span class="font-serif text-2xl text-espresso font-medium block mt-1">4 Bags</span>
+<span class="text-[11px] font-label text-muted-clay block mt-0.5">1,000g Total (50 Cups)</span>
+</div>
+<div class="border border-hairline p-4 rounded bg-parchment-card text-center hover:border-terracotta cursor-pointer transition-all">
+<span class="font-label text-xs uppercase tracking-wider text-muted-clay block">Auction Cask</span>
+<span class="font-serif text-2xl text-espresso font-medium block mt-1">Rare Reserve Cask</span>
+<span class="text-[11px] font-label text-muted-clay block mt-0.5">Includes 1 Sealed Geisha Specimen</span>
+</div>
+</div>
+</div>
+<!-- Step 3: Dispatch Frequency -->
+<div>
+<label class="block font-label text-xs uppercase tracking-widest text-espresso font-semibold mb-3">
+                3. Dispatch Cadence
+              </label>
+<div class="grid grid-cols-3 gap-3">
+<button class="py-3 px-2 text-center rounded border border-hairline text-xs font-label uppercase tracking-wider hover:border-espresso text-muted-clay transition-all" type="button">
+                  Weekly
+                </button>
+<button class="py-3 px-2 text-center rounded border-2 border-espresso bg-espresso text-parchment text-xs font-label uppercase tracking-wider font-medium transition-all" type="button">
+                  Bi-Weekly
+                </button>
+<button class="py-3 px-2 text-center rounded border border-hairline text-xs font-label uppercase tracking-wider hover:border-espresso text-muted-clay transition-all" type="button">
+                  Monthly Solstice
+                </button>
+</div>
+</div>
+<!-- Live Dispatch Schedule Display -->
+<div class="p-4 bg-parchment-deep rounded border border-hairline/80 flex flex-col sm:flex-row sm:items-center justify-between text-xs font-label text-espresso gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-terracotta text-base">schedule</span>
+<span><strong>Next Roast Date:</strong> Tuesday, Oct 24</span>
+</div>
+<div class="flex items-center gap-2 text-muted-clay">
+<span class="material-symbols-outlined text-botanical text-base">local_shipping</span>
+<span>Dispatch via Climate-Neutral Post: <strong>Thursday, Oct 26</strong></span>
+</div>
+</div>
+<!-- Price Summary & Submission CTA -->
+<div class="pt-6 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-6">
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-muted-clay">Allotment Investment</p>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-serif text-4xl text-espresso font-semibold">$58.00</span>
+<span class="font-label text-xs text-muted-clay">/ Bi-weekly dispatch • Free Shipping</span>
+</div>
+</div>
+<button class="w-full sm:w-auto bg-terracotta hover:bg-terracotta-dark text-white font-label text-xs uppercase tracking-widest px-9 py-4 rounded transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+<span>Reserve Curated Allotment</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
-<p class="font-label text-[10px] text-center text-on-surface-variant mt-2">
-                    Reservations reviewed within 12 hours by our Chief Grooming Officer.
-                  </p>
-</div>
-</form>
 </div>
 </div>
 </div>
-</div>
-</section>
-<!-- 5. VERIFICATION & CERTIFICATION SEALS -->
-<section class="py-12 bg-white border-b border-outline-variant/40">
-<div class="max-w-7xl mx-auto px-6 lg:px-12">
-<div class="flex flex-wrap items-center justify-around gap-8 text-on-surface-variant">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl text-accent" data-icon="verified_user">verified_user</span>
-<div>
-<p class="font-headline text-xs font-bold text-on-surface">Chartered Society 1894</p>
-<p class="font-label text-[10px] uppercase tracking-wider">Feline Etiquette Seal</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl text-accent" data-icon="spa">spa</span>
-<div>
-<p class="font-headline text-xs font-bold text-on-surface">Royal Catnip Guild</p>
-<p class="font-label text-[10px] uppercase tracking-wider">Certified Organic Herbarium</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl text-accent" data-icon="account_balance">account_balance</span>
-<div>
-<p class="font-headline text-xs font-bold text-on-surface">Genealogical Purity Seal</p>
-<p class="font-label text-[10px] uppercase tracking-wider">Seven-Generation Archival Audit</p>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-3xl text-accent" data-icon="sentiment_very_satisfied">sentiment_very_satisfied</span>
-<div>
-<p class="font-headline text-xs font-bold text-on-surface">Zero Claws Policy</p>
-<p class="font-label text-[10px] uppercase tracking-wider">Gentle Parlour Guarantee</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- 6. DISPATCHES NEWSLETTER MODULE -->
-<section class="py-16 bg-[#FAF7F2]">
-<div class="max-w-4xl mx-auto px-6 text-center space-y-6">
-<div class="w-12 h-12 rounded-full border border-primary/30 mx-auto flex items-center justify-center bg-surface-container">
-<span class="material-symbols-outlined text-primary text-2xl" data-icon="newspaper">newspaper</span>
-</div>
-<h3 class="font-display text-3xl sm:text-4xl font-bold text-on-surface">
-          Receive "The Whisker Gazette"
-        </h3>
-<p class="font-body text-sm text-on-surface-variant max-w-lg mx-auto font-light">
-          Dispatches on salon diplomacy, feline genetics, seasonal cat grass cultivation, and high-society gossip delivered fortnightly to your parlour.
-        </p>
-<form class="max-w-md mx-auto flex gap-2" onsubmit="event.preventDefault(); alert('Your dispatch courier has been commissioned.');">
-<input class="flex-1 text-xs font-label rounded-full border-outline-variant bg-white px-4 py-3 text-on-surface focus:border-primary focus:ring-primary shadow-inner" placeholder="Enter your estate email..." required="" type="email"/>
-<button class="px-6 py-3 rounded-full bg-primary hover:bg-[#8A3A2B] text-white font-label text-xs uppercase tracking-widest font-semibold transition-all shadow-sm whitespace-nowrap" type="submit">
-            Subscribe
-          </button>
-</form>
-<span class="font-label text-[10px] text-on-surface-variant block">We respect privacy. Never spam; only feline discourse of genuine merit.</span>
 </div>
 </section>
 </main>
-<!-- FOOTER -->
-<footer class="w-full bg-surface-container border-t border-outline-variant/40">
-<div class="max-w-7xl mx-auto px-6 lg:px-12 py-16 flex flex-col items-center text-center space-y-8">
-<!-- Brand & Society Crest -->
-<div class="space-y-2">
-<div class="w-12 h-12 rounded-full border border-primary/30 mx-auto flex items-center justify-center bg-surface">
-<span class="material-symbols-outlined text-primary text-2xl" data-icon="cruelty_free">cruelty_free</span>
+<!-- FOOTER (Shared Component: Footer aligned with JSON specs & botanical editorial details) -->
+<footer class="bg-[#F2ECE2] border-t border-hairline text-espresso">
+<div class="w-full max-w-7xl mx-auto px-6 lg:px-12 py-16 flex flex-col gap-12">
+<!-- Top Row: Newsletter Dispatch & Brand Monogram -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-hairline">
+<!-- Brand & Botanical Seal -->
+<div class="lg:col-span-5 space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-serif text-2xl uppercase tracking-tight text-espresso font-normal">
+              Aura &amp; Embers
+            </span>
 </div>
-<h4 class="font-headline text-xl font-bold tracking-tight text-primary">Purrfect Match</h4>
-<p class="font-display italic text-sm text-on-surface-variant">Velvet Salon &amp; Whisker Society of Great Britain</p>
+<p class="font-body text-sm text-muted-clay max-w-sm leading-relaxed">
+            Terroir Monograph &amp; Micro-Lot Cupping Compendium. Printed on Unbleached Digital Medium. Dedicated to agrarian biodiversity and fair compensation at origin.
+          </p>
+<div class="flex items-center gap-3 pt-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-hairline bg-parchment text-[10px] font-label uppercase tracking-widest text-muted-clay">
+<span class="material-symbols-outlined text-botanical text-xs">eco</span>
+              Carbon-Neutral Post
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-hairline bg-parchment text-[10px] font-label uppercase tracking-widest text-muted-clay">
+<span class="material-symbols-outlined text-terracotta text-xs">verified</span>
+              Direct Trade Protocol
+            </span>
 </div>
-<!-- Links from Shared Components JSON -->
-<div class="flex flex-wrap justify-center gap-x-8 gap-y-3 font-label text-xs uppercase tracking-widest text-on-surface-variant">
-<a class="hover:text-primary transition-colors duration-200" href="#">The Whisker Gazette</a>
-<a class="hover:text-primary transition-colors duration-200" href="#">Salon Charter</a>
-<a class="hover:text-primary transition-colors duration-200" href="#">Lineage Archives</a>
-<a class="hover:text-primary transition-colors duration-200" href="#">Concierge Registry</a>
-<a class="hover:text-primary transition-colors duration-200" href="#">Terms of Courtship</a>
-<a class="hover:text-primary transition-colors duration-200" href="#">Privacy Dispatches</a>
 </div>
-<!-- Archival Watermark Note -->
-<div class="max-w-xl text-center">
-<p class="font-body text-body-sm leading-relaxed text-on-surface-variant/80 text-xs">
-          © 1894–2025 Purrfect Match &amp; Velvet Salon Society. Curated feline courtships of distinction. All courtesies reserved.
-        </p>
+<!-- Newsletter Subscription Form -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<div>
+<span class="font-label text-xs uppercase tracking-widest text-terracotta font-semibold block mb-1">
+              Seasonal Epistles
+            </span>
+<h3 class="font-serif text-2xl text-espresso font-normal">
+              Receive harvest bulletins and private cupping invitations.
+            </h3>
+<p class="font-body text-xs text-muted-clay mt-1">
+              Issued eight times annually in synchrony with solar equinoxes and farm gate cuppings. Never promotional spam.
+            </p>
+</div>
+<form class="mt-6 flex flex-col sm:flex-row gap-2" onsubmit="event.preventDefault();">
+<input class="bg-parchment border border-hairline rounded px-4 py-3 text-xs font-body text-espresso placeholder:text-muted-clay/60 focus:outline-none focus:border-terracotta focus:ring-0 flex-grow" placeholder="curator@journal.com" required="" type="email"/>
+<button class="bg-terracotta hover:bg-terracotta-dark text-white font-label text-xs uppercase tracking-widest px-6 py-3 rounded transition-colors flex items-center justify-center gap-2 shrink-0" type="submit">
+<span>Subscribe</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</form>
+</div>
+</div>
+<!-- Monochrome Nav Columns (Origin Ledger, Cupping Standards, Dispatch & Shipping, Archival Journals) -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-xs font-label">
+<div>
+<h4 class="font-serif text-base text-espresso font-medium mb-3">Origin Ledger</h4>
+<ul class="space-y-2 text-muted-clay">
+<li><a class="hover:text-terracotta transition-colors" href="#ledger">Terroir Ledger Index</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#ledger">Elevation Index</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#ledger">Huila &amp; Cauca Allotments</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#ledger">Kirinyaga Wet Mills</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-serif text-base text-espresso font-medium mb-3">Methodology</h4>
+<ul class="space-y-2 text-muted-clay">
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Cupping Methodology</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Thermal Profile Charts</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Moisture Verification</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Brew Extraction Archive</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-serif text-base text-espresso font-medium mb-3">Dispatch Calendar</h4>
+<ul class="space-y-2 text-muted-clay">
+<li><a class="hover:text-terracotta transition-colors" href="#configurator">Dispatch &amp; Roast Schedule</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#configurator">Archival Subscriptions</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#configurator">Degassing Guide</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#configurator">Overland Postal Routing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-serif text-base text-espresso font-medium mb-3">Ethics &amp; Atelier</h4>
+<ul class="space-y-2 text-muted-clay">
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Ethical Transparency</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#methodology">Producer Pricing Index</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#">Atelier Monograph Folios</a></li>
+<li><a class="hover:text-terracotta transition-colors" href="#">Curator Contact</a></li>
+</ul>
+</div>
+</div>
+<!-- Legal and Copyright Line -->
+<div class="pt-8 border-t border-hairline flex flex-col sm:flex-row justify-between items-center text-[11px] font-label text-muted-clay gap-4">
+<p>© 2025 Aura &amp; Embers Roasters. Terroir Monograph &amp; Micro-Lot Cupping Compendium. Printed on Unbleached Digital Medium.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-terracotta transition-colors" href="#">Terms of Dispatch</a>
+<a class="hover:text-terracotta transition-colors" href="#">Privacy Monograph</a>
+<a class="hover:text-terracotta transition-colors" href="#">Finca Protocols</a>
+</div>
 </div>
 </div>
 </footer>

@@ -4243,16 +4243,22 @@ async function handleVoteResolution(sock, voteRes) {
     return;
   }
 
-  if (pending.context === 'website_vibe_choice') {
-    const cleanVibe = chosenOption.replace(/^[0-9️⃣\s]+/, '').trim();
-    await sendReply(sock, groupJid, `Got it: "${cleanVibe}" aesthetic locked in! Tuning the design tokens 🎨`);
-    const state = loadProjectsState();
-    state.portfolioSessions = state.portfolioSessions || {};
-    if (!state.portfolioSessions[groupJid]) {
-      state.portfolioSessions[groupJid] = {};
+  if (pending.context === 'portfolio_variant_selection' || pending.context === 'website_vibe_choice') {
+    const cleanOption = chosenOption.replace(/^[0-9️⃣\s]+/, '').trim();
+    if (cleanOption.toLowerCase().includes('custom') || cleanOption.toLowerCase().includes('request') || cleanOption.toLowerCase().includes('bespoke')) {
+      await sendReply(sock, groupJid, `Tell me what changes you'd like to see (e.g. "make hero darker", "add reviews section", "switch font to serif") and I'll update it! 🛠️`);
+      return;
     }
-    state.portfolioSessions[groupJid].preferredVibe = cleanVibe;
-    saveProjectsState(state);
+
+    const { iteratePortfolioDesign } = await import('./portfolio/portfolioOrchestrator.js');
+    await sendReply(sock, groupJid, `Switching to ${cleanOption} and deploying live... 🚀`);
+    const iterRes = await iteratePortfolioDesign({ chatJid: groupJid, feedbackText: cleanOption });
+    if (iterRes) {
+      if (iterRes.screenshotPath && fs.existsSync(iterRes.screenshotPath)) {
+        await sendWhatsAppFile(sock, groupJid, iterRes.screenshotPath, `Live preview updated: ${iterRes.name}`);
+      }
+      await sendReply(sock, groupJid, iterRes.formattedMessage || `Switched to ${iterRes.name}! Live at: ${iterRes.siteUrl}`);
+    }
     return;
   }
 
