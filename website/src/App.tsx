@@ -227,12 +227,6 @@ export function App() {
           >
             GitHub
           </a>
-          <a
-            href="mailto:ramanandv722@gmail.com"
-            className="hover:text-white transition-colors"
-          >
-            ramanandv722@gmail.com
-          </a>
         </nav>
       </footer>
 
