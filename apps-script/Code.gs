@@ -1,23 +1,31 @@
 /**
  * Weave Early Access & Waitlist Database (Google Apps Script)
  * 
- * Instructions:
- * 1. Open Google Sheets (https://sheets.new) and name the spreadsheet (e.g., "Weave Early Access Waitlist").
- * 2. In Google Sheets menu, click: Extensions -> Apps Script.
- * 3. Replace all default code with this file's contents.
- * 4. Click "Deploy" (top right) -> "New deployment".
- * 5. Select type: "Web app" (click gear icon ⚙️ if not selected).
- * 6. Set Description: "Weave Early Access API"
- * 7. Set "Execute as": "Me"
- * 8. Set "Who has access": "Anyone"
- * 9. Click "Deploy", authorize permissions when prompted, and copy the Web App URL.
- * 10. Add the URL to your website's .env file as:
- *     VITE_EARLY_ACCESS_SCRIPT_URL=https://script.google.com/macros/s/.../exec
+ * IMPORTANT:
+ * If this script was opened from Google Sheets (Extensions -> Apps Script), leave SPREADSHEET_ID blank.
+ * If this script was created as a standalone project on script.google.com, paste your Google Sheet ID or URL below.
  */
+var SPREADSHEET_ID = ""; // e.g. "1yA8X..." or leave empty if bound to sheet
+
+function getTargetSheet() {
+  if (SPREADSHEET_ID && SPREADSHEET_ID.trim().length > 0) {
+    var id = SPREADSHEET_ID.trim();
+    if (id.includes('/d/')) {
+      id = id.split('/d/')[1].split('/')[0];
+    }
+    return SpreadsheetApp.openById(id).getActiveSheet();
+  }
+  
+  var active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) {
+    return active.getActiveSheet();
+  }
+  
+  throw new Error("No active spreadsheet found. If your Apps Script is standalone, paste your Sheet ID into SPREADSHEET_ID at line 8.");
+}
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  // Wait up to 30 seconds for concurrent requests to clear
   try {
     lock.waitLock(30000);
   } catch (err) {
@@ -28,8 +36,7 @@ function doPost(e) {
   }
 
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet();
+    var sheet = getTargetSheet();
 
     // Parse incoming payload
     var data = {};
@@ -43,7 +50,7 @@ function doPost(e) {
       data = e.parameter;
     }
 
-    // Auto-create polished header row if the sheet is brand new / empty
+    // Auto-create polished header row if the sheet is empty
     if (sheet.getLastRow() === 0) {
       var headers = [
         "Submitted At (UTC)",
@@ -56,7 +63,6 @@ function doPost(e) {
       ];
       sheet.appendRow(headers);
       
-      // Style headers
       var headerRange = sheet.getRange(1, 1, 1, headers.length);
       headerRange.setFontWeight("bold");
       headerRange.setBackground("#18181b");
@@ -77,10 +83,10 @@ function doPost(e) {
     var lastRow = sheet.getLastRow();
     var isDuplicate = false;
     if (lastRow > 1) {
-      var existingIdentities = sheet.getRange(2, 2, lastRow - 1, 2).getValues();
-      for (var i = 0; i < existingIdentities.length; i++) {
-        var rowIdentity = existingIdentities[i][0];
-        var rowPhone = existingIdentities[i][1];
+      var existingData = sheet.getRange(2, 2, lastRow - 1, 2).getValues();
+      for (var i = 0; i < existingData.length; i++) {
+        var rowIdentity = existingData[i][0];
+        var rowPhone = existingData[i][1];
         if (
           (identity && rowIdentity && rowIdentity.toString().toLowerCase() === identity.toLowerCase()) ||
           (phoneNumber && rowPhone && rowPhone.toString() === phoneNumber)
@@ -125,4 +131,30 @@ function doGet(e) {
     service: 'Weave Early Access API',
     timestamp: new Date().toISOString()
   })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Run this function in the Apps Script editor to test your spreadsheet connection & grant permissions!
+ */
+function testWrite() {
+  Logger.log("Testing spreadsheet connection...");
+  var sheet = getTargetSheet();
+  Logger.log("Connected to spreadsheet tab: " + sheet.getName());
+  
+  var mockEvent = {
+    postData: {
+      contents: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        identity: "test_verification@example.com",
+        phoneNumber: "+91 9999999999",
+        countryCode: "IN",
+        countryName: "India",
+        sourceUrl: "https://tryweave.vercel.app",
+        userAgent: "Apps Script Test Runner"
+      })
+    }
+  };
+  
+  var res = doPost(mockEvent);
+  Logger.log("doPost response: " + res.getContent());
 }

@@ -388,9 +388,18 @@ export function App() {
 
             {/* Success Toast */}
             {isSubmitted && (
-              <div className="mt-4 p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5 animate-fadeIn">
-                <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                <span>You're on the early access list! We'll notify you on WhatsApp as invites roll out.</span>
+              <div className="mt-4 p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex flex-col gap-2 animate-fadeIn">
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
+                  <span>You're on the early access list! We'll notify you on WhatsApp as invites roll out.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-left text-[11px] text-emerald-400/80 hover:text-emerald-200 underline cursor-pointer mt-0.5"
+                >
+                  Need to update or test another entry?
+                </button>
               </div>
             )}
           </div>
