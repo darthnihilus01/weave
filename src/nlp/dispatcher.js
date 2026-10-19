@@ -35,6 +35,7 @@ import {
   executePortfolioCreation,
   iteratePortfolioDesign,
 } from '../portfolio/portfolioOrchestrator.js';
+import { getFallbackDesignInspirations } from '../portfolio/designInspirationResearcher.js';
 import { geminiClient } from '../gemini-client.js';
 import { sendChoicePoll } from '../autopilot/polls.js';
 
@@ -657,28 +658,31 @@ export async function dispatchIntent({
         msg
       ).catch(() => {});
 
-      // 2. Interactive Discovery Poll (Vibe & Aesthetic)
+      // 2. Interactive Discovery Poll (Dynamic Domain-Native Aesthetic Directions)
       const voterJid = msg?.key?.fromMe
         ? (sock?.user?.id || jid)
         : (msg?.key?.participant || msg?.key?.remoteJid || jid);
 
       try {
+        const domainInspirations = getFallbackDesignInspirations(rawBody);
+        const pollOptions = (domainInspirations.inspirations || []).map((ins, idx) => {
+          const numEmoji = ['1️⃣', '2️⃣', '3️⃣'][idx] || `${idx + 1}️⃣`;
+          return `${numEmoji} ${ins.name}`;
+        });
+        pollOptions.push('4️⃣ Bespoke (I’ll describe in chat)');
+
+        const brandOrDomain = domainInspirations.topicAnalysis?.brandName || 'this site';
         await sendChoicePoll(sock, {
           groupJid: jid,
           allowedVoterJid: voterJid,
-          question: 'What vibe or aesthetic are you going for?',
-          options: [
-            '1️⃣ Minimalist & Clean (Editorial whitespace)',
-            '2️⃣ Dark Cyber & High-Tech (Glowing accents)',
-            '3️⃣ Warm & Artisanal (Craft tones & serif)',
-            '4️⃣ Bold & Vibrant (Bento grid & dynamic)',
-          ],
+          question: `Which aesthetic direction best fits ${brandOrDomain}?`,
+          options: pollOptions,
           intent: 'choice_needed',
           originalTask: rawBody,
           context: 'website_vibe_choice',
         });
       } catch (pollErr) {
-        console.warn('[Dispatcher] Vibe poll notice:', pollErr.message);
+        console.warn('[Dispatcher] Dynamic vibe poll notice:', pollErr.message);
       }
 
       // 3. Product Discovery Follow-up (Agent 2 - Conversational Product Discovery)

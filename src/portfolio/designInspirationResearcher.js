@@ -213,7 +213,7 @@ Output MUST be strictly valid JSON without any markdown or code fences. Format:
  * Fully dynamic domain fallback inspirations synthesized organically from the prompt.
  * ZERO hardcoded presets: constructs bespoke aesthetic names, palettes, and components.
  */
-function getFallbackDesignInspirations(prompt) {
+export function getFallbackDesignInspirations(prompt) {
   const cleanPrompt = (prompt || '').trim();
   const words = cleanPrompt.replace(/^(create|build|make|design|need|want|a|an|the|website|for|landing\s+page)\s+/gi, '').trim();
   const domainTitle = words.length > 0
