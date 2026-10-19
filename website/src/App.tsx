@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
-import { ArrowRight, X, Check, Copy } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  ArrowRight,
+  X,
+  Check,
+  Copy,
+  AtSign,
+  ShieldCheck,
+  ChevronDown,
+  Terminal,
+  CheckCircle2,
+  ArrowUpRight,
+  Loader2
+} from 'lucide-react';
 
 interface TaskReaction {
   id: string;
@@ -45,12 +57,42 @@ export function App() {
   const [activeTask, setActiveTask] = useState<string | null>(null);
   const [hoveredTask, setHoveredTask] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const copyEmail = () => {
+  // Modal Interactive States
+  const [activeTab, setActiveTab] = useState<'request' | 'founder'>('request');
+  const [identity, setIdentity] = useState('');
+  const [countryCode, setCountryCode] = useState('+1');
+  const [phone, setPhone] = useState('');
+  const [runtimeTarget, setRuntimeTarget] = useState<'antigravity' | 'gemini'>('antigravity');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copiedFounderEmail, setCopiedFounderEmail] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+      }
+    };
+    if (isModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
+
+  const copyFounderEmail = () => {
     navigator.clipboard.writeText('ramanandv722@gmail.com');
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+    setCopiedFounderEmail(true);
+    setTimeout(() => setCopiedFounderEmail(false), 2000);
+  };
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 700);
   };
 
   const currentTask = TASKS.find(t => t.id === (hoveredTask || activeTask));
@@ -61,7 +103,6 @@ export function App() {
       {/* Top Header / Emblem */}
       <header className="w-full max-w-3xl mx-auto flex items-center pb-12 sm:pb-20">
         <a href="/" className="inline-flex items-center gap-3 group">
-          {/* Weave custom woven companion emblem in dark mode */}
           <div className="relative size-10 rounded-full border border-[#27272a] bg-[#18181b] flex items-center justify-center shadow-xs group-hover:border-[#ff5100] group-hover:scale-105 transition-all">
             <svg
               className="size-5 text-white group-hover:text-[#ff5100] transition-colors"
@@ -189,76 +230,369 @@ export function App() {
         </nav>
       </footer>
 
-      {/* Minimalist Invite-Only Modal */}
+      {/* Stitch-Engineered "Invite Only" Capsule Pass Modal */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in font-sans"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-2xl animate-fade-in font-sans overflow-y-auto"
           onClick={() => setIsModalOpen(false)}
         >
+          {/* Glass Capsule Ticket Container */}
           <div
-            className="relative w-full max-w-md bg-[#121214] rounded-2xl border border-[#27272a] p-6 sm:p-8 shadow-2xl flex flex-col gap-6 text-white"
+            className="relative w-full max-w-[580px] my-auto rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] overflow-hidden transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 p-1.5 rounded-full text-[#71717a] hover:text-white hover:bg-[#27272a] transition-colors cursor-pointer"
-              aria-label="Close"
-            >
-              <X className="size-4" />
-            </button>
+            {/* Soft Emerald Neon Glow Accent Aura */}
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-32 bg-emerald-500/10 blur-[60px] pointer-events-none rounded-full" />
 
-            {/* Content */}
-            <div className="flex flex-col gap-2.5">
-              <div className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#ff5100]" />
-                <span className="text-xs font-semibold tracking-wider uppercase text-[#ff5100]">
-                  Private Beta
+            {/* Top Bar: Monospace Ticket Badge with Live Status Beacon */}
+            <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/25">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                  </span>
+                  <span className="font-mono text-[11px] font-medium tracking-widest text-emerald-300/90 uppercase">
+                    ACCESS PASS // BATCH #14
+                  </span>
+                </div>
+                <span className="hidden sm:inline-block font-mono text-[11px] text-zinc-400 uppercase tracking-wider">
+                  GATEWAY: LIVE
                 </span>
               </div>
-              
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                Weave is invite only for now
-              </h3>
-              
-              <p className="text-sm sm:text-base text-[#a1a1aa] leading-relaxed">
-                To get access, email us:
-              </p>
-            </div>
-
-            {/* Email Box with One-Click Actions */}
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#18181b] border border-[#27272a]">
-                <span className="font-mono text-sm sm:text-base text-white select-all">
-                  ramanandv722@gmail.com
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] text-zinc-400/60 px-1.5 py-0.5 rounded border border-white/5 hidden sm:inline-block">
+                  ESC
                 </span>
                 <button
-                  onClick={copyEmail}
-                  className="px-2.5 py-1 text-xs font-medium rounded-lg bg-[#27272a] hover:bg-[#3f3f46] text-white flex items-center gap-1.5 cursor-pointer transition-colors"
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-zinc-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/5 cursor-pointer"
+                  title="Close modal"
                 >
-                  {copiedEmail ? (
-                    <>
-                      <Check className="size-3 text-emerald-400" />
-                      <span className="text-emerald-400 font-semibold">Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="size-3 text-[#a1a1aa]" />
-                      <span>Copy</span>
-                    </>
-                  )}
+                  <X className="size-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Capsule Body */}
+            <div className="p-6 sm:p-7 space-y-5 relative z-10 text-left">
+              {/* Headline & Punchy Subtitle */}
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-xs bg-white inline-block" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
+                    Private Beta Access Protocol
+                  </span>
+                </div>
+                <h2 className="text-[26px] sm:text-[30px] leading-tight text-white font-semibold tracking-tight">
+                  Weave is invite-only for now
+                </h2>
+                <p className="text-zinc-400 text-[13px] sm:text-[14px] leading-relaxed">
+                  Connect WhatsApp directly to your local runtime. Deploying weekly tranches to preserve latency and verifiable cryptographic peer pairing.
+                </p>
+              </div>
+
+              {/* Direct Interactive Toggle Switcher */}
+              <div className="p-1 rounded-xl bg-[#09090b]/90 border border-white/[0.08] grid grid-cols-2 gap-1">
+                <button
+                  type="button"
+                  onClick={() => { setActiveTab('request'); setIsSubmitted(false); }}
+                  className={`py-2 px-3 rounded-lg text-center font-mono text-[12px] font-medium tracking-wide transition-all cursor-pointer ${
+                    activeTab === 'request'
+                      ? 'bg-white/10 text-white shadow-xs border border-white/10'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.03]'
+                  }`}
+                >
+                  Apply for Access
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('founder')}
+                  className={`py-2 px-3 rounded-lg text-center font-mono text-[12px] font-medium tracking-wide transition-all cursor-pointer ${
+                    activeTab === 'founder'
+                      ? 'bg-white/10 text-white shadow-xs border border-white/10'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.03]'
+                  }`}
+                >
+                  Contact Founder
                 </button>
               </div>
 
-              <a
-                href="mailto:ramanandv722@gmail.com?subject=Weave%20Invite%20Access&body=Hi%2C%20I'd%20love%20to%20get%20access%20to%20Weave."
-                className="w-full py-3 rounded-full bg-white text-[#09090b] hover:bg-[#ff5100] hover:text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
-              >
-                <span>Email Us</span>
-                <ArrowRight className="size-4" />
-              </a>
-            </div>
+              {/* TAB 1: APPLY FOR ACCESS */}
+              {activeTab === 'request' && (
+                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                  {/* Segmented Work Email or GitHub with Validation Badge */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center px-0.5">
+                      <label htmlFor="invite-identity" className="font-mono text-[11px] uppercase tracking-wider text-zinc-200">
+                        Work Email or GitHub Handle
+                      </label>
+                      <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-wide flex items-center gap-1">
+                        <span className="size-1 rounded-full bg-emerald-400" /> VERIFIED GATEWAY
+                      </span>
+                    </div>
+                    <div className="relative flex items-center">
+                      <span className="absolute left-3.5 text-zinc-400 flex items-center pointer-events-none">
+                        <AtSign className="size-4" />
+                      </span>
+                      <input
+                        id="invite-identity"
+                        type="text"
+                        required
+                        disabled={isSubmitted}
+                        value={identity}
+                        onChange={(e) => setIdentity(e.target.value)}
+                        placeholder="name@company.com or @handle"
+                        className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg pl-10 pr-24 font-mono text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all disabled:opacity-60"
+                      />
+                      <span className="absolute right-3 font-mono text-[10px] text-zinc-400/80 bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
+                        Required
+                      </span>
+                    </div>
+                  </div>
 
+                  {/* WhatsApp Number with Country Code */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center px-0.5">
+                      <label htmlFor="invite-phone" className="font-mono text-[11px] uppercase tracking-wider text-zinc-200">
+                        WhatsApp Mobile Number
+                      </label>
+                      <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-wider">
+                        For Signal E2EE Keyring
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="relative shrink-0">
+                        <select
+                          aria-label="Country Code"
+                          value={countryCode}
+                          disabled={isSubmitted}
+                          onChange={(e) => setCountryCode(e.target.value)}
+                          className="h-11 appearance-none bg-[#09090b]/90 border border-white/10 rounded-lg pl-3 pr-7 font-mono text-[12px] text-white focus:outline-none focus:border-white/30 cursor-pointer disabled:opacity-60"
+                        >
+                          <option value="+1">🇺🇸 +1</option>
+                          <option value="+44">🇬🇧 +44</option>
+                          <option value="+49">🇩🇪 +49</option>
+                          <option value="+91">🇮🇳 +91</option>
+                          <option value="+81">🇯🇵 +81</option>
+                          <option value="+65">🇸🇬 +65</option>
+                        </select>
+                        <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 size-3.5 text-zinc-400 pointer-events-none" />
+                      </div>
+                      <div className="relative flex-1">
+                        <input
+                          id="invite-phone"
+                          type="tel"
+                          disabled={isSubmitted}
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="(555) 000-0000"
+                          className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg px-3.5 font-mono text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all disabled:opacity-60"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Primary Runtime Target Cards */}
+                  <div className="space-y-1.5 pt-0.5">
+                    <label className="font-mono text-[11px] uppercase tracking-wider text-zinc-400 px-0.5">
+                      Primary Runtime Target
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {/* Card 1: Antigravity CLI */}
+                      <label
+                        onClick={() => !isSubmitted && setRuntimeTarget('antigravity')}
+                        className={`runtime-card group relative flex items-start gap-3 p-3 rounded-xl bg-[#09090b]/90 border cursor-pointer transition-all select-none ${
+                          runtimeTarget === 'antigravity'
+                            ? 'border-white/20 ring-1 ring-white/10'
+                            : 'border-white/5 hover:border-white/20'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="target-model"
+                          value="antigravity"
+                          checked={runtimeTarget === 'antigravity'}
+                          onChange={() => setRuntimeTarget('antigravity')}
+                          className="sr-only"
+                        />
+                        <div className={`size-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${
+                          runtimeTarget === 'antigravity' ? 'border-emerald-400 bg-emerald-400/20' : 'border-white/30'
+                        }`}>
+                          {runtimeTarget === 'antigravity' && <div className="size-2 rounded-full bg-emerald-400" />}
+                        </div>
+                        <div className="space-y-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[12px] font-semibold text-white">Local CLI</span>
+                            <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-white/10 text-white/80 uppercase">
+                              Offline
+                            </span>
+                          </div>
+                          <p className="font-mono text-[11px] text-zinc-400 leading-tight">
+                            Antigravity daemon (Zero cloud)
+                          </p>
+                        </div>
+                      </label>
+
+                      {/* Card 2: Cloud API */}
+                      <label
+                        onClick={() => !isSubmitted && setRuntimeTarget('gemini')}
+                        className={`runtime-card group relative flex items-start gap-3 p-3 rounded-xl bg-[#09090b]/90 border cursor-pointer transition-all select-none ${
+                          runtimeTarget === 'gemini'
+                            ? 'border-white/20 ring-1 ring-white/10'
+                            : 'border-white/5 hover:border-white/20'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="target-model"
+                          value="gemini"
+                          checked={runtimeTarget === 'gemini'}
+                          onChange={() => setRuntimeTarget('gemini')}
+                          className="sr-only"
+                        />
+                        <div className={`size-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${
+                          runtimeTarget === 'gemini' ? 'border-emerald-400 bg-emerald-400/20' : 'border-white/30'
+                        }`}>
+                          {runtimeTarget === 'gemini' && <div className="size-2 rounded-full bg-emerald-400" />}
+                        </div>
+                        <div className="space-y-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[12px] font-semibold text-white">Cloud API</span>
+                            <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 uppercase">
+                              Fast
+                            </span>
+                          </div>
+                          <p className="font-mono text-[11px] text-zinc-400 leading-tight">
+                            Gemini 2.5 Flash hybrid pipeline
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  {isSubmitted ? (
+                    <div className="w-full h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 cursor-default">
+                      <CheckCircle2 className="size-4 text-emerald-400" />
+                      <span>Key Dispatched</span>
+                    </div>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full h-12 rounded-full bg-white text-[#09090b] font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 hover:bg-slate-100 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] active:scale-[0.99] transition-all cursor-pointer mt-1"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          <span>Generating Ticket Key...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Request Invitation Key</span>
+                          <ArrowRight className="size-4 font-bold" />
+                        </>
+                      )}
+                    </button>
+                  )}
+
+                  {/* Success Toast */}
+                  {isSubmitted && (
+                    <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono text-xs flex items-center justify-between animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
+                        <span>Token assigned! SMS verification dispatched to WhatsApp.</span>
+                      </div>
+                      <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 shrink-0">
+                        PASS #85
+                      </span>
+                    </div>
+                  )}
+                </form>
+              )}
+
+              {/* TAB 2: CONTACT FOUNDER */}
+              {activeTab === 'founder' && (
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl bg-[#09090b]/90 border border-white/10 space-y-3.5">
+                    <div className="space-y-1">
+                      <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-400 block">
+                        Priority Founder Access
+                      </span>
+                      <p className="text-white text-[13px] leading-relaxed">
+                        Building production multi-agent tooling or running local Antigravity orchestrators? Ping the founder directly for instant bypass token provisioning:
+                      </p>
+                    </div>
+
+                    {/* Founder Ticket Card */}
+                    <div className="p-3 rounded-lg bg-[#18181b] border border-white/10 space-y-3">
+                      <div className="flex items-center justify-between gap-2 overflow-x-auto">
+                        <div className="flex items-center gap-2">
+                          <AtSign className="size-4 text-zinc-400" />
+                          <span className="font-mono text-sm text-white font-medium select-all">
+                            ramanandv722@gmail.com
+                          </span>
+                        </div>
+                        <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20 uppercase shrink-0">
+                          Lead Eng
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={copyFounderEmail}
+                          className="h-9 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 font-mono text-xs text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          {copiedFounderEmail ? (
+                            <>
+                              <Check className="size-3.5 text-emerald-400" />
+                              <span className="text-emerald-400">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="size-3.5 text-zinc-400" />
+                              <span>Copy Email</span>
+                            </>
+                          )}
+                        </button>
+
+                        <a
+                          href="mailto:ramanandv722@gmail.com?subject=Weave%20Private%20Beta%20Access%20Request&body=Hi%20Ramanand%2C%0A%0AWe%20are%20building%20with%3A%20%5BAntigravity%20CLI%20%2F%20Gemini%202.5%20Flash%5D%0AOur%20workflow%20use-case%3A%20%0A%0AWhatsApp%20Number%20for%20pairing%3A%20"
+                          className="h-9 rounded-lg bg-white text-[#09090b] font-mono text-xs font-semibold flex items-center justify-center gap-1 hover:bg-slate-100 transition-colors shadow-xs"
+                        >
+                          <span>Direct Dispatch</span>
+                          <ArrowUpRight className="size-3.5" />
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-zinc-400 font-mono text-[11px] pt-1">
+                      <Terminal className="size-3.5 text-emerald-400 shrink-0" />
+                      <span>Include your deployment target (Antigravity CLI or Gemini) for immediate response.</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Bottom Ticker: Live Counter & E2EE Assurance */}
+              <div className="pt-3 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2 text-zinc-400">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_6px_#34d399]" />
+                  </span>
+                  <span className="font-mono text-[11px] text-zinc-400 tracking-tight">
+                    <strong className="font-medium text-white">84 engineers</strong> waiting in queue
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-[11px] text-white/70">
+                  <ShieldCheck className="size-3.5 text-emerald-400" />
+                  <span>Signal E2EE verified</span>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       )}
