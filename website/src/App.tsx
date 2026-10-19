@@ -2,12 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, 
   X, 
-  Check, 
-  Copy, 
-  ShieldCheck, 
-  AtSign, 
-  Terminal, 
-  ExternalLink, 
   CheckCircle2, 
   ChevronDown, 
   IdCard 
@@ -58,14 +52,12 @@ export function App() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  // Invite Modal States
-  const [inviteTab, setInviteTab] = useState<'request' | 'founder'>('request');
+  // Invite Form States
   const [identity, setIdentity] = useState('');
   const [countryCode, setCountryCode] = useState('+1');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
     if (window.location.hash === '#invite' || window.location.search.includes('invite')) {
@@ -80,12 +72,6 @@ export function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const copyFounderEmail = () => {
-    navigator.clipboard.writeText('ramanandv722@gmail.com');
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
 
   const handleWaitlistSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,7 +171,10 @@ export function App() {
         {/* Primary Call to Action Button */}
         <div className="pt-2 sm:pt-4">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setIsSubmitted(false);
+              setIsModalOpen(true);
+            }}
             className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-white text-[#09090b] hover:bg-[#ff5100] hover:text-white text-base sm:text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-98"
           >
             <span>Get Weave</span>
@@ -211,7 +200,10 @@ export function App() {
 
         <nav className="flex flex-wrap items-center gap-6">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setIsSubmitted(false);
+              setIsModalOpen(true);
+            }}
             className="hover:text-white transition-colors cursor-pointer"
           >
             Get Weave
@@ -233,7 +225,7 @@ export function App() {
         </nav>
       </footer>
 
-      {/* CLEAN & STREAMLINED INVITE-ONLY PASS MODAL */}
+      {/* CLEAN & STREAMLINED INVITE-ONLY MODAL */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#09090b]/85 backdrop-blur-2xl animate-fade-in font-sans"
@@ -241,7 +233,7 @@ export function App() {
         >
           {/* FLOATING GLASS CAPSULE */}
           <div 
-            className="relative w-full max-w-[540px] rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] transition-all duration-300 overflow-hidden text-white"
+            className="relative w-full max-w-[500px] rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] transition-all duration-300 overflow-hidden text-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Soft Emerald Neon Glow Accent Aura */}
@@ -258,219 +250,121 @@ export function App() {
             </button>
 
             {/* Modal Capsule Body */}
-            <div className="p-6 sm:p-8 space-y-5 relative z-10">
+            <div className="p-6 sm:p-8 space-y-6 relative z-10">
               
               {/* Headline */}
               <div className="pr-8">
-                <h2 className="text-[26px] sm:text-[30px] leading-tight text-white font-bold tracking-tight">
+                <h2 className="text-[26px] sm:text-[28px] leading-tight text-white font-bold tracking-tight">
                   Weave is invite-only for now
                 </h2>
               </div>
 
-              {/* Direct Interactive Toggle Switcher */}
-              <div className="p-1 rounded-xl bg-[#09090b]/90 border border-white/[0.08] grid grid-cols-2 gap-1 font-mono">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setInviteTab('request');
-                    setIsSubmitted(false);
-                  }}
-                  className={`py-2 px-3 rounded-lg text-center text-[12px] font-medium tracking-wide transition-all cursor-pointer ${
-                    inviteTab === 'request'
-                      ? 'bg-white/10 text-white shadow-sm border border-white/10'
-                      : 'text-[#71717a] hover:text-white hover:bg-white/[0.03]'
-                  }`}
-                >
-                  Apply for Access
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setInviteTab('founder');
-                    setIsSubmitted(false);
-                  }}
-                  className={`py-2 px-3 rounded-lg text-center text-[12px] font-medium tracking-wide transition-all cursor-pointer ${
-                    inviteTab === 'founder'
-                      ? 'bg-white/10 text-white shadow-sm border border-white/10'
-                      : 'text-[#71717a] hover:text-white hover:bg-white/[0.03]'
-                  }`}
-                >
-                  Contact Founder
-                </button>
-              </div>
+              {/* Form */}
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                {/* Work Email or GitHub Handle */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center px-0.5">
+                    <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-identity">
+                      Work Email or GitHub Handle
+                    </label>
+                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-wide flex items-center gap-1">
+                      <span className="size-1 rounded-full bg-emerald-400" />
+                      <span>VERIFIED GATEWAY</span>
+                    </span>
+                  </div>
+                  <div className="relative flex items-center">
+                    <span className="absolute left-3.5 text-[#71717a] flex items-center pointer-events-none">
+                      <IdCard className="size-4" />
+                    </span>
+                    <input
+                      id="invite-identity"
+                      type="text"
+                      required
+                      disabled={isSubmitted}
+                      value={identity}
+                      onChange={(e) => setIdentity(e.target.value)}
+                      placeholder="name@company.com or @handle"
+                      className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg pl-10 pr-24 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
+                    />
+                    <span className="absolute right-3 font-mono text-[10px] text-[#71717a]/80 bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
+                      Required
+                    </span>
+                  </div>
+                </div>
 
-              {/* TAB CONTENT 1: APPLY FOR ACCESS */}
-              {inviteTab === 'request' && (
-                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                  {/* Work Email or GitHub Handle */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center px-0.5">
-                      <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-identity">
-                        Work Email or GitHub Handle
-                      </label>
-                      <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-1.5 py-0.5 rounded tracking-wide flex items-center gap-1">
-                        <span className="size-1 rounded-full bg-emerald-400" />
-                        <span>VERIFIED GATEWAY</span>
-                      </span>
+                {/* WhatsApp Mobile Number */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center px-0.5">
+                    <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-phone">
+                      WhatsApp Mobile Number
+                    </label>
+                    <span className="font-mono text-[10px] text-[#71717a] uppercase tracking-wider">
+                      For Signal E2EE Keyring
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {/* Country Code Pill Selector */}
+                    <div className="relative shrink-0">
+                      <select
+                        aria-label="Country Code"
+                        value={countryCode}
+                        onChange={(e) => setCountryCode(e.target.value)}
+                        className="h-11 appearance-none bg-[#09090b]/90 border border-white/10 rounded-lg pl-3 pr-7 font-mono text-[12px] text-white focus:outline-none focus:border-white/30 cursor-pointer"
+                      >
+                        <option value="+1">🇺🇸 +1</option>
+                        <option value="+44">🇬🇧 +44</option>
+                        <option value="+49">🇩🇪 +49</option>
+                        <option value="+91">🇮🇳 +91</option>
+                        <option value="+81">🇯🇵 +81</option>
+                        <option value="+65">🇸🇬 +65</option>
+                      </select>
+                      <ChevronDown className="size-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-[#71717a] pointer-events-none" />
                     </div>
-                    <div className="relative flex items-center">
-                      <span className="absolute left-3.5 text-[#71717a] flex items-center pointer-events-none">
-                        <IdCard className="size-4" />
-                      </span>
+                    {/* Phone Input */}
+                    <div className="relative flex-1">
                       <input
-                        id="invite-identity"
-                        type="text"
-                        required
+                        id="invite-phone"
+                        type="tel"
                         disabled={isSubmitted}
-                        value={identity}
-                        onChange={(e) => setIdentity(e.target.value)}
-                        placeholder="name@company.com or @handle"
-                        className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg pl-10 pr-24 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="(555) 000-0000"
+                        className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg px-3.5 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
                       />
-                      <span className="absolute right-3 font-mono text-[10px] text-[#71717a]/80 bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
-                        Required
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* WhatsApp Mobile Number */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center px-0.5">
-                      <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8]" htmlFor="invite-phone">
-                        WhatsApp Mobile Number
-                      </label>
-                      <span className="font-mono text-[10px] text-[#71717a] uppercase tracking-wider">
-                        For Signal E2EE Keyring
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {/* Country Code Pill Selector */}
-                      <div className="relative shrink-0">
-                        <select
-                          aria-label="Country Code"
-                          value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
-                          className="h-11 appearance-none bg-[#09090b]/90 border border-white/10 rounded-lg pl-3 pr-7 font-mono text-[12px] text-white focus:outline-none focus:border-white/30 cursor-pointer"
-                        >
-                          <option value="+1">🇺🇸 +1</option>
-                          <option value="+44">🇬🇧 +44</option>
-                          <option value="+49">🇩🇪 +49</option>
-                          <option value="+91">🇮🇳 +91</option>
-                          <option value="+81">🇯🇵 +81</option>
-                          <option value="+65">🇸🇬 +65</option>
-                        </select>
-                        <ChevronDown className="size-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-[#71717a] pointer-events-none" />
-                      </div>
-                      {/* Phone Input */}
-                      <div className="relative flex-1">
-                        <input
-                          id="invite-phone"
-                          type="tel"
-                          disabled={isSubmitted}
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          placeholder="(555) 000-0000"
-                          className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg px-3.5 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || isSubmitted}
-                    className={`w-full h-12 rounded-full font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-2 ${
-                      isSubmitted
-                        ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 cursor-default'
-                        : isSubmitting
-                        ? 'bg-white/80 text-black cursor-wait'
-                        : 'bg-white text-black hover:bg-slate-100 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] active:scale-[0.99] cursor-pointer'
-                    }`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <span className="size-3.5 border-2 border-black border-t-transparent animate-spin rounded-full inline-block mr-1" />
-                        <span>Generating Ticket Key...</span>
-                      </>
-                    ) : isSubmitted ? (
-                      <>
-                        <CheckCircle2 className="size-4 text-emerald-400" />
-                        <span>Key Dispatched</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Request Invitation Key</span>
-                        <ArrowRight className="size-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-
-              {/* TAB CONTENT 2: CONTACT FOUNDER */}
-              {inviteTab === 'founder' && (
-                <div className="space-y-4">
-                  <div className="p-4 rounded-xl bg-[#09090b]/90 border border-white/10 space-y-3.5">
-                    <div className="space-y-1">
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-400 block font-semibold">
-                        Priority Founder Access
-                      </span>
-                      <p className="text-white text-[13px] leading-relaxed">
-                        Building production multi-agent tooling or running local Antigravity orchestrators? Ping the founder directly for instant bypass token provisioning:
-                      </p>
-                    </div>
-
-                    {/* Founder Ticket Card */}
-                    <div className="p-3 rounded-lg bg-[#18181b] border border-white/10 space-y-3">
-                      <div className="flex items-center justify-between gap-2 overflow-x-auto">
-                        <div className="flex items-center gap-2">
-                          <AtSign className="size-4 text-[#71717a]" />
-                          <span className="font-mono text-sm text-white font-medium select-all">
-                            ramanandv722@gmail.com
-                          </span>
-                        </div>
-                        <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20 uppercase font-semibold">
-                          Lead Eng
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-2 pt-1 font-mono">
-                        <button
-                          type="button"
-                          onClick={copyFounderEmail}
-                          className="h-9 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 text-xs text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                        >
-                          {copiedEmail ? (
-                            <>
-                              <Check className="size-3.5 text-emerald-400" />
-                              <span className="text-emerald-400 font-semibold">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="size-3.5 text-[#71717a]" />
-                              <span>Copy Email</span>
-                            </>
-                          )}
-                        </button>
-
-                        <a
-                          href="mailto:ramanandv722@gmail.com?subject=Weave%20Private%20Beta%20Access%20Request&body=Hi%20Ramanand%2C%0A%0AWe%20are%20building%20with%3A%20Weave%20Agent%0AOur%20workflow%20use-case%3A%20%0A%0AWhatsApp%20Number%20for%20pairing%3A%20"
-                          className="h-9 rounded-lg bg-white text-black text-xs font-semibold flex items-center justify-center gap-1 hover:bg-slate-100 transition-colors shadow-xs"
-                        >
-                          <span>Direct Dispatch</span>
-                          <ExternalLink className="size-3.5" />
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-[#71717a] font-mono text-[11px] pt-1">
-                      <Terminal className="size-3.5 text-emerald-400 shrink-0" />
-                      <span>Direct email to Ramanand for immediate bypass key provisioning.</span>
                     </div>
                   </div>
                 </div>
-              )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting || isSubmitted}
+                  className={`w-full h-12 rounded-full font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-2 ${
+                    isSubmitted
+                      ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 cursor-default'
+                      : isSubmitting
+                      ? 'bg-white/80 text-black cursor-wait'
+                      : 'bg-white text-black hover:bg-slate-100 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] active:scale-[0.99] cursor-pointer'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="size-3.5 border-2 border-black border-t-transparent animate-spin rounded-full inline-block mr-1" />
+                      <span>Generating Ticket Key...</span>
+                    </>
+                  ) : isSubmitted ? (
+                    <>
+                      <CheckCircle2 className="size-4 text-emerald-400" />
+                      <span>Key Dispatched</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Request Invitation Key</span>
+                      <ArrowRight className="size-4" />
+                    </>
+                  )}
+                </button>
+              </form>
 
               {/* Success Toast Notification */}
               {isSubmitted && (
@@ -484,22 +378,6 @@ export function App() {
                   </span>
                 </div>
               )}
-
-              {/* Bottom Ticker: Live Counter & E2EE Assurance */}
-              <div className="pt-3 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2 text-[#71717a] font-mono">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_6px_#34d399]" />
-                  </span>
-                  <span className="text-[11px] text-[#71717a] tracking-tight">
-                    <strong className="font-medium text-white">84 engineers</strong> waiting in queue
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] text-white/70">
-                  <ShieldCheck className="size-3.5 text-emerald-400" />
-                  <span>Signal E2EE verified</span>
-                </div>
-              </div>
 
             </div>
           </div>
