@@ -376,13 +376,7 @@ export function App() {
               </div>
             )}
 
-            {/* Email Support Fallback */}
-            <div className="mt-6 pt-4 border-t border-[#27272a] text-center text-xs text-[#71717a]">
-              <span>Direct founder inquiry: </span>
-              <a href="mailto:ramanandv722@gmail.com" className="text-white hover:text-[#ff5100] transition-colors underline underline-offset-2">
-                ramanandv722@gmail.com
-              </a>
-            </div>
+
 
           </div>
         </div>
