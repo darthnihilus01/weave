@@ -3,8 +3,7 @@ import {
   ArrowRight, 
   X, 
   CheckCircle2, 
-  ChevronDown, 
-  IdCard 
+  ChevronDown 
 } from 'lucide-react';
 
 interface TaskReaction {
@@ -13,6 +12,18 @@ interface TaskReaction {
   emoji: string;
   detail: string;
 }
+
+const COUNTRIES = [
+  { code: 'IN', dial: '+91', flag: '🇮🇳', name: 'India' },
+  { code: 'US', dial: '+1', flag: '🇺🇸', name: 'United States' },
+  { code: 'GB', dial: '+44', flag: '🇬🇧', name: 'United Kingdom' },
+  { code: 'DE', dial: '+49', flag: '🇩🇪', name: 'Germany' },
+  { code: 'JP', dial: '+81', flag: '🇯🇵', name: 'Japan' },
+  { code: 'SG', dial: '+65', flag: '🇸🇬', name: 'Singapore' },
+  { code: 'AE', dial: '+971', flag: '🇦🇪', name: 'UAE' },
+  { code: 'CA', dial: '+1', flag: '🇨🇦', name: 'Canada' },
+  { code: 'AU', dial: '+61', flag: '🇦🇺', name: 'Australia' },
+];
 
 const TASKS: TaskReaction[] = [
   {
@@ -52,15 +63,14 @@ export function App() {
   const [hoveredTask, setHoveredTask] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  // Invite Form States
-  const [identity, setIdentity] = useState('');
-  const [countryCode, setCountryCode] = useState('+1');
+  // Early Access Instinct-Style Form States
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]); // Defaults to India 🇮🇳 +91 like user reference
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (window.location.hash === '#invite' || window.location.search.includes('invite')) {
+    if (window.location.hash === '#invite' || window.location.hash === '#access' || window.location.search.includes('invite')) {
       setIsModalOpen(true);
     }
 
@@ -73,15 +83,15 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identity.trim()) return;
+    if (!phoneNumber.trim()) return;
 
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 700);
+    }, 600);
   };
 
   const currentTask = TASKS.find(t => t.id === (hoveredTask || activeTask));
@@ -225,150 +235,134 @@ export function App() {
         </nav>
       </footer>
 
-      {/* CLEAN & STREAMLINED INVITE-ONLY MODAL */}
+      {/* INSTINCT-STYLE MINIMAL EARLY ACCESS MODAL / PAGE */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#09090b]/85 backdrop-blur-2xl animate-fade-in font-sans"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#09090b]/90 backdrop-blur-xl animate-fade-in font-sans"
           onClick={() => setIsModalOpen(false)}
         >
-          {/* FLOATING GLASS CAPSULE */}
+          {/* CENTERED INSTINCT-STYLE DIALOG CARD */}
           <div 
-            className="relative w-full max-w-[500px] rounded-2xl bg-[#0e0e12]/95 backdrop-blur-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.06)] transition-all duration-300 overflow-hidden text-white"
+            className="relative w-full max-w-[420px] rounded-2xl bg-[#0f0f12] border border-[#27272a] p-7 sm:p-9 shadow-2xl text-white transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Soft Emerald Neon Glow Accent Aura */}
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-32 bg-emerald-500/10 blur-[60px] pointer-events-none rounded-full" />
-
             {/* Clean Close Button in Top-Right */}
             <button 
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 text-[#71717a] hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer z-20"
-              title="Close modal (Esc)"
-              aria-label="Close modal"
+              className="absolute top-5 right-5 text-[#71717a] hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer"
+              title="Close (Esc)"
+              aria-label="Close"
             >
               <X className="size-4" />
             </button>
 
-            {/* Modal Capsule Body */}
-            <div className="p-6 sm:p-8 space-y-6 relative z-10">
-              
-              {/* Headline */}
-              <div className="pr-8">
-                <h2 className="text-[26px] sm:text-[28px] leading-tight text-white font-bold tracking-tight">
-                  Weave is invite-only for now
-                </h2>
+            {/* Title & Subtitle */}
+            <div className="pr-6">
+              <h2 className="text-2xl sm:text-[27px] font-semibold text-white tracking-tight leading-tight">
+                Sign in to Weave
+              </h2>
+              <p className="text-sm text-[#a1a1aa] mt-1.5">
+                We'll send you a code to sign in.
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handlePhoneSubmit} className="mt-6">
+              {/* Country Code + Phone Combined Input Box */}
+              <div className="flex items-center border border-[#27272a] focus-within:border-white/40 rounded-xl bg-[#141417] transition-all">
+                {/* Country Flag Selector */}
+                <div className="relative flex items-center pl-3.5 pr-2 py-3 shrink-0 cursor-pointer">
+                  <span className="text-lg mr-1.5 select-none">{selectedCountry.flag}</span>
+                  <ChevronDown className="size-3.5 text-[#71717a] pointer-events-none" />
+                  <select
+                    value={selectedCountry.code}
+                    onChange={(e) => {
+                      const c = COUNTRIES.find((x) => x.code === e.target.value);
+                      if (c) setSelectedCountry(c);
+                    }}
+                    aria-label="Country Code"
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                  >
+                    {COUNTRIES.map((c) => (
+                      <option key={c.code} value={c.code} className="bg-[#18181b] text-white">
+                        {c.flag} {c.name} ({c.dial})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Vertical Divider */}
+                <div className="w-px h-6 bg-[#27272a] shrink-0" />
+
+                {/* Phone Input */}
+                <input
+                  type="tel"
+                  required
+                  disabled={isSubmitted}
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder={`${selectedCountry.dial} 5550 000 000`}
+                  className="w-full bg-transparent px-3.5 py-3 text-sm text-white placeholder:text-[#52525b] focus:outline-none font-sans"
+                />
               </div>
 
-              {/* Form */}
-              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                {/* Work Email or GitHub Handle */}
-                <div className="space-y-1.5">
-                  <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8] block px-0.5" htmlFor="invite-identity">
-                    Work Email or GitHub Handle
-                  </label>
-                  <div className="relative flex items-center">
-                    <span className="absolute left-3.5 text-[#71717a] flex items-center pointer-events-none">
-                      <IdCard className="size-4" />
-                    </span>
-                    <input
-                      id="invite-identity"
-                      type="text"
-                      required
-                      disabled={isSubmitted}
-                      value={identity}
-                      onChange={(e) => setIdentity(e.target.value)}
-                      placeholder="name@company.com or @handle"
-                      className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg pl-10 pr-24 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
-                    />
-                    <span className="absolute right-3 font-mono text-[10px] text-[#71717a]/80 bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
-                      Required
-                    </span>
-                  </div>
-                </div>
+              {/* Terms & Privacy Disclaimer */}
+              <p className="text-[12px] text-[#71717a] leading-relaxed mt-4">
+                By clicking the "Send code" button, I agree to Weave's{' '}
+                <a href="#" className="underline hover:text-white transition-colors">Terms of Service</a>{' '}
+                and{' '}
+                <a href="#" className="underline hover:text-white transition-colors">SMS Terms</a>,{' '}
+                and acknowledge the{' '}
+                <a href="#" className="underline hover:text-white transition-colors">Privacy Policy</a>.
+              </p>
 
-                {/* WhatsApp Mobile Number */}
-                <div className="space-y-1.5">
-                  <label className="font-mono text-[11px] uppercase tracking-wider text-[#d4d4d8] block px-0.5" htmlFor="invite-phone">
-                    WhatsApp Mobile Number
-                  </label>
-                  <div className="flex items-center gap-2">
-                    {/* Country Code Pill Selector */}
-                    <div className="relative shrink-0">
-                      <select
-                        aria-label="Country Code"
-                        value={countryCode}
-                        onChange={(e) => setCountryCode(e.target.value)}
-                        className="h-11 appearance-none bg-[#09090b]/90 border border-white/10 rounded-lg pl-3 pr-7 font-mono text-[12px] text-white focus:outline-none focus:border-white/30 cursor-pointer"
-                      >
-                        <option value="+1">🇺🇸 +1</option>
-                        <option value="+44">🇬🇧 +44</option>
-                        <option value="+49">🇩🇪 +49</option>
-                        <option value="+91">🇮🇳 +91</option>
-                        <option value="+81">🇯🇵 +81</option>
-                        <option value="+65">🇸🇬 +65</option>
-                      </select>
-                      <ChevronDown className="size-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-[#71717a] pointer-events-none" />
-                    </div>
-                    {/* Phone Input */}
-                    <div className="relative flex-1">
-                      <input
-                        id="invite-phone"
-                        type="tel"
-                        disabled={isSubmitted}
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="(555) 000-0000"
-                        className="w-full h-11 bg-[#09090b]/90 border border-white/10 rounded-lg px-3.5 font-mono text-sm text-white placeholder:text-[#71717a]/60 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all"
-                      />
-                    </div>
-                  </div>
-                </div>
+              {/* Action Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting || isSubmitted}
+                className={`w-full h-12 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-6 cursor-pointer ${
+                  isSubmitted
+                    ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 cursor-default'
+                    : isSubmitting
+                    ? 'bg-white/80 text-black cursor-wait'
+                    : 'bg-white text-black hover:bg-[#ff5100] hover:text-white shadow-sm active:scale-[0.99]'
+                }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="size-3.5 border-2 border-black border-t-transparent animate-spin rounded-full inline-block mr-1" />
+                    <span>Sending code...</span>
+                  </>
+                ) : isSubmitted ? (
+                  <>
+                    <CheckCircle2 className="size-4 text-emerald-400" />
+                    <span>Code sent via WhatsApp</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send code</span>
+                    <ArrowRight className="size-4" />
+                  </>
+                )}
+              </button>
+            </form>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting || isSubmitted}
-                  className={`w-full h-12 rounded-full font-mono text-sm font-semibold tracking-wide flex items-center justify-center gap-2 transition-all mt-2 ${
-                    isSubmitted
-                      ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 cursor-default'
-                      : isSubmitting
-                      ? 'bg-white/80 text-black cursor-wait'
-                      : 'bg-white text-black hover:bg-slate-100 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] active:scale-[0.99] cursor-pointer'
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <span className="size-3.5 border-2 border-black border-t-transparent animate-spin rounded-full inline-block mr-1" />
-                      <span>Generating Ticket Key...</span>
-                    </>
-                  ) : isSubmitted ? (
-                    <>
-                      <CheckCircle2 className="size-4 text-emerald-400" />
-                      <span>Key Dispatched</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Request Invitation Key</span>
-                      <ArrowRight className="size-4" />
-                    </>
-                  )}
-                </button>
-              </form>
+            {/* Success Toast */}
+            {isSubmitted && (
+              <div className="mt-4 p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5 animate-fadeIn">
+                <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
+                <span>Code dispatched! Check your WhatsApp messages for your sign in code.</span>
+              </div>
+            )}
 
-              {/* Success Toast Notification */}
-              {isSubmitted && (
-                <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono text-xs flex items-center justify-between animate-fadeIn">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                    <span>Token assigned! SMS verification dispatched to WhatsApp.</span>
-                  </div>
-                  <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 font-bold shrink-0">
-                    PASS #85
-                  </span>
-                </div>
-              )}
-
+            {/* Email Support Fallback */}
+            <div className="mt-6 pt-4 border-t border-[#27272a] text-center text-xs text-[#71717a]">
+              <span>Need invite access or help? </span>
+              <a href="mailto:ramanandv722@gmail.com" className="text-white hover:text-[#ff5100] transition-colors underline underline-offset-2">
+                ramanandv722@gmail.com
+              </a>
             </div>
+
           </div>
         </div>
       )}
