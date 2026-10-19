@@ -71,6 +71,16 @@ export function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem('weave_early_access_user');
+      if (savedUser) {
+        setIsSubmitted(true);
+        const parsed = JSON.parse(savedUser);
+        if (parsed.identity) setIdentity(parsed.identity);
+        if (parsed.rawPhoneNumber) setPhoneNumber(parsed.rawPhoneNumber);
+      }
+    } catch {}
+
     if (window.location.hash === '#invite' || window.location.hash === '#access' || window.location.search.includes('invite')) {
       setIsModalOpen(true);
     }
@@ -84,15 +94,44 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleEarlyAccessSubmit = (e: React.FormEvent) => {
+  const handleEarlyAccessSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneNumber.trim() || !identity.trim()) return;
+    if (!phoneNumber.trim() || !identity.trim() || isSubmitting) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    const fullPhone = `${selectedCountry.dial} ${phoneNumber.trim()}`;
+    const payload = {
+      timestamp: new Date().toISOString(),
+      identity: identity.trim(),
+      phoneNumber: fullPhone,
+      rawPhoneNumber: phoneNumber.trim(),
+      countryCode: selectedCountry.code,
+      countryName: selectedCountry.name,
+      sourceUrl: window.location.href,
+      userAgent: navigator.userAgent
+    };
+
+    try {
+      const scriptUrl = import.meta.env.VITE_EARLY_ACCESS_SCRIPT_URL;
+      if (scriptUrl) {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+      }
+      try {
+        localStorage.setItem('weave_early_access_user', JSON.stringify(payload));
+      } catch {}
+    } catch (err) {
+      console.warn('Waitlist submission notice:', err);
+    } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    }
   };
 
   const currentTask = TASKS.find(t => t.id === (hoveredTask || activeTask));
@@ -369,9 +408,6 @@ export function App() {
                 <span>You're on the early access list! We'll notify you on WhatsApp as invites roll out.</span>
               </div>
             )}
-
-
-
           </div>
         </div>
       )}
