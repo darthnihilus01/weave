@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Download, X, QrCode, Laptop, Check, Terminal, Copy, CheckCircle2, Monitor, ExternalLink } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { ArrowRight, X, Check, Copy } from 'lucide-react';
 
 interface TaskReaction {
   id: string;
@@ -46,56 +45,12 @@ export function App() {
   const [activeTask, setActiveTask] = useState<string | null>(null);
   const [hoveredTask, setHoveredTask] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [downloadTab, setDownloadTab] = useState<'linux' | 'mac' | 'windows' | 'qr'>('linux');
-  const [detectedOS, setDetectedOS] = useState<'linux' | 'mac' | 'windows'>('linux');
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [copiedLinuxCmd, setCopiedLinuxCmd] = useState(false);
-  const [downloadStarted, setDownloadStarted] = useState<string | null>(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const detectOS = (): 'linux' | 'mac' | 'windows' => {
-    if (typeof window === 'undefined') return 'linux';
-    const ua = navigator.userAgent.toLowerCase();
-    const platform = (navigator as any).userAgentData?.platform?.toLowerCase() || navigator.platform?.toLowerCase() || '';
-    if (ua.includes('linux') || platform.includes('linux') || ua.includes('x11')) return 'linux';
-    if (ua.includes('win') || platform.includes('win')) return 'windows';
-    if (ua.includes('mac') || platform.includes('mac') || platform.includes('darwin')) return 'mac';
-    return 'linux';
-  };
-
-  const openDownloadModal = () => {
-    const os = detectOS();
-    setDetectedOS(os);
-    setDownloadTab(os);
-    confetti({
-      particleCount: 50,
-      spread: 60,
-      origin: { y: 0.7 },
-      colors: ['#ff5100', '#ffffff', '#34d399', '#f97316']
-    });
-    setIsModalOpen(true);
-  };
-
-  const handleDownload = (filename: string) => {
-    setDownloadStarted(filename);
-    confetti({
-      particleCount: 40,
-      spread: 60,
-      origin: { y: 0.6 },
-      colors: ['#ff5100', '#22c55e', '#ffffff']
-    });
-    setTimeout(() => setDownloadStarted(null), 5000);
-  };
-
-  const copyQuickInstall = () => {
-    navigator.clipboard.writeText('npm i -g weave-agent');
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  };
-
-  const copyLinuxCmd = () => {
-    navigator.clipboard.writeText('chmod +x Weave.AppImage && ./Weave.AppImage');
-    setCopiedLinuxCmd(true);
-    setTimeout(() => setCopiedLinuxCmd(false), 2000);
+  const copyEmail = () => {
+    navigator.clipboard.writeText('ramanandv722@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
   };
 
   const currentTask = TASKS.find(t => t.id === (hoveredTask || activeTask));
@@ -183,10 +138,10 @@ export function App() {
           )}
         </div>
 
-        {/* Primary Call to Action Button (Crisp White on Black with Orange Hover) */}
+        {/* Primary Call to Action Button */}
         <div className="pt-2 sm:pt-4">
           <button
-            onClick={openDownloadModal}
+            onClick={() => setIsModalOpen(true)}
             className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-white text-[#09090b] hover:bg-[#ff5100] hover:text-white text-base sm:text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-98"
           >
             <span>Get Weave</span>
@@ -194,11 +149,11 @@ export function App() {
           </button>
           
           <div className="flex flex-wrap items-center gap-4 pt-3 text-xs sm:text-sm text-[#71717a]">
-            <span>✓ 100% Free</span>
+            <span>Invite only for now</span>
             <span>•</span>
-            <span>✓ Runs privately on your laptop</span>
+            <span>Runs privately on your laptop</span>
             <span>•</span>
-            <span>✓ Pairs with WhatsApp in 1 scan</span>
+            <span>Pairs with WhatsApp in 1 scan</span>
           </div>
         </div>
 
@@ -212,10 +167,10 @@ export function App() {
 
         <nav className="flex flex-wrap items-center gap-6">
           <button
-            onClick={openDownloadModal}
+            onClick={() => setIsModalOpen(true)}
             className="hover:text-white transition-colors cursor-pointer"
           >
-            Download
+            Get Weave
           </button>
           <a
             href="https://github.com/darthnihilus01/weave"
@@ -226,311 +181,81 @@ export function App() {
             GitHub
           </a>
           <a
-            href="mailto:hello@weave.run"
+            href="mailto:ramanandv722@gmail.com"
             className="hover:text-white transition-colors"
           >
-            hello@weave.run
+            ramanandv722@gmail.com
           </a>
         </nav>
       </footer>
 
-      {/* 1-Click Multi-Platform Download Modal */}
+      {/* Minimalist Invite-Only Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in font-sans">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in font-sans"
+          onClick={() => setIsModalOpen(false)}
+        >
           <div
-            className="relative w-full max-w-lg bg-[#121214] rounded-3xl border border-[#27272a] p-6 sm:p-7 shadow-2xl flex flex-col gap-5 text-white max-h-[92vh] overflow-y-auto"
+            className="relative w-full max-w-md bg-[#121214] rounded-2xl border border-[#27272a] p-6 sm:p-8 shadow-2xl flex flex-col gap-6 text-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 p-1.5 rounded-full text-[#71717a] hover:text-white hover:bg-[#27272a] transition-colors cursor-pointer"
+              aria-label="Close"
             >
-              <X className="size-5" />
+              <X className="size-4" />
             </button>
 
-            {/* Modal Header */}
-            <div className="flex flex-col gap-1.5 pr-8">
+            {/* Content */}
+            <div className="flex flex-col gap-2.5">
               <div className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-[#ff5100]" />
                 <span className="text-xs font-semibold tracking-wider uppercase text-[#ff5100]">
-                  Get Weave // Desktop &amp; CLI
+                  Private Beta
                 </span>
               </div>
-              <h3 className="text-2xl font-bold tracking-tight text-white">
-                Set up in 60 seconds
+              
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Weave is invite only for now
               </h3>
-              <p className="text-xs sm:text-sm text-[#a1a1aa] leading-relaxed">
-                Download Weave for Linux, macOS, or Windows PC. Link WhatsApp with a quick scan, and your assistant is ready to help.
+              
+              <p className="text-sm sm:text-base text-[#a1a1aa] leading-relaxed">
+                To get access, email us:
               </p>
             </div>
 
-            {/* Platform Selector Tabs */}
-            <div className="flex rounded-xl bg-[#1c1c1f] p-1 text-xs font-medium">
-              <button
-                onClick={() => setDownloadTab('linux')}
-                className={`flex-1 py-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  downloadTab === 'linux'
-                    ? 'bg-[#27272a] text-white shadow-xs font-semibold'
-                    : 'text-[#a1a1aa] hover:text-white'
-                }`}
-              >
-                <span>Linux</span>
-                {detectedOS === 'linux' && (
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff5100]/20 text-[#ff5100] border border-[#ff5100]/30 font-bold">
-                    Detected
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setDownloadTab('mac')}
-                className={`flex-1 py-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  downloadTab === 'mac'
-                    ? 'bg-[#27272a] text-white shadow-xs font-semibold'
-                    : 'text-[#a1a1aa] hover:text-white'
-                }`}
-              >
-                <span>macOS</span>
-                {detectedOS === 'mac' && (
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff5100]/20 text-[#ff5100] border border-[#ff5100]/30 font-bold">
-                    Detected
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setDownloadTab('windows')}
-                className={`flex-1 py-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  downloadTab === 'windows'
-                    ? 'bg-[#27272a] text-white shadow-xs font-semibold'
-                    : 'text-[#a1a1aa] hover:text-white'
-                }`}
-              >
-                <span>Windows</span>
-                {detectedOS === 'windows' && (
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#ff5100]/20 text-[#ff5100] border border-[#ff5100]/30 font-bold">
-                    Detected
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setDownloadTab('qr')}
-                className={`flex-1 py-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                  downloadTab === 'qr'
-                    ? 'bg-[#27272a] text-white shadow-xs font-semibold'
-                    : 'text-[#a1a1aa] hover:text-white'
-                }`}
-              >
-                <QrCode className="size-3.5" />
-                <span>Pair Phone</span>
-              </button>
-            </div>
-
-            {/* Download started alert banner */}
-            {downloadStarted && (
-              <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs animate-fadeIn">
-                <CheckCircle2 className="size-4 shrink-0 text-emerald-400" />
-                <span>Downloading <strong>{downloadStarted}</strong>! Check your browser downloads folder.</span>
-              </div>
-            )}
-
-            {/* Tab Contents: LINUX */}
-            {downloadTab === 'linux' && (
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.AppImage"
-                  download="Weave.AppImage"
-                  onClick={() => handleDownload('Weave.AppImage')}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] hover:shadow-sm transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <Terminal className="size-5 text-[#ff5100]" />
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-white flex items-center gap-2">
-                        <span>Weave for Linux (AppImage)</span>
-                        <span className="text-[10px] bg-[#ff5100]/20 text-[#ff5100] px-2 py-0.5 rounded-full font-bold">
-                          Recommended
-                        </span>
-                      </div>
-                      <div className="text-xs text-[#a1a1aa]">
-                        Universal x86_64 standalone binary (.AppImage) • 129 MB
-                      </div>
-                    </div>
-                  </div>
-                  <Download className="size-4 text-[#a1a1aa] group-hover:text-[#ff5100] group-hover:translate-y-0.5 transition-all" />
-                </a>
-
-                {/* Linux Terminal One-Liner */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-[#1c1c1f] border border-[#27272a] text-xs font-mono">
-                  <div className="flex items-center gap-2 overflow-x-auto text-[#d4d4d8]">
-                    <span className="text-[#ff5100] select-none">$</span>
-                    <span className="truncate">chmod +x Weave.AppImage &amp;&amp; ./Weave.AppImage</span>
-                  </div>
-                  <button
-                    onClick={copyLinuxCmd}
-                    className="ml-2 px-2.5 py-1 rounded bg-[#27272a] hover:bg-[#3f3f46] text-white flex items-center gap-1 shrink-0 transition-colors cursor-pointer"
-                  >
-                    {copiedLinuxCmd ? (
-                      <>
-                        <Check className="size-3 text-emerald-400" />
-                        <span className="text-emerald-400 font-semibold text-[11px]">Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="size-3 text-[#ff5100]" />
-                        <span className="text-[11px]">Copy</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-Linux.AppImage"
-                  download="Weave-Linux.AppImage"
-                  onClick={() => handleDownload('Weave-Linux.AppImage')}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] transition-all text-xs text-[#a1a1aa] hover:text-white"
-                >
-                  <span>Alternative Mirror (Weave-Linux.AppImage)</span>
-                  <Download className="size-3.5" />
-                </a>
-              </div>
-            )}
-
-            {/* Tab Contents: MACOS */}
-            {downloadTab === 'mac' && (
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.dmg"
-                  download="Weave.dmg"
-                  onClick={() => handleDownload('Weave.dmg')}
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] hover:shadow-sm transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <Laptop className="size-5 text-[#ff5100]" />
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-white">
-                        Apple Silicon Mac
-                      </div>
-                      <div className="text-xs text-[#a1a1aa]">M1, M2, M3, M4 (.dmg) • 150 MB</div>
-                    </div>
-                  </div>
-                  <Download className="size-4 text-[#a1a1aa] group-hover:text-[#ff5100] group-hover:translate-y-0.5 transition-all" />
-                </a>
-
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-macOS.zip"
-                  download="Weave-macOS.zip"
-                  onClick={() => handleDownload('Weave-macOS.zip')}
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] hover:shadow-sm transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <Laptop className="size-5 text-[#a1a1aa]" />
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-white">
-                        Intel Mac / Universal ZIP
-                      </div>
-                      <div className="text-xs text-[#a1a1aa]">Legacy Intel &amp; Portable (.zip) • 150 MB</div>
-                    </div>
-                  </div>
-                  <Download className="size-4 text-[#a1a1aa] group-hover:text-[#ff5100] group-hover:translate-y-0.5 transition-all" />
-                </a>
-              </div>
-            )}
-
-            {/* Tab Contents: WINDOWS */}
-            {downloadTab === 'windows' && (
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave.exe"
-                  download="Weave.exe"
-                  onClick={() => handleDownload('Weave.exe')}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] hover:shadow-sm transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <Monitor className="size-5 text-[#ff5100]" />
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-white">
-                        Windows 10 / 11 Installer
-                      </div>
-                      <div className="text-xs text-[#a1a1aa]">Standard 64-bit installer (.exe) • 246 MB</div>
-                    </div>
-                  </div>
-                  <Download className="size-4 text-[#a1a1aa] group-hover:text-[#ff5100] group-hover:translate-y-0.5 transition-all" />
-                </a>
-
-                <a
-                  href="https://github.com/darthnihilus01/weave/releases/download/Downloadables/Weave-Windows-x64.zip"
-                  download="Weave-Windows-x64.zip"
-                  onClick={() => handleDownload('Weave-Windows-x64.zip')}
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-[#18181b] border border-[#27272a] hover:border-[#ff5100] transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <Monitor className="size-5 text-[#a1a1aa]" />
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-white">
-                        Windows Portable ZIP
-                      </div>
-                      <div className="text-xs text-[#a1a1aa]">No installation required (.zip) • 181 MB</div>
-                    </div>
-                  </div>
-                  <Download className="size-4 text-[#a1a1aa] group-hover:text-[#ff5100] group-hover:translate-y-0.5 transition-all" />
-                </a>
-              </div>
-            )}
-
-            {/* Tab Contents: PAIR PHONE */}
-            {downloadTab === 'qr' && (
-              <div className="flex flex-col gap-4 p-4 rounded-2xl bg-[#18181b] border border-[#27272a]">
-                <div className="flex items-center gap-4">
-                  <div className="size-24 bg-white rounded-xl flex items-center justify-center p-2 shrink-0">
-                    <QrCode className="size-20 text-black" />
-                  </div>
-                  <div className="text-xs text-[#a1a1aa] space-y-2">
-                    <div className="font-semibold text-white text-sm">How to pair WhatsApp:</div>
-                    <ol className="list-decimal list-inside space-y-1 text-[#d4d4d8]">
-                      <li>Open WhatsApp on your phone</li>
-                      <li>Go to <strong>Linked Devices</strong></li>
-                      <li>Tap <strong>Link a Device</strong> and scan the QR code on your PC screen</li>
-                    </ol>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 pt-2 border-t border-[#27272a] text-[11px] text-[#71717a]">
-                  <span className="size-1.5 rounded-full bg-emerald-400" />
-                  <span>End-to-end encrypted • Runs 100% locally on your computer</span>
-                </div>
-              </div>
-            )}
-
-            {/* Quick terminal install note & Releases link */}
-            <div className="pt-2 border-t border-[#27272a] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#71717a]">
-              <div className="flex items-center gap-2">
-                <span>CLI:</span>
+            {/* Email Box with One-Click Actions */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#18181b] border border-[#27272a]">
+                <span className="font-mono text-sm sm:text-base text-white select-all">
+                  ramanandv722@gmail.com
+                </span>
                 <button
-                  onClick={copyQuickInstall}
-                  className="font-mono bg-[#18181b] text-white px-2.5 py-1 rounded border border-[#27272a] hover:border-[#ff5100] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  onClick={copyEmail}
+                  className="px-2.5 py-1 text-xs font-medium rounded-lg bg-[#27272a] hover:bg-[#3f3f46] text-white flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
-                  {copiedCode ? (
+                  {copiedEmail ? (
                     <>
                       <Check className="size-3 text-emerald-400" />
-                      <span className="text-emerald-400 font-semibold text-[11px]">Copied!</span>
+                      <span className="text-emerald-400 font-semibold">Copied</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-[#ff5100]">$</span>
-                      <span>npm i -g weave-agent</span>
-                      <Copy className="size-3 text-[#71717a] ml-1" />
+                      <Copy className="size-3 text-[#a1a1aa]" />
+                      <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
 
               <a
-                href="https://github.com/darthnihilus01/weave/releases/tag/Downloadables"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-1 text-[11px]"
+                href="mailto:ramanandv722@gmail.com?subject=Weave%20Invite%20Access&body=Hi%2C%20I'd%20love%20to%20get%20access%20to%20Weave."
+                className="w-full py-3 rounded-full bg-white text-[#09090b] hover:bg-[#ff5100] hover:text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
               >
-                <span>All release assets</span>
-                <ExternalLink className="size-3" />
+                <span>Email Us</span>
+                <ArrowRight className="size-4" />
               </a>
             </div>
 
