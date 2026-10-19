@@ -64,7 +64,8 @@ export function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Early Access Instinct-Style Form States
-  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]); // Defaults to India 🇮🇳 +91 like user reference
+  const [identity, setIdentity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]); // Defaults to India 🇮🇳 +91
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -83,9 +84,9 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handlePhoneSubmit = (e: React.FormEvent) => {
+  const handleEarlyAccessSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneNumber.trim()) return;
+    if (!phoneNumber.trim() || !identity.trim()) return;
 
     setIsSubmitting(true);
     setTimeout(() => {
@@ -243,7 +244,7 @@ export function App() {
         >
           {/* CENTERED INSTINCT-STYLE DIALOG CARD */}
           <div 
-            className="relative w-full max-w-[420px] rounded-2xl bg-[#0f0f12] border border-[#27272a] p-7 sm:p-9 shadow-2xl text-white transition-all duration-300"
+            className="relative w-full max-w-[460px] rounded-2xl bg-[#0f0f12] border border-[#27272a] p-7 sm:p-9 shadow-2xl text-white transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Clean Close Button in Top-Right */}
@@ -258,60 +259,86 @@ export function App() {
 
             {/* Title & Subtitle */}
             <div className="pr-6">
-              <h2 className="text-2xl sm:text-[27px] font-semibold text-white tracking-tight leading-tight">
-                Sign in to Weave
+              <h2 className="text-2xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
+                Weave is invite-only for now
               </h2>
-              <p className="text-sm text-[#a1a1aa] mt-1.5">
-                We'll send you a code to sign in.
+              <p className="text-sm text-[#a1a1aa] mt-2 leading-relaxed">
+                Enter your details to request early access, or email{' '}
+                <a href="mailto:ramanandv722@gmail.com" className="text-white underline hover:text-[#ff5100] transition-colors">
+                  ramanandv722@gmail.com
+                </a>
               </p>
             </div>
 
             {/* Form */}
-            <form onSubmit={handlePhoneSubmit} className="mt-6">
-              {/* Country Code + Phone Combined Input Box */}
-              <div className="flex items-center border border-[#27272a] focus-within:border-white/40 rounded-xl bg-[#141417] transition-all">
-                {/* Country Flag Selector */}
-                <div className="relative flex items-center pl-3.5 pr-2 py-3 shrink-0 cursor-pointer">
-                  <span className="text-lg mr-1.5 select-none">{selectedCountry.flag}</span>
-                  <ChevronDown className="size-3.5 text-[#71717a] pointer-events-none" />
-                  <select
-                    value={selectedCountry.code}
-                    onChange={(e) => {
-                      const c = COUNTRIES.find((x) => x.code === e.target.value);
-                      if (c) setSelectedCountry(c);
-                    }}
-                    aria-label="Country Code"
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                  >
-                    {COUNTRIES.map((c) => (
-                      <option key={c.code} value={c.code} className="bg-[#18181b] text-white">
-                        {c.flag} {c.name} ({c.dial})
-                      </option>
-                    ))}
-                  </select>
+            <form onSubmit={handleEarlyAccessSubmit} className="mt-6 space-y-4">
+              {/* Field 1: Work Email or GitHub Handle */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-[#a1a1aa] block px-0.5" htmlFor="early-access-identity">
+                  Work Email or GitHub Handle
+                </label>
+                <div className="flex items-center border border-[#27272a] focus-within:border-white/40 rounded-xl bg-[#141417] transition-all">
+                  <input
+                    id="early-access-identity"
+                    type="text"
+                    required
+                    disabled={isSubmitted}
+                    value={identity}
+                    onChange={(e) => setIdentity(e.target.value)}
+                    placeholder="name@company.com or @handle"
+                    className="w-full bg-transparent px-3.5 py-3 text-sm text-white placeholder:text-[#52525b] focus:outline-none font-sans"
+                  />
                 </div>
+              </div>
 
-                {/* Vertical Divider */}
-                <div className="w-px h-6 bg-[#27272a] shrink-0" />
+              {/* Field 2: WhatsApp Mobile Number */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-[#a1a1aa] block px-0.5" htmlFor="early-access-phone">
+                  WhatsApp Mobile Number
+                </label>
+                <div className="flex items-center border border-[#27272a] focus-within:border-white/40 rounded-xl bg-[#141417] transition-all">
+                  {/* Country Flag Selector */}
+                  <div className="relative flex items-center pl-3.5 pr-2 py-3 shrink-0 cursor-pointer">
+                    <span className="text-lg mr-1.5 select-none">{selectedCountry.flag}</span>
+                    <ChevronDown className="size-3.5 text-[#71717a] pointer-events-none" />
+                    <select
+                      value={selectedCountry.code}
+                      onChange={(e) => {
+                        const c = COUNTRIES.find((x) => x.code === e.target.value);
+                        if (c) setSelectedCountry(c);
+                      }}
+                      aria-label="Country Code"
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                    >
+                      {COUNTRIES.map((c) => (
+                        <option key={c.code} value={c.code} className="bg-[#18181b] text-white">
+                          {c.flag} {c.name} ({c.dial})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                {/* Phone Input */}
-                <input
-                  type="tel"
-                  required
-                  disabled={isSubmitted}
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder={`${selectedCountry.dial} 5550 000 000`}
-                  className="w-full bg-transparent px-3.5 py-3 text-sm text-white placeholder:text-[#52525b] focus:outline-none font-sans"
-                />
+                  {/* Vertical Divider */}
+                  <div className="w-px h-6 bg-[#27272a] shrink-0" />
+
+                  {/* Phone Input */}
+                  <input
+                    id="early-access-phone"
+                    type="tel"
+                    required
+                    disabled={isSubmitted}
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder={`${selectedCountry.dial} 5550 000 000`}
+                    className="w-full bg-transparent px-3.5 py-3 text-sm text-white placeholder:text-[#52525b] focus:outline-none font-sans"
+                  />
+                </div>
               </div>
 
               {/* Terms & Privacy Disclaimer */}
-              <p className="text-[12px] text-[#71717a] leading-relaxed mt-4">
-                By clicking the "Send code" button, I agree to Weave's{' '}
+              <p className="text-[12px] text-[#71717a] leading-relaxed pt-1">
+                By clicking "Request Early Access", I agree to Weave's{' '}
                 <a href="#" className="underline hover:text-white transition-colors">Terms of Service</a>{' '}
-                and{' '}
-                <a href="#" className="underline hover:text-white transition-colors">SMS Terms</a>,{' '}
                 and acknowledge the{' '}
                 <a href="#" className="underline hover:text-white transition-colors">Privacy Policy</a>.
               </p>
@@ -331,16 +358,16 @@ export function App() {
                 {isSubmitting ? (
                   <>
                     <span className="size-3.5 border-2 border-black border-t-transparent animate-spin rounded-full inline-block mr-1" />
-                    <span>Sending code...</span>
+                    <span>Submitting request...</span>
                   </>
                 ) : isSubmitted ? (
                   <>
                     <CheckCircle2 className="size-4 text-emerald-400" />
-                    <span>Code sent via WhatsApp</span>
+                    <span>Request received</span>
                   </>
                 ) : (
                   <>
-                    <span>Send code</span>
+                    <span>Request Early Access</span>
                     <ArrowRight className="size-4" />
                   </>
                 )}
@@ -351,13 +378,13 @@ export function App() {
             {isSubmitted && (
               <div className="mt-4 p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5 animate-fadeIn">
                 <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                <span>Code dispatched! Check your WhatsApp messages for your sign in code.</span>
+                <span>You're on the early access list! We'll notify you on WhatsApp as invites roll out.</span>
               </div>
             )}
 
             {/* Email Support Fallback */}
             <div className="mt-6 pt-4 border-t border-[#27272a] text-center text-xs text-[#71717a]">
-              <span>Need invite access or help? </span>
+              <span>Direct founder inquiry: </span>
               <a href="mailto:ramanandv722@gmail.com" className="text-white hover:text-[#ff5100] transition-colors underline underline-offset-2">
                 ramanandv722@gmail.com
               </a>
