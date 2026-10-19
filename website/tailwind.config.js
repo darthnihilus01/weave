@@ -20,7 +20,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['Newsreader', 'Georgia', 'serif'],
-        mono: ['"JetBrains Mono"', '"Geist Mono"', 'monospace'],
+        mono: ['"Geist Mono"', 'monospace'],
       }
     },
   },
