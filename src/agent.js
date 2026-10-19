@@ -730,9 +730,9 @@ export async function runAntigravityTask({
     }
   }
 
-  // Strict Master Directory Sandboxing Enforcement
+  // Strict Master Directory Sandboxing Enforcement (bypassed if allowAllFiles is true)
   const state = loadProjectsState();
-  if (state.masterDir && !isPathWithinMasterDir(projectDir, state.masterDir)) {
+  if (!state.allowAllFiles && state.masterDir && !isPathWithinMasterDir(projectDir, state.masterDir)) {
     throw new Error(`Security Violation: Execution blocked. Directory "${projectDir}" is outside the Master Directory sandbox.`);
   }
 

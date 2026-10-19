@@ -196,12 +196,30 @@ ipcMain.handle('weave:get-status', async () => {
     projects: state.projects,
     activeProject: state.activeProject,
     masterDir: state.masterDir || '',
+    allowAllFiles: Boolean(state.allowAllFiles),
     groupBindings: state.groupBindings,
     initializedGroups: configMod.getAllInitializedGroups(),
     friends: state.friends || [],
     projectAccess: state.projectAccess || {},
     groupNames: state.groupNames || {},
   };
+});
+
+ipcMain.handle('weave:set-allow-all-files', async (_event, payload) => {
+  const enabled = Boolean(payload && (typeof payload === 'boolean' ? payload : payload.enabled));
+  const state = configMod.loadProjectsState();
+  state.allowAllFiles = enabled;
+  configMod.saveProjectsState(state);
+  sendToRenderer('weave:status-update', {
+    allowAllFiles: state.allowAllFiles,
+  });
+  sendToRenderer('weave:projects-update', state);
+  console.log(
+    enabled
+      ? '⚠️ Full computer file access enabled by user.'
+      : '🛡️ Sandboxing restored: file access restricted to Master Directory.'
+  );
+  return { success: true, allowAllFiles: state.allowAllFiles };
 });
 
 ipcMain.handle('weave:pick-master-dir', async () => {

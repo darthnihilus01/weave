@@ -383,6 +383,7 @@ export function loadProjectsState() {
       masterDir: existingMasterDir || '',
       activeProject: firstAlias,
       projects: discovered,
+      allowAllFiles: false,
       initializedGroups: {},
       groupBindings: {},
       pendingPolls: {},
@@ -400,6 +401,7 @@ export function loadProjectsState() {
     // Projects are strictly folders in master directory
     saved.projects = discovered;
     saved.masterDir = typeof saved.masterDir === 'string' ? saved.masterDir : '';
+    saved.allowAllFiles = typeof saved.allowAllFiles === 'boolean' ? saved.allowAllFiles : false;
     saved.initializedGroups = saved.initializedGroups || {};
     saved.groupBindings = saved.groupBindings || {};
     saved.pendingPolls = saved.pendingPolls || {};
@@ -451,6 +453,7 @@ export function loadProjectsState() {
       masterDir: existingMasterDir || '',
       activeProject: '',
       projects: discovered,
+      allowAllFiles: false,
       initializedGroups: {},
       groupBindings: {},
       pendingPolls: {},
@@ -1070,12 +1073,15 @@ export function resetAllState({ preserveMasterDir = true } = {}) {
     masterDir,
     activeProject: firstAlias,
     projects: discovered,
+    allowAllFiles: Boolean(currentState.allowAllFiles),
     initializedGroups: {},
     groupBindings: {},
     pendingPolls: {},
     conversations: {},
     autopilot: true,
     friends: [],
+    projectAccess: {},
+    groupNames: {},
   };
 
   saveProjectsState(newState);
@@ -1091,6 +1097,24 @@ export function resetAllState({ preserveMasterDir = true } = {}) {
   } catch {}
 
   return newState;
+}
+
+/**
+ * Checks whether full file access (outside Master Directory) is allowed.
+ */
+export function getAllowAllFiles() {
+  const state = loadProjectsState();
+  return Boolean(state.allowAllFiles);
+}
+
+/**
+ * Sets whether full file access is allowed.
+ */
+export function setAllowAllFiles(enabled) {
+  const state = loadProjectsState();
+  state.allowAllFiles = Boolean(enabled);
+  saveProjectsState(state);
+  return state.allowAllFiles;
 }
 
 

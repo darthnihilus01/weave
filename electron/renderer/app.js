@@ -97,6 +97,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const masterDirWorkspaceBadge = document.getElementById('master-dir-workspace-badge');
   const badgeMountedCount = document.getElementById('badge-mounted-count');
 
+  // Allow All Files Toggles & Badges
+  const toggleAllowAllFilesWorkspace = document.getElementById('toggle-allow-all-files-workspace');
+  const toggleAllowAllFilesTelemetry = document.getElementById('toggle-allow-all-files-telemetry');
+  const workspaceAllowFilesIcon = document.getElementById('workspace-allow-files-icon');
+  const workspaceAllowFilesDesc = document.getElementById('workspace-allow-files-desc');
+  const telemetrySandboxStatus = document.getElementById('telemetry-sandbox-status');
+  const telemetrySandboxIcon = document.getElementById('telemetry-sandbox-icon');
+  const telemetrySandboxText = document.getElementById('telemetry-sandbox-text');
+  const telemetrySandboxSubtext = document.getElementById('telemetry-sandbox-subtext');
+  const footerSandboxBadge = document.getElementById('footer-sandbox-badge');
+  const footerSandboxSubtext = document.getElementById('footer-sandbox-subtext');
+
   // Workspace Feed & Elements
   const terminalBody = document.getElementById('terminal-body');
   const btnClearLogs = document.getElementById('btn-clear-logs');
@@ -426,6 +438,47 @@ document.addEventListener('DOMContentLoaded', async () => {
       .join('');
   }
 
+  function updateAllowAllFilesUI(allowAll) {
+    const isAllowed = Boolean(allowAll);
+    if (toggleAllowAllFilesWorkspace && toggleAllowAllFilesWorkspace.checked !== isAllowed) {
+      toggleAllowAllFilesWorkspace.checked = isAllowed;
+    }
+    if (toggleAllowAllFilesTelemetry && toggleAllowAllFilesTelemetry.checked !== isAllowed) {
+      toggleAllowAllFilesTelemetry.checked = isAllowed;
+    }
+
+    if (workspaceAllowFilesIcon) {
+      workspaceAllowFilesIcon.textContent = isAllowed ? 'lock_open_right' : 'shield';
+      workspaceAllowFilesIcon.className = `material-symbols-outlined text-[14px] ${isAllowed ? 'text-amber-400' : 'text-emerald-400'}`;
+    }
+    if (workspaceAllowFilesDesc) {
+      workspaceAllowFilesDesc.textContent = isAllowed ? '⚠️ Full computer access (Unrestricted)' : 'Sandboxed to Master Directory';
+      workspaceAllowFilesDesc.className = `text-[9px] font-mono truncate mt-0.5 ${isAllowed ? 'text-amber-400 font-medium' : 'text-zinc-500'}`;
+    }
+
+    if (telemetrySandboxStatus) {
+      telemetrySandboxStatus.className = `text-xs font-medium truncate flex items-center gap-1.5 ${isAllowed ? 'text-amber-400' : 'text-emerald-400'}`;
+    }
+    if (telemetrySandboxIcon) {
+      telemetrySandboxIcon.className = isAllowed ? 'fa-solid fa-triangle-exclamation text-[10px]' : 'fa-solid fa-shield text-[10px]';
+    }
+    if (telemetrySandboxText) {
+      telemetrySandboxText.textContent = isAllowed ? 'Full Computer Access' : 'Scoped Airgap';
+    }
+    if (telemetrySandboxSubtext) {
+      telemetrySandboxSubtext.textContent = isAllowed ? 'All files accessible' : 'Restricted to Master Dir';
+      telemetrySandboxSubtext.className = `text-[10px] font-mono mt-0.5 truncate ${isAllowed ? 'text-amber-400/80 font-medium' : 'text-app-tertiary'}`;
+    }
+
+    if (footerSandboxBadge) {
+      footerSandboxBadge.textContent = isAllowed ? 'Full Access' : 'Active';
+      footerSandboxBadge.className = isAllowed ? 'text-amber-400 font-normal' : 'text-emerald-400 font-normal';
+    }
+    if (footerSandboxSubtext) {
+      footerSandboxSubtext.textContent = isAllowed ? 'Full Disk Access' : 'Subprocess Isolation';
+    }
+  }
+
   // State Synchronizer
   function renderState(state) {
     if (!state) return;
@@ -617,6 +670,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (state.friends) {
       renderFriendsList(state.friends);
     }
+    updateAllowAllFilesUI(state.allowAllFiles);
   }
 
   async function syncStatus() {
@@ -659,6 +713,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         waHeaderDot.className = 'w-1.5 h-1.5 rounded-full bg-neutral-600 inline-block';
         waHeaderText.textContent = 'Disconnected';
         appendLog('warn', '⚠️ WhatsApp connection closed.');
+      }
+      if (typeof update.allowAllFiles === 'boolean') {
+        updateAllowAllFilesUI(update.allowAllFiles);
       }
     });
 
@@ -845,6 +902,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (btnSaveMasterDirWorkspace) {
     btnSaveMasterDirWorkspace.addEventListener('click', () => {
       handleMasterDirSave(masterDirInputWorkspace?.value?.trim() || '', 'workspace');
+    });
+  }
+
+  // Allow All Files (Full Computer Access) Toggle Handlers
+  async function handleToggleAllowAllFiles(checked, source) {
+    updateAllowAllFilesUI(checked);
+    try {
+      const res = await api?.setAllowAllFiles(checked);
+      if (res?.success) {
+        updateAllowAllFilesUI(res.allowAllFiles);
+        if (res.allowAllFiles) {
+          appendLog('warn', '⚠️ Full computer file access ENABLED. Weave can now access, create, and edit files anywhere on this computer.');
+        } else {
+          appendLog('info', '🛡️ Sandbox RESTORED. File access is strictly restricted to your Master Directory.');
+        }
+      }
+    } catch (err) {
+      appendLog('error', `Failed to update file access setting: ${err.message}`);
+      syncStatus();
+    }
+  }
+
+  if (toggleAllowAllFilesWorkspace) {
+    toggleAllowAllFilesWorkspace.addEventListener('change', (e) => {
+      handleToggleAllowAllFiles(e.target.checked, 'workspace');
+    });
+  }
+
+  if (toggleAllowAllFilesTelemetry) {
+    toggleAllowAllFilesTelemetry.addEventListener('change', (e) => {
+      handleToggleAllowAllFiles(e.target.checked, 'telemetry');
     });
   }
 

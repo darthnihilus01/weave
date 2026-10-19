@@ -33,6 +33,7 @@ contextBridge.exposeInMainWorld('weaveAPI', {
   toggleAutopilot: (enabled) => ipcRenderer.invoke('weave:toggle-autopilot', enabled),
   pickMasterDir: () => ipcRenderer.invoke('weave:pick-master-dir'),
   setMasterDir: (dirPath) => ipcRenderer.invoke('weave:set-master-dir', dirPath),
+  setAllowAllFiles: (enabled) => ipcRenderer.invoke('weave:set-allow-all-files', { enabled }),
 
   // Friends & Collaborators Directory
   getFriends: () => ipcRenderer.invoke('weave:get-friends'),

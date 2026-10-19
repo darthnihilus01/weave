@@ -41,9 +41,10 @@ export function createProjectUnderMaster(rawProjectName, groupJid = null) {
   }
 
   const targetPath = path.join(masterDir, sanitized);
+  const state = loadProjectsState();
 
-  // Security Sandboxing check
-  if (!isPathWithinMasterDir(targetPath, masterDir)) {
+  // Security Sandboxing check (bypassed if allowAllFiles is true)
+  if (!state.allowAllFiles && !isPathWithinMasterDir(targetPath, masterDir)) {
     throw new Error('Security Violation: Target path is outside the Master Directory.');
   }
 
@@ -51,7 +52,6 @@ export function createProjectUnderMaster(rawProjectName, groupJid = null) {
     fs.mkdirSync(targetPath, { recursive: true });
   }
 
-  const state = loadProjectsState();
   state.projects = state.projects || {};
   state.projects[sanitized] = targetPath;
   state.activeProject = sanitized;
@@ -99,8 +99,8 @@ export function switchGroupProject(rawProjectName, groupJid) {
     throw new Error(`Project "${rawProjectName}" was not found under Master Directory.`);
   }
 
-  // Security Sandboxing check
-  if (!isPathWithinMasterDir(matchedPath, masterDir)) {
+  // Security Sandboxing check (bypassed if allowAllFiles is true)
+  if (!state.allowAllFiles && !isPathWithinMasterDir(matchedPath, masterDir)) {
     throw new Error(`Security Violation: Project "${matchedAlias}" is located outside the Master Directory.`);
   }
 
@@ -185,10 +185,10 @@ export function listProjectsForGroup(groupJid) {
     throw new Error(`Failed to read Master Directory: ${err.message}`);
   }
 
-  // Combine with state.projects that are inside masterDir
+  // Combine with state.projects that are inside masterDir (or all projects if allowAllFiles is true)
   const projectSet = new Set(dirEntries);
   for (const [alias, dir] of Object.entries(state.projects || {})) {
-    if (isPathWithinMasterDir(dir, masterDir)) {
+    if (state.allowAllFiles || isPathWithinMasterDir(dir, masterDir)) {
       projectSet.add(alias);
     }
   }

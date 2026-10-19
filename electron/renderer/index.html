@@ -415,7 +415,7 @@
                   </div>
 
                   <!-- Master Directory Config Bar -->
-                  <div class="mb-3 p-2 rounded bg-app-canvas border border-app-border">
+                  <div class="mb-3 p-2.5 rounded bg-app-canvas border border-app-border">
                     <div class="flex items-center justify-between mb-1.5">
                       <span class="text-[10px] font-mono uppercase text-app-tertiary flex items-center gap-1">
                         <span class="material-symbols-outlined text-[13px] text-zinc-400">folder_special</span>
@@ -432,6 +432,21 @@
                       <button id="btn-save-master-dir-workspace" class="px-2.5 py-1 bg-white hover:bg-neutral-200 text-black text-[11px] font-mono font-medium rounded transition active:scale-95 shrink-0 cursor-pointer">
                         Save
                       </button>
+                    </div>
+
+                    <!-- Allow All Files Toggle Bar -->
+                    <div class="mt-2.5 pt-2 border-t border-app-borderSubtle flex items-center justify-between">
+                      <div class="flex flex-col min-w-0 pr-2">
+                        <div class="flex items-center gap-1.5">
+                          <span id="workspace-allow-files-icon" class="material-symbols-outlined text-[14px] text-emerald-400">shield</span>
+                          <span class="text-[11px] font-mono text-white font-medium">Access All Files</span>
+                        </div>
+                        <span id="workspace-allow-files-desc" class="text-[9px] font-mono text-zinc-500 truncate mt-0.5">Sandboxed to Master Directory</span>
+                      </div>
+                      <label class="relative inline-flex items-center cursor-pointer shrink-0" title="Allow Weave to access and edit all files on your computer">
+                        <input id="toggle-allow-all-files-workspace" type="checkbox" class="sr-only peer"/>
+                        <div class="w-8 h-4 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-500"></div>
+                      </label>
                     </div>
                   </div>
                   
@@ -456,8 +471,8 @@
                 </div>
 
                 <div class="mt-3 pt-2 border-t border-app-borderSubtle flex items-center justify-between text-[10px] text-app-tertiary font-mono">
-                  <span>SANDBOX: <strong class="text-app-secondary font-normal">Active</strong></span>
-                  <span class="text-app-dim">Subprocess Isolation</span>
+                  <span>SANDBOX: <strong id="footer-sandbox-badge" class="text-emerald-400 font-normal">Active</strong></span>
+                  <span id="footer-sandbox-subtext" class="text-app-dim">Subprocess Isolation</span>
                 </div>
               </div>
 
@@ -543,15 +558,21 @@
                         <div class="text-[10px] text-app-tertiary font-mono mt-0.5">0 pending tasks</div>
                       </div>
                     </div>
-                    <!-- Safety Mode -->
-                    <div class="bg-app-canvas border border-app-border rounded p-2.5 flex flex-col justify-between">
+                    <!-- Safety Mode / File Access Sandbox Toggle -->
+                    <div class="bg-app-canvas border border-app-border rounded p-2.5 flex flex-col justify-between" id="telemetry-sandbox-card">
                       <div class="flex items-center justify-between mb-1">
-                        <span class="text-[10px] text-app-tertiary uppercase font-mono">Sandbox</span>
-                        <i class="fa-solid fa-shield text-app-secondary text-[10px]"></i>
+                        <span class="text-[10px] text-app-tertiary uppercase font-mono">File Access</span>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0" title="Toggle full computer file access">
+                          <input id="toggle-allow-all-files-telemetry" type="checkbox" class="sr-only peer"/>
+                          <div class="w-7 h-3.5 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-3.5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-500"></div>
+                        </label>
                       </div>
                       <div>
-                        <div class="text-xs font-medium text-white truncate">Scoped Folders Only</div>
-                        <div class="text-[10px] text-app-tertiary font-mono mt-0.5">Strict Airgap</div>
+                        <div id="telemetry-sandbox-status" class="text-xs font-medium text-emerald-400 truncate flex items-center gap-1.5">
+                          <i id="telemetry-sandbox-icon" class="fa-solid fa-shield text-[10px]"></i>
+                          <span id="telemetry-sandbox-text">Scoped Airgap</span>
+                        </div>
+                        <div id="telemetry-sandbox-subtext" class="text-[10px] text-app-tertiary font-mono mt-0.5 truncate">Restricted to Master Dir</div>
                       </div>
                     </div>
                   </div>

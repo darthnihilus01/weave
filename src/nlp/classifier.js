@@ -491,6 +491,7 @@ export async function classifyUserIntent({
     `Current System Context:`,
     `- Master Directory: ${state.masterDir ? `"${state.masterDir}"` : 'NOT_SET'}`,
     `- Currently Bound Project in this chat: ${boundProject ? `"${boundProject}"` : 'NONE'}`,
+    `- Full Computer File Access: ${state.allowAllFiles ? 'ENABLED' : 'DISABLED'}`,
     `- Known Project Aliases: ${JSON.stringify(availableProjects)}`,
     `- Is an Agent Task currently executing right now?: ${Boolean(activeTask)}`,
     `- Registered Friends: ${JSON.stringify(friends.map((f) => ({ name: f.name, github: f.github })))}`,

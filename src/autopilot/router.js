@@ -24,6 +24,7 @@ export async function routeAutopilotIntent({ prompt, groupJid, recentHistory = [
     masterDir: state.masterDir || '',
     boundProject: state.groupBindings?.[groupJid] || null,
     availableProjects: [],
+    allowAllFiles: Boolean(state.allowAllFiles),
   };
 
   try {
@@ -37,6 +38,7 @@ export async function routeAutopilotIntent({ prompt, groupJid, recentHistory = [
     `Current Workspace Context:`,
     `- Master Directory: ${workspaceContext.masterDir ? `"${workspaceContext.masterDir}"` : 'NOT_SET'}`,
     `- Currently Active Project in this WhatsApp group: ${workspaceContext.boundProject ? `"${workspaceContext.boundProject}"` : 'NONE'}`,
+    `- Full Computer File Access (Desktop App Setting): ${workspaceContext.allowAllFiles ? 'ENABLED (User granted full access to all files and directories across the entire computer; this chat defaults to the active project folder, but files across the machine are accessible)' : 'DISABLED (Strictly sandboxed to the active project folder)'}`,
     `- Subproject Folders inside Master Directory: ${JSON.stringify(workspaceContext.availableProjects)}`,
     '',
     `Recent Conversation Context:`,
