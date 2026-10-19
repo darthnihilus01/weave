@@ -257,17 +257,11 @@ export function App() {
               <X className="size-4" />
             </button>
 
-            {/* Title & Subtitle */}
+            {/* Title */}
             <div className="pr-6">
               <h2 className="text-2xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
                 Weave is invite-only for now
               </h2>
-              <p className="text-sm text-[#a1a1aa] mt-2 leading-relaxed">
-                Enter your details to request early access, or email{' '}
-                <a href="mailto:ramanandv722@gmail.com" className="text-white underline hover:text-[#ff5100] transition-colors">
-                  ramanandv722@gmail.com
-                </a>
-              </p>
             </div>
 
             {/* Form */}
