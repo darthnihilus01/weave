@@ -112,7 +112,7 @@ export function App() {
     };
 
     try {
-      const scriptUrl = import.meta.env.VITE_EARLY_ACCESS_SCRIPT_URL;
+      const scriptUrl = import.meta.env.VITE_EARLY_ACCESS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbx9xSDX9Wqus-tQM5ObL7T-InZU7bDEyr1encl6rs8LP8HROVCzttv6uquNnwNISQ/exec';
       if (scriptUrl) {
         await fetch(scriptUrl, {
           method: 'POST',
