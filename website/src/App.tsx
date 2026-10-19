@@ -141,22 +141,7 @@ export function App() {
       
       {/* Top Header / Emblem */}
       <header className="w-full max-w-3xl mx-auto flex items-center pb-12 sm:pb-20">
-        <a href="/" className="inline-flex items-center gap-3 group">
-          <div className="relative size-10 rounded-full border border-[#27272a] bg-[#18181b] flex items-center justify-center shadow-xs group-hover:border-[#ff5100] group-hover:scale-105 transition-all">
-            <svg
-              className="size-5 text-white group-hover:text-[#ff5100] transition-colors"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4 21l3.5-.96A8.93 8.93 0 0 0 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z" />
-              <path d="M8 12h.01M12 12h.01M16 12h.01" strokeWidth="2.5" />
-            </svg>
-            <span className="absolute -top-1 -right-1 size-2.5 rounded-full bg-[#ff5100] ring-2 ring-[#09090b]" />
-          </div>
+        <a href="/" className="inline-flex items-center group">
           <span className="text-xl font-bold tracking-tight text-white group-hover:text-[#ff5100] transition-colors">
             weave
           </span>
