@@ -16,19 +16,30 @@ const DEFAULT_CLIENT_SECRET =
   ['GOCS', 'PX', '-K58FWR486LdL', 'J1mLB8sXC4z6qDAf'].join('');
 const DEFAULT_PORT = parseInt(process.env.GOOGLE_REDIRECT_PORT || '8085', 10) || 8085;
 
-// Verified Google OAuth scopes for Desktop PKCE flow
-const OAUTH_SCOPES = [
+// Base Google OAuth scopes registered for the built-in PKCE Desktop client
+const BASE_OAUTH_SCOPES = [
   'openid',
   'email',
   'profile',
   'https://www.googleapis.com/auth/userinfo.email',
   'https://www.googleapis.com/auth/userinfo.profile',
   'https://www.googleapis.com/auth/cloud-platform',
-  'https://www.googleapis.com/auth/gmail.send',
-  'https://mail.google.com/',
+];
+
+// Extended scopes requested when the user configures their own Google Cloud OAuth Client ID in .env
+const EXTENDED_SCOPES = [
   'https://www.googleapis.com/auth/calendar',
   'https://www.googleapis.com/auth/calendar.events',
+  'https://www.googleapis.com/auth/gmail.send',
+  'https://mail.google.com/',
 ];
+
+export function getEffectiveOAuthScopes(clientId = DEFAULT_CLIENT_ID) {
+  if (process.env.GOOGLE_CLIENT_ID && clientId === process.env.GOOGLE_CLIENT_ID) {
+    return [...BASE_OAUTH_SCOPES, ...EXTENDED_SCOPES];
+  }
+  return BASE_OAUTH_SCOPES;
+}
 
 
 class GoogleAuthManager {
@@ -109,11 +120,12 @@ class GoogleAuthManager {
     this.pkceVerifier = verifier;
     this.pkceChallenge = challenge;
 
+    const activeScopes = getEffectiveOAuthScopes(this.clientId);
     const params = new URLSearchParams({
       client_id: this.clientId,
       redirect_uri: redirectUri,
       response_type: 'code',
-      scope: OAUTH_SCOPES.join(' '),
+      scope: activeScopes.join(' '),
       access_type: 'offline',
       prompt: 'select_account',
       code_challenge: challenge,
